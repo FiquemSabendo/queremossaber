@@ -1,6 +1,22 @@
-<html>
-  <head></head>
-  <body>
-    {% block content %}{% endblock %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>
+      LAI Anônima
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.1/css/tachyons.min.css"/>
+  </head>
+  <body class="bg-black-05 sans-serif ">
+    <header class="w-100 pa3 ph5-ns bg-white">
+      <div class="db dt-ns mw9 center w-100">
+        <strong class="light-purple">
+          LAI Anônima
+        </strong>
+      </div>
+    </header>
+    <main class="ph3 ph5-ns">
+      {% block content %}{% endblock %}
+    </main>
   </body>
 </html>

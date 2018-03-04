@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Index</h1>
-<p><a href="{% url 'message_new' %}">Enviar pedido</a></p>
+<p>
+  <a
+    class="f6 link dim br-pill ph3 pv2 mb2 dib white bg-light-purple"
+    href="{% url 'message_new' %}"
+  >
+    Enviar Pedido
+  </a>
+</p>
 {% endblock %}
