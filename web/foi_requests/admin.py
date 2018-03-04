@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import PublicBody, FOIRequest
+
+admin.site.register(PublicBody)
+admin.site.register(FOIRequest)
