@@ -1,4 +1,4 @@
-from django.test import TestCase
+import pytest
 from django.urls import reverse
 from django.db import transaction
 from django.db.utils import IntegrityError
@@ -6,7 +6,8 @@ from django.db.utils import IntegrityError
 from ..models import Message, FOIRequest, PublicBody
 
 
-class TestMessage(TestCase):
+@pytest.mark.django_db()
+class TestMessage(object):
     def test_creating_message_creates_foi_request(self):
         message = Message()
         message.save()
@@ -19,7 +20,7 @@ class TestMessage(TestCase):
         message.body = None
 
         with transaction.atomic():
-            with self.assertRaises(IntegrityError):
+            with pytest.raises(IntegrityError):
                 message.save()
 
         assert initial_foi_requests_count == FOIRequest.objects.count()
@@ -35,7 +36,7 @@ class TestMessage(TestCase):
         assert message.get_absolute_url() == expected_url
 
 
-class TestFOIRequest(TestCase):
+class TestFOIRequest(object):
     def test_protocol_is_automatically_generated(self):
         foi_request = FOIRequest()
 
@@ -52,8 +53,8 @@ class TestFOIRequest(TestCase):
 
         assert foi_request.protocol in str(foi_request)
 
-    def test_public_body_returns_first_messages_receiver(self):
-        public_body = PublicBody(name='example', esic_url='http://example.com')
+    @pytest.mark.django_db()
+    def test_public_body_returns_first_messages_receiver(self, public_body):
         with transaction.atomic():
             public_body.save()
             message = Message(receiver=public_body)
@@ -64,3 +65,11 @@ class TestFOIRequest(TestCase):
 
     def test_public_body_returns_none_if_there_are_no_messages(self):
         assert FOIRequest().public_body is None
+
+
+@pytest.fixture
+def public_body():
+    return PublicBody(
+        name='example',
+        esic_url='http://example.com'
+    )
