@@ -1,13 +1,8 @@
-from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 
 from .forms import MessageForm
 from .models import FOIRequest
-
-
-class IndexView(TemplateView):
-    template_name = 'foi_requests/index.html'
 
 
 class CreateMessageView(CreateView):
