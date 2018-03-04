@@ -28,6 +28,15 @@ class FOIRequest(models.Model):
     def __str__(self):
         return self.protocol
 
+    @property
+    def public_body(self):
+        if self._first_message:
+            return self._first_message.receiver
+
+    @property
+    def _first_message(self):
+        return self.message_set.first()
+
 
 class Message(models.Model):
     foi_request = models.ForeignKey(FOIRequest, on_delete=models.CASCADE)
@@ -49,9 +58,16 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def save(self, *args, **kwargs):
         if not self.foi_request_id:
             foi_request = FOIRequest()
             foi_request.save()
             self.foi_request = foi_request
         return super(Message, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('foirequest_detail', args=[self.foi_request.protocol])

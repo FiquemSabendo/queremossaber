@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Pedido: {{ object.protocol }}</h1>
+<dl>
+  <dt>Órgão</dt>
+  <dd>{{ object.public_body.name }}</dd>
+  <dt>Aberto em</dt>
+  <dd>{{ object.created_at }}</dd>
+</dl>
+
+<p>
+  <ul>
+  {% for message in object.message_set.all %}
+    <li>
+      {% include "foi_requests/_message_details.html" %}
+    </li>
+  {% endfor %}
+  </ul>
+</p>
+{% endblock %}

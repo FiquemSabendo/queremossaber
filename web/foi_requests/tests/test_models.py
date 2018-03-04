@@ -1,8 +1,9 @@
 from django.test import TestCase
+from django.urls import reverse
 from django.db import transaction
 from django.db.utils import IntegrityError
 
-from ..models import Message, FOIRequest
+from ..models import Message, FOIRequest, PublicBody
 
 
 class TestMessage(TestCase):
@@ -23,6 +24,16 @@ class TestMessage(TestCase):
 
         assert initial_foi_requests_count == FOIRequest.objects.count()
 
+    def test_absolute_url_points_to_foi_request_url(self):
+        message = Message()
+        message.save()
+        expected_url = reverse(
+            'foirequest_detail',
+            args=[message.foi_request.protocol]
+        )
+
+        assert message.get_absolute_url() == expected_url
+
 
 class TestFOIRequest(TestCase):
     def test_protocol_is_automatically_generated(self):
@@ -40,3 +51,16 @@ class TestFOIRequest(TestCase):
         foi_request = FOIRequest()
 
         assert foi_request.protocol in str(foi_request)
+
+    def test_public_body_returns_first_messages_receiver(self):
+        public_body = PublicBody(name='example', esic_url='http://example.com')
+        with transaction.atomic():
+            public_body.save()
+            message = Message(receiver=public_body)
+            message.save()
+        foi_request = message.foi_request
+
+        assert foi_request.public_body == message.receiver
+
+    def test_public_body_returns_none_if_there_are_no_messages(self):
+        assert FOIRequest().public_body is None
