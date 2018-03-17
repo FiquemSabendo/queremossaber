@@ -1,4 +1,6 @@
+from django.utils import timezone
 from django.db import models
+from django.core.exceptions import ValidationError
 from . import utils
 
 
@@ -18,12 +20,29 @@ class FOIRequest(models.Model):
         unique=True,
         default=utils.generate_protocol
     )
-    esic_protocol = models.CharField(max_length=255)
+    esic_protocol = models.CharField(max_length=255, blank=True)
     moderation_status = models.NullBooleanField()
     moderation_message = models.TextField(blank=True)
     moderated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at', '-moderation_status']
+
+    def __init__(self, *args, **kwargs):
+        super(FOIRequest, self).__init__(*args, **kwargs)
+        self._original_moderation_status = self.moderation_status
+        self._original_protocol = self.protocol
+
+    def save(self, *args, **kwargs):
+        if self._original_moderation_status != self.moderation_status:
+            self.moderated_at = timezone.now()
+        if self._original_protocol != self.protocol:
+            raise ValidationError(
+                {'protocol': 'Protocol can not be changed.'}
+            )
+        super(FOIRequest, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.protocol

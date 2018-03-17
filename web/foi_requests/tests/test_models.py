@@ -66,6 +66,16 @@ class TestFOIRequest(object):
     def test_public_body_returns_none_if_there_are_no_messages(self):
         assert FOIRequest().public_body is None
 
+    @pytest.mark.django_db()
+    def test_foi_request_updates_moderated_at_when_moderation_status_is_set(self, foi_request):
+        assert foi_request.moderated_at is None
+
+        with transaction.atomic():
+            foi_request.moderation_status = True
+            foi_request.save()
+
+        assert foi_request.moderated_at is not None
+
 
 @pytest.fixture
 def public_body():
@@ -73,3 +83,8 @@ def public_body():
         name='example',
         esic_url='http://example.com'
     )
+
+
+@pytest.fixture
+def foi_request():
+    return FOIRequest()
