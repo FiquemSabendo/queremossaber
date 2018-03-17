@@ -7,14 +7,15 @@ from django.core.exceptions import ValidationError
 from ..models import Message, FOIRequest, PublicBody
 
 
-@pytest.mark.django_db()
 class TestMessage(object):
+    @pytest.mark.django_db()
     def test_creating_message_creates_foi_request(self):
         message = Message()
         message.save()
 
         assert message.foi_request
 
+    @pytest.mark.django_db()
     def test_foi_request_isnt_created_if_message_creation_fails(self):
         initial_foi_requests_count = FOIRequest.objects.count()
         message = Message()
@@ -26,6 +27,15 @@ class TestMessage(object):
 
         assert initial_foi_requests_count == FOIRequest.objects.count()
 
+    @pytest.mark.django_db()
+    def test_message_doesnt_create_new_foi_request_if_it_already_has_one(self, foi_request):
+        foi_request.save()
+        message = Message(foi_request=foi_request)
+        message.save()
+
+        assert message.foi_request == foi_request
+
+    @pytest.mark.django_db()
     def test_absolute_url_points_to_foi_request_url(self):
         message = Message()
         message.save()

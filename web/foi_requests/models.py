@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from . import utils
@@ -88,12 +88,22 @@ class Message(models.Model):
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-        if not self.foi_request_id:
-            foi_request = FOIRequest()
-            foi_request.save()
-            self.foi_request = foi_request
+        self._create_or_update_foi_request_id()
         return super(Message, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('foirequest_detail', args=[self.foi_request.protocol])
+
+    def _create_or_update_foi_request_id(self):
+        '''If there is a foi_request, use its ID, otherwise create one.'''
+        try:
+            foi_request = self.foi_request
+            self.foi_request_id = foi_request.id
+        except ObjectDoesNotExist:
+            pass
+
+        if not self.foi_request_id:
+            foi_request = FOIRequest()
+            foi_request.save()
+            self.foi_request = foi_request
