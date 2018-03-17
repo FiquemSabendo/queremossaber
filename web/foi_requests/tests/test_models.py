@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from django.db import transaction
 from django.db.utils import IntegrityError
+from django.core.exceptions import ValidationError
 
 from ..models import Message, FOIRequest, PublicBody
 
@@ -75,6 +76,18 @@ class TestFOIRequest(object):
             foi_request.save()
 
         assert foi_request.moderated_at is not None
+
+    @pytest.mark.django_db()
+    def test_protocol_cant_be_changed(self, foi_request):
+        foi_request.save()
+        original_protocol = foi_request.protocol
+
+        with pytest.raises(ValidationError):
+            foi_request.protocol = 'somethingelse'
+            foi_request.save()
+
+        foi_request.refresh_from_db()
+        assert foi_request.protocol == original_protocol
 
 
 @pytest.fixture
