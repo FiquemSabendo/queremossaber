@@ -95,6 +95,10 @@ class Message(models.Model):
         from django.urls import reverse
         return reverse('foirequest_detail', args=[self.foi_request.protocol])
 
+    @property
+    def is_from_user(self):
+        return self.sender is None
+
     def _create_or_update_foi_request_id(self):
         '''If there is a foi_request, use its ID, otherwise create one.'''
         try:

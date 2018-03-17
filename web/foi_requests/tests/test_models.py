@@ -46,6 +46,17 @@ class TestMessage(object):
 
         assert message.get_absolute_url() == expected_url
 
+    def test_is_from_user_is_true_if_sender_is_none(self):
+        message = Message(sender=None)
+
+        assert message.is_from_user
+
+    def test_is_from_user_is_false_if_sender_is_not_none(self):
+        public_body = PublicBody()
+        message = Message(sender=public_body)
+
+        assert not message.is_from_user
+
 
 class TestFOIRequest(object):
     def test_protocol_is_automatically_generated(self):
