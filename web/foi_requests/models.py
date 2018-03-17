@@ -1,6 +1,7 @@
-from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils import timezone
+from django.utils.translation import gettext as _
 from . import utils
 
 
@@ -40,7 +41,7 @@ class FOIRequest(models.Model):
             self.moderated_at = timezone.now()
         if self._original_protocol != self.protocol:
             raise ValidationError(
-                {'protocol': 'Protocol can not be changed.'}
+                {'protocol': _('Protocol can not be changed.')}
             )
         super(FOIRequest, self).save(*args, **kwargs)
 
