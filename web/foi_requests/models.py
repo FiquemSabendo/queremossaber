@@ -22,7 +22,13 @@ class FOIRequest(models.Model):
         default=utils.generate_protocol
     )
     esic_protocol = models.CharField(max_length=255, blank=True)
-    moderation_status = models.NullBooleanField()
+    moderation_status = models.NullBooleanField(
+        choices=(
+            (None, 'Pending'),
+            (True, 'Approved'),
+            (False, 'Rejected'),
+        )
+    )
     moderation_message = models.TextField(blank=True)
     moderated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
