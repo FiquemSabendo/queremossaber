@@ -9,4 +9,13 @@
     Enviar Pedido
   </a>
 </p>
+<p>
+  Consultar pedido
+  <form
+    action="{% url 'foirequest_search' %}"
+    method="get">
+  <input name="protocol" />
+  <button type="submit" >Go</button>
+  </form>
+</p>
 {% endblock %}
