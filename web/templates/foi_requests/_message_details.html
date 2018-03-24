@@ -5,4 +5,7 @@
   <dd>{{ message.title }}</dd>
   <dt>Corpo</dt>
   <dd>{{ message.body }}</dd>
+  {% if message.attached_file %}
+    <p>Arquivo anexo: <a href="{{ message.attached_file.url }}">{{ message.attached_file.url }}</a></p>
+  {% endif %}
 </dl>
