@@ -84,6 +84,13 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    #Configuring the path to where files will be uploaded
+    #this will result in media/PROTOCOL/filename
+    def _upload_to(instance, filename):
+        return '/'.join([instance.foi_request.protocol, filename])
+
+    attached_file = models.FileField(upload_to=_upload_to, blank=True, null=True)
+
     class Meta:
         ordering = ['-created_at']
 

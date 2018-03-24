@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('moderated_at', models.DateTimeField(null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
+                ('attached_file', models.FileField(blank=True, null=True)),
             ],
         ),
         migrations.CreateModel(
