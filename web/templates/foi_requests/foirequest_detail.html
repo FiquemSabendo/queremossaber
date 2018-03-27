@@ -1,21 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Pedido: {{ object.protocol }}</h1>
-<dl>
-  <dt>Órgão</dt>
-  <dd>{{ object.public_body.name }}</dd>
-  <dt>Aberto em</dt>
-  <dd>{{ object.created_at }}</dd>
-</dl>
-
-<p>
-  <ul>
-  {% for message in object.message_set.all %}
-    <li>
-      {% include "foi_requests/_message_details.html" %}
-    </li>
-  {% endfor %}
-  </ul>
-</p>
+<div class="pa4">
+  <h1 class="f1 lh-title">
+    Pedido: {{ object.protocol }}
+  </h1>
+  <dl class="lh-title mt0">
+    <dt class="f6 b">
+      Órgão
+    </dt>
+    <dd class="ml0 mb3">
+      {{ object.public_body.name }}
+    </dd>
+    <dt class="f6 b">
+      Aberto em
+    </dt>
+    <dd class="ml0 mb3">
+      {{ object.created_at }}
+    </dd>
+    <dt class="f6 b">
+     Pedido
+    </dt>
+    {% for message in object.message_set.all %}
+      <dd class="m0">
+        {% include "foi_requests/_message_details.html" %}
+      </dd>
+    {% endfor %}
+  </dl>
+</div>
 {% endblock %}
