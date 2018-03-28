@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.utils import timezone
@@ -83,6 +84,15 @@ class Message(models.Model):
     sent_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def _attached_file_path(self, filename):
+        return os.path.join(self.foi_request.protocol, filename)
+
+    attached_file = models.FileField(
+        upload_to=_attached_file_path,
+        blank=True,
+        null=True
+    )
 
     class Meta:
         ordering = ['-created_at']

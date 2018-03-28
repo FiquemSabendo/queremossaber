@@ -17,4 +17,12 @@
   <dd class="ml0 mb3">
     {{ message.body }}
   </dd>
+  {% if message.attached_file %}
+    <dt class="f6 b">
+      Arquivos
+    </dt>
+    <dd class="ml0 mb3">
+      <a href="{{ message.attached_file.url }}">{{ message.attached_file.url }}</a>
+    </dd>
+  {% endif %}
 </dl>
