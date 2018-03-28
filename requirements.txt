@@ -4,5 +4,6 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
+django-widget-tweaks==1.4.1
 django==2.0.2
 pytz==2018.3              # via django
