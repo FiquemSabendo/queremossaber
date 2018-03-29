@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.1/css/tachyons.min.css"/>
   </head>
-  <body class="bg-black-05 sans-serif">
+  {% load static %}
+  <body
+    class="bg-black-05 sans-serif"
+    style="background-image:url('{% static '/web/scott-webb-274694-unsplash.jpg' %}');">
     <header class="w-100 pa4 bg-white">
       <div class="db dt-ns mw9 center w-100">
         <a href="/" class="light-purple">
