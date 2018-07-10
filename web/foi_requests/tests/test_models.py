@@ -46,6 +46,43 @@ class TestMessage(object):
 
         assert message.get_absolute_url() == expected_url
 
+    @pytest.mark.django_db()
+    def test_message_updates_moderated_at_when_moderation_status_is_set(self):
+        message = Message(moderated_at=None)
+        assert message.moderated_at is None
+
+        with transaction.atomic():
+            message.moderation_status = True
+            message.save()
+
+        assert message.moderated_at is not None
+
+    def test_message_approve_approves_the_message(self):
+        message = Message(moderation_status=None)
+        assert not message.is_approved
+
+        message.approve()
+
+        assert message.is_approved
+
+    def test_message_reject_rejects_the_message(self):
+        message = Message(moderation_status=None)
+        assert not message.is_rejected
+
+        message.reject()
+
+        assert message.is_rejected
+
+    def test_message_reject_fails_if_moderation_message_is_empty(self):
+        message = Message(moderation_message='')
+
+        message.clean()
+
+        message.reject()
+
+        with pytest.raises(ValidationError):
+            message.clean()
+
     def test_is_from_user_is_true_if_sender_is_none(self):
         message = Message(sender=None)
 
@@ -56,6 +93,22 @@ class TestMessage(object):
         message = Message(sender=public_body)
 
         assert not message.is_from_user
+
+    def test_message_is_automatically_approved_when_sender_is_government(self, message_from_government):
+        assert not message_from_government.is_from_user
+        message_from_government.moderation_status = None
+
+        message_from_government.clean()
+
+        assert message_from_government.is_approved
+
+    def test_message_is_not_automatically_approved_when_sender_is_user(self, message_from_user):
+        assert message_from_user.is_from_user
+        message_from_user.moderation_status = None
+
+        message_from_user.clean()
+
+        assert not message_from_user.is_approved
 
 
 class TestFOIRequest(object):
@@ -89,16 +142,6 @@ class TestFOIRequest(object):
         assert FOIRequest().public_body is None
 
     @pytest.mark.django_db()
-    def test_foi_request_updates_moderated_at_when_moderation_status_is_set(self, foi_request):
-        assert foi_request.moderated_at is None
-
-        with transaction.atomic():
-            foi_request.moderation_status = True
-            foi_request.save()
-
-        assert foi_request.moderated_at is not None
-
-    @pytest.mark.django_db()
     def test_protocol_cant_be_changed(self, foi_request):
         foi_request.save()
         original_protocol = foi_request.protocol
@@ -122,3 +165,19 @@ def public_body():
 @pytest.fixture
 def foi_request():
     return FOIRequest()
+
+
+@pytest.fixture
+def message_from_user(public_body):
+    return Message(
+        sender=None,
+        receiver=public_body
+    )
+
+
+@pytest.fixture
+def message_from_government(public_body):
+    return Message(
+        sender=public_body,
+        receiver=None
+    )

@@ -23,34 +23,26 @@ class FOIRequest(models.Model):
         default=utils.generate_protocol
     )
     esic_protocol = models.CharField(max_length=255, blank=True)
-    moderation_status = models.NullBooleanField(
-        choices=(
-            (None, 'Pending'),
-            (True, 'Approved'),
-            (False, 'Rejected'),
-        )
-    )
-    moderation_message = models.TextField(blank=True)
-    moderated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at', '-moderation_status']
+        ordering = ['-created_at']
 
     def __init__(self, *args, **kwargs):
         super(FOIRequest, self).__init__(*args, **kwargs)
-        self._original_moderation_status = self.moderation_status
         self._original_protocol = self.protocol
 
     def save(self, *args, **kwargs):
-        if self._original_moderation_status != self.moderation_status:
-            self.moderated_at = timezone.now()
+        self.clean()
+        return super(FOIRequest, self).save(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
         if self._original_protocol != self.protocol:
             raise ValidationError(
                 {'protocol': _('Protocol can not be changed.')}
             )
-        super(FOIRequest, self).save(*args, **kwargs)
+        return super(FOIRequest, self).clean(*args, **kwargs)
 
     def __str__(self):
         return self.protocol
@@ -70,20 +62,47 @@ class Message(models.Model):
     sender = models.ForeignKey(
         PublicBody,
         null=True,
+        blank=True,
         related_name='messages_sent',
         on_delete=models.PROTECT
     )
     receiver = models.ForeignKey(
         PublicBody,
         null=True,
+        blank=True,
         related_name='messages_received',
         on_delete=models.PROTECT
     )
     title = models.TextField(blank=True)
     body = models.TextField(blank=False)
-    sent_at = models.DateTimeField(null=True)
+    sent_at = models.DateTimeField(null=True, verbose_name="Sent date")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # Moderation-related attributes
+    moderation_status = models.NullBooleanField(
+        choices=(
+            (None, 'Pending'),
+            (True, 'Approved'),
+            (False, 'Rejected'),
+        )
+    )
+    moderation_message = models.TextField(blank=True)
+    moderated_at = models.DateTimeField(null=True)
+
+    @property
+    def sender_type(self):
+        sender_type = 'user'
+        if self.sender is not None:
+            sender_type = 'government'
+        return sender_type
+
+    def __str__(self):
+        title = self.title
+        if not title:
+            title = self.body[0:100]
+
+        return '(%s) %s' % (self.sender_type, title)
 
     def _attached_file_path(self, filename):
         return os.path.join(self.foi_request.protocol, filename)
@@ -94,20 +113,53 @@ class Message(models.Model):
         null=True
     )
 
+    @property
+    def is_from_user(self):
+        return self.sender is None
+
+    @property
+    def is_approved(self):
+        return self.moderation_status is True
+
+    @property
+    def is_rejected(self):
+        return self.moderation_status is False
+
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-created_at', '-moderation_status']
+
+    def __init__(self, *args, **kwargs):
+        super(Message, self).__init__(*args, **kwargs)
+        self._original_moderation_status = self.moderation_status
 
     def save(self, *args, **kwargs):
         self._create_or_update_foi_request_id()
+        self.clean()
+        print('saving message')
         return super(Message, self).save(*args, **kwargs)
+
+    def clean(self):
+        self._update_moderated_at_if_needed()
+
+        if not self.is_from_user:
+            self.approve()
+
+        if self.is_rejected and not self.moderation_message:
+            raise ValidationError({
+                'moderation_status': _('A message can not be rejected without an explanation.'),  # noqa: E501
+            })
+
+    def approve(self):
+        self.moderated_at = timezone.now()
+        self.moderation_status = True
+
+    def reject(self):
+        self.moderated_at = timezone.now()
+        self.moderation_status = False
 
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('foirequest_detail', args=[self.foi_request.protocol])
-
-    @property
-    def is_from_user(self):
-        return self.sender is None
 
     def _create_or_update_foi_request_id(self):
         '''If there is a foi_request, use its ID, otherwise create one.'''
@@ -121,3 +173,8 @@ class Message(models.Model):
             foi_request = FOIRequest()
             foi_request.save()
             self.foi_request = foi_request
+
+    def _update_moderated_at_if_needed(self):
+        if self._original_moderation_status != self.moderation_status:
+            self.moderated_at = timezone.now()
+            self._original_moderation_status = self.moderation_status

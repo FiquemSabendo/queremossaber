@@ -4,14 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from .models import PublicBody, FOIRequest, Message
 
 
-class MessageInline(admin.StackedInline):
-    model = Message
-    readonly_fields = (
-        'created_at',
-        'updated_at',
-    )
-
-
 class ModerationStatusListFilter(admin.SimpleListFilter):
     title = _('moderation status')
     parameter_name = 'moderation_status'
@@ -35,24 +27,114 @@ class ModerationStatusListFilter(admin.SimpleListFilter):
             return queryset.filter(moderation_status=moderation_status)
 
 
-@admin.register(FOIRequest)
-class FOIRequestAdmin(admin.ModelAdmin):
+class MessageInline(admin.StackedInline):
+    model = Message
+
     list_display = (
-        'protocol',
         'moderation_status',
     )
     list_filter = (
         ModerationStatusListFilter,
     )
+
+
+@admin.register(FOIRequest)
+class FOIRequestAdmin(admin.ModelAdmin):
+    list_display = (
+        'protocol',
+    )
+
     readonly_fields = (
         'protocol',
-        'moderated_at',
         'created_at',
         'updated_at',
     )
     inlines = (
         MessageInline,
     )
+
+
+def approve_messages(modeladmin, request, queryset):
+    queryset.update(moderation_status=True)
+
+
+approve_messages.short_description = 'Approve selected messages'
+
+
+# FIXME: Enable checks that moderation_message IS NOT NULL in the DB
+def reject_messages(modeladmin, request, queryset):
+    queryset.update(moderation_status=False)
+
+
+reject_messages.short_description = 'Reject selected messages'
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    actions = (
+        approve_messages,
+        reject_messages,
+    )
+
+    list_display = (
+        'foi_request',
+        'sender_type',
+        'title',
+        'body',
+        'moderation_status',
+        'created_at',
+    )
+
+    fieldsets = (
+        (None, {
+            'fields': (
+                'foi_request',
+                'sender',
+                'receiver',
+                'title',
+                'body',
+                'attached_file',
+                'created_at',
+                'updated_at',
+            ),
+        }),
+    )
+
+    readonly_fields = (
+        'moderated_at',
+        'created_at',
+        'updated_at',
+    )
+
+    def get_fieldsets(self, request, obj=None):
+        extra_fieldsets = ()
+        sender_is_user = (obj and obj.sender is None)
+
+        if sender_is_user:
+            extra_fieldsets = (
+                ('Moderation', {
+                    'fields': (
+                        'moderation_status',
+                        'moderation_message',
+                        'moderated_at',
+                    ),
+                }),
+            )
+
+        return self.fieldsets + extra_fieldsets
+
+    def get_readonly_fields(self, request, obj=None):
+        extra_readonly_fields = ()
+
+        if obj:
+            # Disallow editing fields
+            extra_readonly_fields = (
+                'foi_request',
+                'sender',
+                'receiver',
+            )
+
+        return self.readonly_fields + extra_readonly_fields
 
 
 admin.site.register(PublicBody)
