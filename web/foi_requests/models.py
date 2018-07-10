@@ -75,7 +75,7 @@ class Message(models.Model):
     )
     title = models.TextField(blank=True)
     body = models.TextField(blank=False)
-    sent_at = models.DateTimeField(null=True, verbose_name="Sent date")
+    sent_at = models.DateTimeField(null=True, blank=True, verbose_name="Sent date")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -88,7 +88,7 @@ class Message(models.Model):
         )
     )
     moderation_message = models.TextField(blank=True)
-    moderated_at = models.DateTimeField(null=True)
+    moderated_at = models.DateTimeField(null=True, blank=True)
 
     @property
     def sender_type(self):

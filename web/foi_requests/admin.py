@@ -61,19 +61,10 @@ def approve_messages(modeladmin, request, queryset):
 approve_messages.short_description = 'Approve selected messages'
 
 
-# FIXME: Enable checks that moderation_message IS NOT NULL in the DB
-def reject_messages(modeladmin, request, queryset):
-    queryset.update(moderation_status=False)
-
-
-reject_messages.short_description = 'Reject selected messages'
-
-
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     actions = (
         approve_messages,
-        reject_messages,
     )
 
     list_display = (

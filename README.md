@@ -12,6 +12,8 @@ pip install -r requirements.txt
 
 ## Executando
 
+1. Copie o `.env.example` para `.env` e altere as configurações (no mínimo, o
+   `DATABASE_URL`)
 1. Execute as database migrations com `python manage.py migrate`
 1. Crie um superusuário com `python manage.py createsuperuser`
 1. Rode o servidor com `python manage.py runserver`
