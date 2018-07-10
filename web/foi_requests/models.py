@@ -135,14 +135,20 @@ class Message(models.Model):
     def save(self, *args, **kwargs):
         self._create_or_update_foi_request_id()
         self.clean()
-        print('saving message')
         return super(Message, self).save(*args, **kwargs)
 
     def clean(self):
         self._update_moderated_at_if_needed()
 
-        if not self.is_from_user:
+        # Government messages are automatically approved
+        if not self.is_from_user and not self.moderation_status:
             self.approve()
+
+        if self.is_from_user and not self.is_approved:
+            if self.sent_at is not None:
+                raise ValidationError({
+                    'sent_at': _('Only approved user messages can be sent.'),
+                })
 
         if self.is_rejected and not self.moderation_message:
             raise ValidationError({

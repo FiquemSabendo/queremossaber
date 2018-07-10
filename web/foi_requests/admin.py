@@ -87,6 +87,7 @@ class MessageAdmin(admin.ModelAdmin):
                 'attached_file',
                 'created_at',
                 'updated_at',
+                'sent_at',
             ),
         }),
     )

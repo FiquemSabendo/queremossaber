@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.db import transaction
 from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from ..models import Message, FOIRequest, PublicBody
 
@@ -56,6 +57,23 @@ class TestMessage(object):
             message.save()
 
         assert message.moderated_at is not None
+
+    def test_message_non_approved_can_not_have_sent_at(self):
+        message = Message(
+            moderation_status=None,
+            sent_at=timezone.now()
+        )
+
+        with pytest.raises(ValidationError):
+            message.clean()
+
+    def test_message_approved_can_have_sent_at(self):
+        message = Message(
+            moderation_status=True,
+            sent_at=timezone.now()
+        )
+
+        message.clean()
 
     def test_message_approve_approves_the_message(self):
         message = Message(moderation_status=None)
