@@ -61,6 +61,29 @@ def approve_messages(modeladmin, request, queryset):
 approve_messages.short_description = 'Approve selected messages'
 
 
+class ModerationStatusListFilter(admin.SimpleListFilter):
+    title = _('moderation status')
+
+    parameter_name = 'moderation_status'
+
+    def lookups(self, request, model_admin):
+        # Need to replace None with 'pending' to differentiate between "disable
+        # filter" and "filter None values"
+        choices = model_admin.model._meta.get_field(self.parameter_name).choices
+
+        return (('pending', choices[0][1]),) + choices[1:]
+
+    def queryset(self, request, queryset):
+        filters = {}
+
+        value = self.value()
+        if value is not None:
+            filter_value = None if value == 'pending' else value
+            filters[self.parameter_name] = filter_value
+
+        return queryset.filter(**filters)
+
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     actions = (
@@ -74,6 +97,10 @@ class MessageAdmin(admin.ModelAdmin):
         'body',
         'moderation_status',
         'created_at',
+    )
+
+    list_filter = (
+        ModerationStatusListFilter,
     )
 
     fieldsets = (
