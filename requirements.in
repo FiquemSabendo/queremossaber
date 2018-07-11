@@ -2,3 +2,6 @@ django
 django-widget-tweaks
 django-environ
 psycopg2
+
+# dev environment
+django-livesync
