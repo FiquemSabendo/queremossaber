@@ -148,13 +148,18 @@ class TestFOIRequest(object):
 
     @pytest.mark.django_db()
     def test_public_body_returns_first_messages_receiver(self, public_body):
-        with transaction.atomic():
-            public_body.save()
-            message = Message(receiver=public_body)
-            message.save()
-        foi_request = message.foi_request
+        public_body.save()
 
-        assert foi_request.public_body == message.receiver
+        with transaction.atomic():
+            foi_request = FOIRequest()
+            first_message = Message(foi_request=foi_request, receiver=public_body)
+            last_message = Message(foi_request=foi_request, receiver=None)
+
+            foi_request.save()
+            first_message.save()
+            last_message.save()
+
+        assert foi_request.public_body == first_message.receiver
 
     def test_public_body_returns_none_if_there_are_no_messages(self):
         assert FOIRequest().public_body is None

@@ -54,7 +54,7 @@ class FOIRequest(models.Model):
 
     @property
     def _first_message(self):
-        return self.message_set.first()
+        return self.message_set.order_by('created_at').first()
 
 
 class Message(models.Model):
