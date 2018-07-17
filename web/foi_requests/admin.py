@@ -37,6 +37,32 @@ class MessageInline(admin.StackedInline):
         ModerationStatusListFilter,
     )
 
+    readonly_fields = (
+        'moderated_at',
+        'receiver',
+    )
+    fieldsets = (
+        ('Message', {
+            'fields': (
+                'foi_request',
+                'sender',
+                'receiver',
+                'title',
+                'body',
+                'attached_file',
+                'sent_at',
+            ),
+        }),
+        ('Moderation', {
+            'fields': (
+                'moderation_status',
+                'moderation_message',
+                'moderated_at',
+            )
+        })
+    )
+    ordering = ['created_at']
+
 
 @admin.register(FOIRequest)
 class FOIRequestAdmin(admin.ModelAdmin):
@@ -117,7 +143,7 @@ class MessageAdmin(admin.ModelAdmin):
     )
 
     fieldsets = (
-        (None, {
+        ('Message', {
             'fields': (
                 'foi_request',
                 'sender',
@@ -137,6 +163,9 @@ class MessageAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
     )
+
+    class Meta:
+        ordering = ['created_at']
 
     def get_fieldsets(self, request, obj=None):
         extra_fieldsets = ()
