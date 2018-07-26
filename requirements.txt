@@ -5,6 +5,7 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 argh==0.26.2              # via watchdog
+django-debug-toolbar==1.9.1
 django-environ==0.4.5
 django-livesync==0.4
 django-widget-tweaks==1.4.1
@@ -14,6 +15,7 @@ psycopg2==2.7.5
 pytz==2018.3              # via django
 pyyaml==3.13              # via watchdog
 six==1.11.0               # via websocket-client
+sqlparse==0.2.4           # via django-debug-toolbar
 tornado==4.5.1            # via django-livesync
 watchdog==0.8.3           # via django-livesync
 websocket-client==0.48.0  # via django-livesync

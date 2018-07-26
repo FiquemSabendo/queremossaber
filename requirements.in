@@ -5,3 +5,4 @@ psycopg2
 
 # dev environment
 django-livesync
+django-debug-toolbar
