@@ -1,43 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="w-80-ns mt7 center pt5 pb5 ph3 ph5-ns bg-white">
-  <div class="tabs" style="margin-top: -5.65rem;">
-    <a data-tab class="no-underline ttu f6 tracked pa2 dark-blue bg-white" href="#about">Sobre</a>
-    <a data-tab class="no-underline ttu f6 tracked pa2 bg-dark-blue white" href="#how-it-works">Como Funciona?</a>
-    <a data-tab class="no-underline ttu f6 tracked pa2 bg-dark-blue white" href="#privacy-and-security">Segurança e Privacidade</a>
+<div>
+  <div class="tabs">
+    <a data-tab href="#about">Sobre</a>
+    <a data-tab href="#how-it-works">Como Funciona?</a>
+    <a data-tab href="#privacy-and-security">Segurança e Privacidade</a>
   </div>
   <div class="tab-panels">
     <div id="about">
-      <h2 class="f-headline lh-solid f1">
+      <h2>
         Sobre
       </h2>
-      <p class="f3 lh-copy measure lh-copy">
+      <p>
         A Lei de Acesso à Informação (LAI) é um dos principais instrumentos de controle social disponíveis à sociedade brasileira.
         Com ele, qualquer cidadão pode pedir informações ao poder público, que é obrigado a responder e, caso não possa atender a demanda, justificar o porquê.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Para enviar um pedido, o solicitante precisa informar seu nome e um documento ao órgão público (algumas vezes, até seu endereço). A justificativa é que essa informação seria necessária para que o órgão soubesse para quem responder, mas isso acaba gerando um empecilho para alguns solicitantes.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Há diversos relatos de ameaças, sutis ou agressivas, demissões e outros tipos de represálias. Uma funcionária pública federal que, depois de pedir informações sobre um determinado contrato bastante controverso, é exonerada de seu cargo de chefia. Um integrante de uma ONG que solicitou informações sobre a Polícia Militar ao governo estadual, e recebeu uma ligação de um coronel da PM em tom de ameaça, chegando a mencionar os financiadores de sua ONG. Um funcionário de uma empresa pública estadual desconfia que a cúpula da empresa está desviando dinheiro, e então pede a seu irmão para fazer pedidos de acesso à informação. Depois disso, é demitido por justa causa, por desobediência.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Infelizmente, esses relatos são reais. Além de represálias, um pedido pode ser respondido de forma diferente se o solicitante é um jornalista, ou um pesquisador de uma grande universidade, ou um cidadão comum.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Tudo isso nos leva a conclusão que a exigência de identificação do solicitante é um problema, que limita o uso da Lei de acesso à informação. O objetivo deste projeto é proteger a identidade de um cidadão que faça um pedido de informação.
       </p>
     </div>
 
-    <div id="how-it-works" class="dn">
-      <h2 class="f-headline lh-solid f1">
+    <div id="how-it-works">
+      <h2>
         Como funciona?
       </h2>
-      <p class="f3 lh-copy measure lh-copy">
+      <p>
         Pela Lei de Acesso à Informação, o solicitante da informação precisa se identificar. O que algumas pessoas já fazem é pedir para algum amigo que não tenha relação com o órgão cadastre o pedido em seu nome. Dessa forma, o autor original do pedido é desconhecido. Esse projeto funciona da mesma forma, mas invés de usarmos a identidade de um amigo, usamos a de ONGs parceiras.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Ao cadastrar um pedido nesse site, só precisamos de:
       </p>
       <ul>
@@ -57,46 +57,46 @@
           </p>
         </li>
       </ul>
-      <p class="measure lh-copy">
+      <p>
         Feito isso, nós geramos um número de protocolo. É através desse número que você pode acompanhar o status do pedido.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Ao receber um novo pedido, ele passa por uma moderação interna, para garantir que não há dados pessoais e o pedido é válido (não é uma ameaça, por exemplo). Feito isso, cadastramos o pedido no sistema do órgão em questão. Quando o órgão responde, adicionamos essa resposta e quaisquer arquivos enviados no nosso sistema. Na próxima vez que o solicitante consultar seu pedido usando nosso protocolo interno, ele verá a resposta do órgão.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Em outras palavras, esse sistema funciona como um intermediário entre o solicitante e o órgão, garantindo a sua anonimidade.
       </p>
     </div>
 
-    <div id="privacy-and-security" class="dn">
-      <h2 class="f-headline lh-solid f1">
+    <div id="privacy-and-security">
+      <h2>
         É seguro?
       </h2>
-      <p class="f3 lh-copy measure lh-copy">
+      <p>
         Esse site foi feito de forma que ninguém, nem mesmo as pessoas que o criaram, consigamos identificar as pessoas que realizam os pedidos.
         Informações de seu acesso, tais como endereço de IP, <b>NÃO</b> são armazenadas em nosso servidor.
         Da mesma maneira, não solicitamos nenhuma informação de identificação pessoal, como seu e-mail.
         <b>O único risco de identificação está no pedido em si.</b>
       </p>
-      <h3 class="pv4">
+      <h3>
         Como fazer um pedido sem me identificar?
       </h3>
       <h4>
         Passo-a-passo
       </h4>
-      <p class="measure lh-copy">
+      <p>
         Só acesse este site de uma rede que você confie (por exemplo, sua casa), ou de uma rede pública (por exemplo, a Wi-Fi de um shopping)
       </p>
-      <p class="measure lh-copy">
+      <p>
         Nunca acesse de dentro de um órgão público
       </p>
-      <p class="measure lh-copy">
-        Use o <a class="dark-blue" href="https://www.torproject.org/projects/torbrowser.html">navegador Tor</a> para acessar essa página.
+      <p>
+        Use o <a href="https://www.torproject.org/projects/torbrowser.html">navegador Tor</a> para acessar essa página.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Não escreva informações que possam te identificar, como nomes, e-mails, telefones, documentos, ou outras informações pessoais.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Existem duas formas que você pode ser identificado ao fazer um pedido nesse site:
       </p>
       <ul>
@@ -111,15 +111,13 @@
           </p>
         </li>
       </ul>
-      <p class="measure lh-copy">
+      <p>
         Para evitar que seu computador seja identificado, só acesse esse site de uma rede que você confie, como a da sua casa, ou uma rede pública, como a wi-fi de um shopping. Nós não guardamos registros dos acessos em nossos servidores, mas se você quiser garantir que, mesmo se guardássemos, você não poderia ser identificado, use o navegador Tor.
       </p>
-      <p class="measure lh-copy">
+      <p>
         Para evitar ser identificado pelo texto do seu pedido, não coloque informações pessoais, seja breve e direto (uma pessoa que conheça sua forma de escrever pode suspeitar de você), e pense na informação que você está requerendo. Algumas informações são tão específicas que só alguém de dentro saberia o que pedir. Se esse for o caso, pense em uma forma de obter a informação indiretamente. Por exemplo, ao invés de pedir o contrato com uma empresa específica, peça de todas as empresas no período. Assim você consegue sua informação, mas não se identifica.
       </p>
     </div>
   </div>
 </div>
-<p>
-</p>
 {% endblock %}

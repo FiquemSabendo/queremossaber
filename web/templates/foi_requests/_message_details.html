@@ -1,27 +1,27 @@
-<dl class="lh-title mt0">
-  <dt class="f6 b">
+<dl>
+  <dt>
     Criado em
   </dt>
-  <dd class="ml0 mb3">
+  <dd>
     {{ message.created_at }}
   </dd>
-  <dt class="f6 b">
+  <dt>
     Titulo
   </dt>
-  <dd class="ml0 mb3">
+  <dd>
     {{ message.title }}
   </dd>
-  <dt class="f6 b">
+  <dt>
     Corpo
   </dt>
-  <dd class="ml0 mb3">
+  <dd>
     {{ message.body }}
   </dd>
   {% if message.attached_file %}
-    <dt class="f6 b">
+    <dt>
       Arquivos
     </dt>
-    <dd class="ml0 mb3">
+    <dd>
       <a href="{{ message.attached_file.url }}">{{ message.attached_file.url }}</a>
     </dd>
   {% endif %}

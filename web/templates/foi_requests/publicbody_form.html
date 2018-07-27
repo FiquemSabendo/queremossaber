@@ -3,44 +3,35 @@
 {% block content %}
 {% load widget_tweaks %}
 
-<div class="flex items-center justify-center pa4 mt6">
+<div>
   <form
-    class="pa4 black-80 bg-white ml4"
     action="{% url 'publicbody_new' %}"
     method="post">
     {% csrf_token %}
     <h2>Novo Órgão</h2>
 
-    <div class="measure pv2">
+    <div>
       {{ form.name.errors }}
 
-      <label
-        class="f6 b db mb2"
-        for="{{ form.name.id_for_label"
-      >
+      <label for="{{ form.name.id_for_label }}">
         Nome
       </label>
-      {% render_field form.name class+="w-100 ba b--black-20 pa2 br2 mb2" %}
+      {% render_field form.name %}
     </div>
 
-    <div class="measure pv2">
+    <div>
       {{ form.esic_url.errors }}
-      <label
-        class="f6 b db mb2"
-        for="{{ form.esic_url.id_for_label"
-      >
+      <label for="{{ form.esic_url.id_for_label }}">
         URL
       </label>
-      {% render_field form.esic_url class+="w-100 ba b--black-20 pa2 br2 mb2" %}
+      {% render_field form.esic_url %}
     </div>
 
-    <div class="measure pv2">
-      <button
-        class="f6 link dim br-pill ph3 pv2 mb2 dib white bg-dark-blue b--dark-blue"
-        type="submit"
-        >
+    <div>
+      <button type="submit">
         Criar
       </button>
+    </div>
   </form>
 </div>
 {% endblock %}

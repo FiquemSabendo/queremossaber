@@ -7,22 +7,17 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static '/web/styles/main.css' %}">
-    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.1/css/tachyons.min.css">
   </head>
-  <body
-    class="bg-black-05 sans-serif bg-dark-blue">
-    <header class="fixed top-0 left-0 w-100 pa4 bg-white">
-      <div class="db dt-ns mw9 center w-100">
-        <a href="/" class="dark-blue f4 no-underline b">
+  <body>
+    <header>
+      <div>
+        <a href="/">
           LAI Anônima
         </a>
 
-        <div class="db dtc-l v-mid w-100 w-75-l tc tr-l">
+        <div>
           {% include '_search_request.html' %}
-          <a
-            class="f6 link dim br-pill ph3 pv2 dib white bg-dark-blue"
-            href="{% url 'message_new' %}"
-          >
+          <a href="{% url 'message_new' %}">
             Enviar Novo Pedido
           </a>
         </div>
@@ -31,8 +26,8 @@
     <main>
       {% block content %}{% endblock %}
     </main>
-    <footer class="w-100 pa4">
-      <div class="db dt-ns mw9 center w-100 white tc">
+    <footer>
+      <div>
         {% now "Y" %} - LAI Anônima é um projeto de código aberto, sem fins lucrativos.
       </div>
     </footer>

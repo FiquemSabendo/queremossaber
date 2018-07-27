@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 {% load widget_tweaks %}
-<div class="flex items-center justify-center pa4 mt6">
-  <p class="lh-title ml3 measure lh-copy bg-dark-blue white pa4">
+<div>
+  <p>
     <b>O maior risco é você ser identificado através do pedido em si. Além de não escrever nenhuma informação pessoal, evite pedir informações particulares.</b>
     <br>
     <br>
-    Nós não gravamos o endereço IP do seu computador, então a única forma de você ser identificado por esse caminho é se alguém conseguir invadir nossos servidores e alterar o nosso sistema. Tomamos precauções para que isso não aconteça, mas você pode garantir sua anonimidade mesmo caso nosso servidor esteja comprometido usando o <a href="https://www.torproject.org/projects/torbrowser.html" class="white">navegador Tor</a>.
+    Nós não gravamos o endereço IP do seu computador, então a única forma de você ser identificado por esse caminho é se alguém conseguir invadir nossos servidores e alterar o nosso sistema. Tomamos precauções para que isso não aconteça, mas você pode garantir sua anonimidade mesmo caso nosso servidor esteja comprometido usando o <a href="https://www.torproject.org/projects/torbrowser.html">navegador Tor</a>.
   </p>
   <form
-    class="pa4 black-80 bg-white ml4"
     action="{% url 'message_new' %}"
     method="post">
     {% csrf_token %}
@@ -18,56 +17,40 @@
       Novo Pedido
     </h2>
 
-    <div class="measure pv2">
+    <div>
       {{ form.receiver.errors }}
-      <label
-        class="f6 b db mb2"
-        for="{{ form.receiver.id_for_label }}"
-      >
+      <label for="{{ form.receiver.id_for_label }}">
         Órgão Público
       </label>
       <a href="{% url 'publicbody_new' %}">Criar novo</a>
-      {% render_field form.receiver class+="w-100 ba b--black-20 pa2 br2 mb2" %}
+      {% render_field form.receiver %}
     </div>
 
-    <div class="measure pv2">
+    <div>
       {{ form.title.errors }}
-      <label
-        class="f6 b db mb2"
-        for="{{ form.title.id_for_label }}"
-      >
+      <label for="{{ form.title.id_for_label }}">
         Título
       </label>
-      {% render_field form.title class+="border-box w-100 ba b--black-20 pa2 br2 mb2" placeholder="Qual o assunto da sua solicitação?" %}
+      {% render_field form.title placeholder="Qual o assunto da sua solicitação?" %}
     </div>
 
-    <div class="measure pv2">
+    <div>
       {{ form.body.errors }}
-      <label
-        class="f6 b db mb2"
-        for="{{ form.body.id_for_label }}"
-      >
+      <label for="{{ form.body.id_for_label }}">
         Pedido
       </label>
-      {% render_field form.body class+="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" %}
+      {% render_field form.body %}
     </div>
 
-    <div class="measure pv2">
-      <button
-        class="f6 link dim br-pill ph3 pv2 mb2 dib white bg-dark-blue b--dark-blue"
-        type="submit"
-        >
+    <div>
+      <button type="submit">
         Enviar pedido
       </button>
-
       <small>
         ou
-        <a href="/" class="dark-blue">cancelar</a>
+        <a href="/">cancelar</a>
       </small>
     </div>
   </form>
-
-
 </div>
-
 {% endblock %}

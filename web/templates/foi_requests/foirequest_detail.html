@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="pa4 mt6 bg-white w-50 center"
-     style="border-top: 2px dashed #00449e; border-bottom: 2px dashed #00449e;">
-  <h2 class="f-headline lh-solid f1">
+<div>
+  <h2>
     Pedido: {{ object.protocol }}
   </h2>
   <p>
@@ -12,24 +11,24 @@
   <p>
     Detalhes do seu pedido:
   </p>
-  <dl class="lh-title mt0">
-    <dt class="f6 b">
+  <dl>
+    <dt>
       Órgão
     </dt>
-    <dd class="ml0 mb3">
+    <dd>
       {{ object.public_body.name }}
     </dd>
-    <dt class="f6 b">
+    <dt>
       Aberto em
     </dt>
-    <dd class="ml0 mb3">
+    <dd>
       {{ object.created_at }}
     </dd>
-    <dt class="f6 b mb3">
+    <dt>
      Pedido
     </dt>
     {% for message in object.message_set.all %}
-      <dd class="ml0">
+      <dd>
         {% include "foi_requests/_message_details.html" %}
       </dd>
     {% endfor %}
