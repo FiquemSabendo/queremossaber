@@ -2,7 +2,9 @@ django
 django-widget-tweaks
 django-environ
 psycopg2
+libsass
 
 # dev environment
 django-livesync
 django-debug-toolbar
+watchdog
