@@ -1,22 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-  <h2>
-    Pedido: {{ object.protocol }}
-  </h2>
-  <p>
-    Anote em um lugar seguro o número de protocolo acima.
-  </p>
+<div class="request-details">
+  <div class="info">
+    <h2>
+      Pedido: {{ object.protocol }}
+    </h2>
+    <p>
+      ATENÇÃO: Anote em um lugar seguro o número de protocolo acima.
+      Esse número é a sua única maneira de acompanhar o andamento do pedido.
+    </p>
+  </div>
   <p>
     Detalhes do seu pedido:
   </p>
   <dl>
-    <dt>
-      Órgão
-    </dt>
+    <dt>Etapa</dt>
     <dd>
-      {{ object.public_body.name }}
+      <div class="request-status request-status-waiting">
+        Aguardando moderação
+      </div>
     </dd>
     <dt>
       Aberto em
@@ -25,8 +28,11 @@
       {{ object.created_at }}
     </dd>
     <dt>
-     Pedido
+      Órgão
     </dt>
+    <dd>
+      {{ object.public_body.name }}
+    </dd>
     {% for message in object.message_set.all %}
       <dd>
         {% include "foi_requests/_message_details.html" %}

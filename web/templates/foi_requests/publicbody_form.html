@@ -10,7 +10,7 @@
     {% csrf_token %}
     <h2>Novo Órgão</h2>
 
-    <div>
+    <div class="form-field">
       {{ form.name.errors }}
 
       <label for="{{ form.name.id_for_label }}">
@@ -19,7 +19,7 @@
       {% render_field form.name %}
     </div>
 
-    <div>
+    <div class="form-field">
       {{ form.esic_url.errors }}
       <label for="{{ form.esic_url.id_for_label }}">
         URL
@@ -27,10 +27,12 @@
       {% render_field form.esic_url %}
     </div>
 
-    <div>
+    <div class="form-submit">
       <button type="submit">
         Criar
       </button>
+      ou
+      <a class="link-dimmed" href="{% url 'message_new' %}">cancelar</a>
     </div>
   </form>
 </div>

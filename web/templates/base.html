@@ -6,31 +6,45 @@
       LAI Anônima
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
     <link rel="stylesheet" href="{% static '/web/styles/main.css' %}">
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
   </head>
   <body>
     <header>
-      <div>
-        <a href="/">
-          LAI Anônima
-        </a>
-
-        <div>
-          {% include '_search_request.html' %}
-          <a href="{% url 'message_new' %}">
-            Enviar Novo Pedido
+      <div class="wrapper">
+        <div class="logo-wrapper">
+          <a class="logo" href="/">
+            LAI Anônima
           </a>
+          <p>
+            Pedidos de Acesso à Informação Anônimos
+          </p>
         </div>
+
+        {% if request.get_full_path == '/' %}
+          <div class="request">
+            {% include '_search_request.html' %}
+
+            <a class="button" href="{% url 'message_new' %}">
+              Fazer Pedido
+            </a>
+          </div>
+        {% endif %}
       </div>
     </header>
     <main>
-      {% block content %}{% endblock %}
+      <div class="wrapper">
+        {% block content %}{% endblock %}
+      </div>
     </main>
     <footer>
-      <div>
-        {% now "Y" %} - LAI Anônima é um projeto de código aberto, sem fins lucrativos.
+      <div class="wrapper">
+        <small>
+          {% now "Y" %} - LAI Anônima é um projeto de código aberto, sem fins lucrativos.
+        </small>
       </div>
     </footer>
-    <script src="{% static '/web/js/web.js' %}"></script>
   </body>
 </html>

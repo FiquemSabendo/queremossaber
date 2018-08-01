@@ -2,11 +2,8 @@
 {% block content %}
 {% load widget_tweaks %}
 <div>
-  <p>
-    <b>O maior risco é você ser identificado através do pedido em si. Além de não escrever nenhuma informação pessoal, evite pedir informações particulares.</b>
-    <br>
-    <br>
-    Nós não gravamos o endereço IP do seu computador, então a única forma de você ser identificado por esse caminho é se alguém conseguir invadir nossos servidores e alterar o nosso sistema. Tomamos precauções para que isso não aconteça, mas você pode garantir sua anonimidade mesmo caso nosso servidor esteja comprometido usando o <a href="https://www.torproject.org/projects/torbrowser.html">navegador Tor</a>.
+  <p class="warning">
+    O maior risco é você ser identificado através do pedido em si. Além de não escrever nenhuma informação pessoal, evite pedir informações particulares.
   </p>
   <form
     action="{% url 'message_new' %}"
@@ -17,16 +14,17 @@
       Novo Pedido
     </h2>
 
-    <div>
+    <div class="form-field">
       {{ form.receiver.errors }}
       <label for="{{ form.receiver.id_for_label }}">
         Órgão Público
       </label>
-      <a href="{% url 'publicbody_new' %}">Criar novo</a>
       {% render_field form.receiver %}
+      <br>
+      <a class="button button-tiny" href="{% url 'publicbody_new' %}">Criar novo</a>
     </div>
 
-    <div>
+    <div class="form-field">
       {{ form.title.errors }}
       <label for="{{ form.title.id_for_label }}">
         Título
@@ -34,7 +32,7 @@
       {% render_field form.title placeholder="Qual o assunto da sua solicitação?" %}
     </div>
 
-    <div>
+    <div class="form-field">
       {{ form.body.errors }}
       <label for="{{ form.body.id_for_label }}">
         Pedido
@@ -42,15 +40,18 @@
       {% render_field form.body %}
     </div>
 
-    <div>
+    <div class="form-submit">
       <button type="submit">
         Enviar pedido
       </button>
-      <small>
-        ou
-        <a href="/">cancelar</a>
-      </small>
+      ou
+      <a class="link-dimmed" href="/">cancelar</a>
     </div>
   </form>
+  <p>
+    <small>
+      Nós não gravamos o endereço IP do seu computador, então a única forma de você ser identificado por esse caminho é se alguém conseguir invadir nossos servidores e alterar o nosso sistema. Tomamos precauções para que isso não aconteça, mas você pode garantir sua anonimidade mesmo caso nosso servidor esteja comprometido usando o <a href="https://www.torproject.org/projects/torbrowser.html">navegador Tor</a>.
+    </small>
+  </p>
 </div>
 {% endblock %}
