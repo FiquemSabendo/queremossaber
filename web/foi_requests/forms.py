@@ -28,4 +28,6 @@ class PublicBodyForm(ModelForm):
         model = PublicBody
         fields = [
             'name',
+            'municipality',
+            'uf',
         ]

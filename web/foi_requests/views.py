@@ -3,7 +3,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.base import RedirectView
 from django.urls import reverse
 
-from .forms import MessageForm, EsicForm
+from .forms import MessageForm, EsicForm, PublicBodyForm
 from .models import FOIRequest, PublicBody
 
 
@@ -18,10 +18,8 @@ class CreateMessageView(CreateView):
 
 
 class CreatePublicBodyView(CreateView):
+    form_class = PublicBodyForm
     model = PublicBody
-    fields = [
-        'name',
-    ]
 
     def get_context_data(self, **kwargs):
         data = super(CreatePublicBodyView, self).get_context_data(**kwargs)

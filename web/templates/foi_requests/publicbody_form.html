@@ -20,6 +20,24 @@
     </div>
 
     <div class="form-field">
+      {{ form.uf.errors }}
+
+      <label for="{{ form.uf.id_for_label }}">
+        Estado
+      </label>
+      {% render_field form.uf %}
+    </div>
+
+    <div class="form-field">
+      {{ form.municipality.errors }}
+
+      <label for="{{ form.municipality.id_for_label }}">
+        Cidade
+      </label>
+      {% render_field form.municipality %}
+    </div>
+
+    <div class="form-field">
       {{ esic_form.url.errors }}
       <label for="{{ form.esic_url.id_for_label }}">
         URL
