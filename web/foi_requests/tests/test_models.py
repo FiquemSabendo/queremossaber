@@ -5,7 +5,7 @@ from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-from ..models import Message, FOIRequest, PublicBody
+from ..models import Message, FOIRequest, Esic, PublicBody
 
 
 class TestMessage(object):
@@ -148,6 +148,9 @@ class TestFOIRequest(object):
 
     @pytest.mark.django_db()
     def test_public_body_returns_first_messages_receiver(self, public_body):
+        # FIXME: The knowledge of saving the esic shouldn't be here. Ideally,
+        # the public_body received would already be saved.
+        public_body.esic.save()
         public_body.save()
 
         with transaction.atomic():
@@ -178,10 +181,17 @@ class TestFOIRequest(object):
 
 
 @pytest.fixture
-def public_body():
+def public_body(esic):
     return PublicBody(
         name='example',
-        esic_url='http://example.com'
+        esic=esic
+    )
+
+
+@pytest.fixture
+def esic():
+    return Esic(
+        url='http://example.com'
     )
 
 

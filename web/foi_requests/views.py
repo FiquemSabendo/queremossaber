@@ -3,7 +3,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.base import RedirectView
 from django.urls import reverse
 
-from .forms import MessageForm
+from .forms import MessageForm, EsicForm
 from .models import FOIRequest, PublicBody
 
 
@@ -21,8 +21,27 @@ class CreatePublicBodyView(CreateView):
     model = PublicBody
     fields = [
         'name',
-        'esic_url',
     ]
+
+    def get_context_data(self, **kwargs):
+        data = super(CreatePublicBodyView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['esic_form'] = EsicForm(self.request.POST)
+        else:
+            data['esic_form'] = EsicForm()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        esic_form = context['esic_form']
+
+        if esic_form.is_valid():
+            # TODO: Add transactionwith transaction.commit_on_success():
+            esic_form.save()
+            form.instance.esic = esic_form.instance
+            self.object = form.save()
+
+        return super(CreatePublicBodyView, self).form_valid(form)
 
     def get_success_url(self):
         return '{url}?receiver={receiver}'.format(

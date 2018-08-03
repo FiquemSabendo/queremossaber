@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from .models import PublicBody, FOIRequest, Message
+from .models import PublicBody, Esic, FOIRequest, Message
 
 
 class ModerationStatusListFilter(admin.SimpleListFilter):
@@ -199,3 +199,4 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(PublicBody)
+admin.site.register(Esic)

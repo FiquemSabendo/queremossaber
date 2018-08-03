@@ -1,5 +1,6 @@
 from django.forms import ModelForm, CharField
-from .models import Message
+
+from .models import Message, Esic, PublicBody
 
 
 class MessageForm(ModelForm):
@@ -12,3 +13,19 @@ class MessageForm(ModelForm):
         ]
 
     title = CharField()
+
+
+class EsicForm(ModelForm):
+    class Meta:
+        model = Esic
+        fields = [
+            'url',
+        ]
+
+
+class PublicBodyForm(ModelForm):
+    class Meta:
+        model = PublicBody
+        fields = [
+            'name',
+        ]

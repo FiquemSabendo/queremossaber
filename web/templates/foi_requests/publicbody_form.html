@@ -20,11 +20,11 @@
     </div>
 
     <div class="form-field">
-      {{ form.esic_url.errors }}
+      {{ esic_form.url.errors }}
       <label for="{{ form.esic_url.id_for_label }}">
         URL
       </label>
-      {% render_field form.esic_url %}
+      {% render_field esic_form.url %}
     </div>
 
     <div class="form-submit">

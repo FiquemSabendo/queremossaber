@@ -6,9 +6,60 @@ from django.utils.translation import gettext as _
 from . import utils
 
 
+class Esic(models.Model):
+    url = models.URLField(unique=True)
+    username = models.CharField(max_length=255, blank=True)
+    # NOTE: This `username` will be extracted to its own class later, whenever
+    # we have multiple accounts per eSIC. Meanwhile, we'll keep it here for
+    # simplicity. This is the username in the eSIC system, for systems that
+    # have logins.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.url
+
+
 class PublicBody(models.Model):
+    UFS = (
+        ('AC', 'Acre'),
+        ('AL', 'Alagoas'),
+        ('AM', 'Amazonas'),
+        ('AP', 'Amapá'),
+        ('BA', 'Bahia'),
+        ('CE', 'Ceará'),
+        ('DF', 'DF'),
+        ('ES', 'Espírito Santo'),
+        ('GO', 'Goiás'),
+        ('MA', 'Maranhão'),
+        ('MG', 'Minas Gerais'),
+        ('MS', 'Mato Grosso do Sul'),
+        ('MT', 'Mato Grosso'),
+        ('PA', 'Pará'),
+        ('PB', 'Paraíba'),
+        ('PE', 'Pernambuco'),
+        ('PI', 'Piauí'),
+        ('PR', 'Paraná'),
+        ('RJ', 'Rio de Janeiro'),
+        ('RN', 'Rio Grande do Norte'),
+        ('RO', 'Rondônia'),
+        ('RR', 'Roraima'),
+        ('RS', 'Rio Grande do Sul'),
+        ('SC', 'Santa Catarina'),
+        ('SE', 'Sergipe'),
+        ('SP', 'São Paulo'),
+        ('TO', 'Tocantins'),
+    )
+
+    # NOTE: We might add a "parent_public_body" attribute later to deal with
+    # cases like Secretaria de Meio-Ambiente de São Paulo, whose parent would
+    # be the Prefeitura de São Paulo. If the time comes, We can get a very
+    # similar relationship by looking for the PublicBodies that are in the
+    # same Esic system. This is a pretty clear relationship.
+    esic = models.ForeignKey(Esic, null=True, blank=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=255, blank=False, unique=True)
-    esic_url = models.URLField()
+    municipality = models.CharField(max_length=255, blank=True)
+    uf = models.CharField(max_length=2, choices=UFS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
