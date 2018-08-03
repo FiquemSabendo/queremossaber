@@ -23,8 +23,8 @@ pip install -r requirements.txt
 A partir desse momento, você já pode acessar o projeto em
 [http://localhost:8000](http://localhost:8000). Para enviar um pedido, você
 precisa ter algum `PublicBody` cadastrado no banco de dados. A forma mais fácil
-de cadastrar é pela tela de administração em
-[http://localhost:8000/admin](http://localhost:8000/admin)
+é cadastrar as fixtures executando `python manage.py loaddata
+load_public_bodies_and_esic`.
 
 
 ## Rodando testes
