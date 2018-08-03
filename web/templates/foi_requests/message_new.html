@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+
+{% block scripts %}
+{{ block.super }}
+{% include "foi_requests/_load_selectize.html" %}
+{% endblock %}
+
 {% block content %}
 {% load widget_tweaks %}
 <div>
@@ -19,7 +25,7 @@
       <label for="{{ form.receiver.id_for_label }}">
         Órgão Público
       </label>
-      {% render_field form.receiver %}
+      {% render_field form.receiver class+="selectize" %}
       <br>
       <a class="button button-tiny" href="{% url 'publicbody_new' %}">Criar novo</a>
     </div>
