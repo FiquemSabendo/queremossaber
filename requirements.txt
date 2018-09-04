@@ -8,15 +8,15 @@ argh==0.26.2              # via watchdog
 django-debug-toolbar==1.9.1
 django-environ==0.4.5
 django-livesync==0.4
-django-widget-tweaks==1.4.1
-django==2.0.2
+django-widget-tweaks==1.4.2
+django==2.1.1
 libsass==0.14.5
 pathtools==0.1.2          # via watchdog
 psycopg2==2.7.5
-pytz==2018.3              # via django
+pytz==2018.5              # via django
 pyyaml==3.13              # via watchdog
 six==1.11.0               # via libsass, websocket-client
 sqlparse==0.2.4           # via django-debug-toolbar
 tornado==4.5.1            # via django-livesync
-watchdog==0.8.3
-websocket-client==0.48.0  # via django-livesync
+watchdog==0.9.0
+websocket-client==0.52.0  # via django-livesync
