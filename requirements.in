@@ -8,3 +8,7 @@ libsass
 django-livesync
 django-debug-toolbar
 watchdog
+
+# heroku
+gunicorn
+django-heroku
