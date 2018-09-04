@@ -3,11 +3,12 @@ django-widget-tweaks
 django-environ
 psycopg2
 libsass
+django-compressor
+django-sass-processor
 
 # dev environment
 django-livesync
 django-debug-toolbar
-watchdog
 
 # heroku
 gunicorn

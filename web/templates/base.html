@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load sass_tags %}
 {% load static %}
 <html lang="pt-br">
   <head>
@@ -8,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-    <link rel="stylesheet" href="{% static '/web/styles/main.css' %}">
+    <link rel="stylesheet" href="{% sass_src 'web/styles/main.scss' %}">
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
   </head>
   <body>
