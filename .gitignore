@@ -110,6 +110,7 @@ venv.bak/
 .#*
 *~
 
-# Generated CSS files
+# Generated files
 web/static/web/styles/*.css
 web/static/web/styles/*.css.map
+staticfiles/
