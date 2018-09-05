@@ -16,6 +16,8 @@ pip install -r requirements.txt
    `DATABASE_URL`)
 1. Execute as database migrations com `python manage.py migrate`
 1. Crie um superusuário com `python manage.py createsuperuser`
+1. Execute `make watch-sass` em um terminal separado, para compilar o SASS para
+   CSS
 1. Rode o servidor com `python manage.py runserver`
 
 A partir desse momento, você já pode acessar o projeto em

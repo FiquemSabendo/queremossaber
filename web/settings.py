@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'livesync',
     'django.contrib.staticfiles',
-    'sass_processor',
     'widget_tweaks',
     'debug_toolbar',
 ]
@@ -135,11 +134,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'web', 'static'),
-]
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'sass_processor.finders.CssFinder',
 ]
 
 # Uploaded files variables
