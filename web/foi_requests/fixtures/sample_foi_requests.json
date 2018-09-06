@@ -1,0 +1,132 @@
+[
+    {
+        "model": "foi_requests.foirequest",
+        "pk": 1,
+        "fields": {
+            "protocol": "HQCYR6KQ",
+            "esic_protocol": "00075001035201319",
+            "created_at": "2018-09-06T15:07:38.665Z",
+            "updated_at": "2018-09-06T15:10:58.273Z"
+        }
+    },
+    {
+        "model": "foi_requests.foirequest",
+        "pk": 2,
+        "fields": {
+            "protocol": "SL6F4L46",
+            "esic_protocol": "",
+            "created_at": "2018-09-06T15:20:01.068Z",
+            "updated_at": "2018-09-06T15:20:42.461Z"
+        }
+    },
+    {
+        "model": "foi_requests.foirequest",
+        "pk": 3,
+        "fields": {
+            "protocol": "H4BRYOXF",
+            "esic_protocol": "",
+            "created_at": "2018-09-06T15:24:14.924Z",
+            "updated_at": "2018-09-06T15:24:14.924Z"
+        }
+    },
+    {
+        "model": "foi_requests.foirequest",
+        "pk": 4,
+        "fields": {
+            "protocol": "GQ2XOQM7",
+            "esic_protocol": "123456",
+            "created_at": "2018-08-05T15:29:46.233Z",
+            "updated_at": "2018-08-05T15:29:46.233Z"
+        }
+    },
+    {
+        "model": "foi_requests.message",
+        "pk": 1,
+        "fields": {
+            "foi_request": 1,
+            "sender": null,
+            "receiver": 63,
+            "title": "C\u00f3digo-fonte e datasets usados para treinar modelo de detec\u00e7\u00e3o de outliers para o FNDE",
+            "body": "Gostaria de obter acesso ao c\u00f3digo-fonte, documenta\u00e7\u00e3o (se houver) e conjuntos de dados usados para cria\u00e7\u00e3o do modelo estat\u00edstico descrito no relat\u00f3rio de atividades subsidi\u00e1rias entitulado \"Proposta de metodologia baseada em gest\u00e3o de riscos para aprimoramento do modelo de tratamento e sele\u00e7\u00e3o das presta\u00e7\u00f5es de contas das Pol\u00edticas Federais da Educa\u00e7\u00e3o\", de junho de 2018, dispon\u00edvel em https://auditoria.cgu.gov.br/download/11478.pdf.\r\n\r\nIdealmente, esse acesso seria disponibilizado online, permitindo que toda comunidade de data science possa entender e, quem sabe, melhorar o modelo. Caso isso n\u00e3o seja poss\u00edvel, deixo \u00e0 CGU a decis\u00e3o de melhor forma de envio dos arquivos, dependendo do tamanho dos mesmos.",
+            "sent_at": "2018-07-27T16:29:00Z",
+            "created_at": "2018-09-06T15:07:38.671Z",
+            "updated_at": "2018-09-06T15:07:38.671Z",
+            "moderation_status": true,
+            "moderation_message": "",
+            "moderated_at": "2018-09-06T15:07:38.653Z",
+            "attached_file": ""
+        }
+    },
+    {
+        "model": "foi_requests.message",
+        "pk": 2,
+        "fields": {
+            "foi_request": 1,
+            "sender": 63,
+            "receiver": null,
+            "title": "",
+            "body": "Prezado(a) Sr(a),\r\n\r\nEm aten\u00e7\u00e3o ao seu requerimento, encaminhamos, na caixa \u201cAnexos\u201d, a resposta fornecida pelo setor respons\u00e1vel pelo assunto em quest\u00e3o.\r\n\r\nInformamos, ainda, que, nos termos do Art. 15 da Lei 12.527/2011, \u00e9 poss\u00edvel recorrer do indeferimento ou das raz\u00f5es da negativa de acesso, no prazo de 10 dias.\r\n\r\nCordialmente.\r\n\r\nServi\u00e7o de Informa\u00e7\u00f5es ao Cidad\u00e3o\r\n\r\nMinist\u00e9rio da Transpar\u00eancia e Controladoria-Geral da Uni\u00e3o.",
+            "sent_at": "2018-08-20T18:52:00Z",
+            "created_at": "2018-09-06T15:07:38.676Z",
+            "updated_at": "2018-09-06T15:10:58.277Z",
+            "moderation_status": true,
+            "moderation_message": "",
+            "moderated_at": "2018-09-06T15:07:38.676Z",
+            "attached_file": "HQ/a6ef82f45d6d7f50819cadc495c691202ed842534a01d0092ec3cee0037dc9c6.pdf"
+        }
+    },
+    {
+        "model": "foi_requests.message",
+        "pk": 3,
+        "fields": {
+            "foi_request": 2,
+            "sender": null,
+            "receiver": 296,
+            "title": "",
+            "body": "Ol\u00e1, meu nome \u00e9 XXX. Gostaria de saber quanto foi repassado ao Museu Nacional entre 2015 e 2018. Obrigado.",
+            "sent_at": null,
+            "created_at": "2018-09-06T15:20:01.073Z",
+            "updated_at": "2018-09-06T15:20:42.485Z",
+            "moderation_status": false,
+            "moderation_message": "Cont\u00e9m informa\u00e7\u00f5es pessoais (retiradas para preservar a identidade do solicitante).",
+            "moderated_at": "2018-09-06T15:20:42.460Z",
+            "attached_file": ""
+        }
+    },
+    {
+        "model": "foi_requests.message",
+        "pk": 4,
+        "fields": {
+            "foi_request": 3,
+            "sender": null,
+            "receiver": 247,
+            "title": "",
+            "body": "Gostaria da agenda oficial do presidente Michel Temer em mar\u00e7o de 2017.",
+            "sent_at": null,
+            "created_at": "2018-09-06T15:24:14.929Z",
+            "updated_at": "2018-09-06T15:24:14.929Z",
+            "moderation_status": true,
+            "moderation_message": "",
+            "moderated_at": null,
+            "attached_file": ""
+        }
+    },
+    {
+        "model": "foi_requests.message",
+        "pk": 5,
+        "fields": {
+            "foi_request": 4,
+            "sender": null,
+            "receiver": 234,
+            "title": "N\u00famero de feminic\u00eddios entre 2015 e 2018",
+            "body": "Gostaria do n\u00famero de feminic\u00eddios registrados entre 2015 e 2018 em todo o Brasil.",
+            "sent_at": "2018-08-06T16:21:00Z",
+            "created_at": "2018-08-05T15:29:46.233Z",
+            "updated_at": "2018-08-05T15:29:46.233Z",
+            "moderation_status": true,
+            "moderation_message": "",
+            "moderated_at": "2018-08-06T12:00:46.233Z",
+            "attached_file": ""
+        }
+    }
+]

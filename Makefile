@@ -8,4 +8,4 @@ encode_gcloud_credentials:
 	@python3 -c 'import base64; creds = open("$(path)", "rb").read(); print(base64.b64encode(creds).decode("utf-8"))'
 
 load_fixtures:
-	python manage.py loaddata public_bodies_and_esics
+	python manage.py loaddata public_bodies_and_esics sample_foi_requests
