@@ -157,6 +157,14 @@ class TestMessage(object):
 
         assert message_from_user.status == Message.STATUS.sent
 
+    def test_attached_file_hashes_filename(self, message):
+        filename = 'foo.pdf'
+        expected_filename = '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae.pdf'
+
+        generated_filename = message.attached_file.field.upload_to(message, filename)
+
+        assert generated_filename.endswith(expected_filename)
+
 
 class TestFOIRequest(object):
     def test_protocol_is_automatically_generated(self):
@@ -272,6 +280,13 @@ def esic():
 @pytest.fixture
 def foi_request():
     return FOIRequest()
+
+
+@pytest.fixture
+def message(foi_request):
+    return Message(
+        foi_request=foi_request
+    )
 
 
 @pytest.fixture

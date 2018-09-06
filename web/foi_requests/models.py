@@ -1,5 +1,6 @@
 import os
 import enum
+import hashlib
 from django.db import models
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.utils import timezone
@@ -217,7 +218,13 @@ class Message(models.Model):
         return '(%s) %s' % (self.sender_type, title)
 
     def _attached_file_path(self, filename):
-        return os.path.join(self.foi_request.protocol[:2], filename)
+        root, ext = os.path.splitext(filename)
+
+        hasher = hashlib.sha256()
+        hasher.update(root.encode('utf-8'))
+        hashed_filename = '{}{}'.format(hasher.hexdigest(), ext)
+
+        return os.path.join(self.foi_request.protocol[:2], hashed_filename)
 
     attached_file = models.FileField(
         upload_to=_attached_file_path,
