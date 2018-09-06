@@ -28,10 +28,12 @@ urlpatterns = [
 ]
 
 if not settings.ENABLE_GCLOUD:
-    urlpatterns += url(r'^upload/(?P<path>.*)$', serve, {
-        'document_root': settings.MEDIA_ROOT,
-        'show_indexes': False,
-    })
+    urlpatterns = [
+        url(r'^upload/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+            'show_indexes': False,
+        })
+    ] + urlpatterns
 
 if settings.DEBUG:
     import debug_toolbar
