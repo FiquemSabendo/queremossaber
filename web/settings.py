@@ -144,6 +144,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 # Setup uploads to Google Cloud
 def _get_google_credentials():
     if 'GOOGLE_APPLICATION_CREDENTIALS' in os.environ:
@@ -152,6 +153,7 @@ def _get_google_credentials():
     credentials_b64 = env('GS_APPLICATION_CREDENTIALS_BASE64')
     credentials = json.loads(base64.b64decode(credentials_b64))
     return service_account.Credentials.from_service_account_info(credentials)
+
 
 ENABLE_GCLOUD = env('ENABLE_GCLOUD')
 if ENABLE_GCLOUD:
