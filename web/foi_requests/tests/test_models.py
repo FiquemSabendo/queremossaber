@@ -112,8 +112,15 @@ class TestMessage(object):
 
         assert not message.is_from_user
 
+    def test_government_messages_must_have_sent_at(self, message_from_government):
+        message_from_government.sent_at = None
+
+        with pytest.raises(ValidationError) as excinfo:
+            message_from_government.clean()
+
+        assert 'sent_at' in excinfo.value.error_dict
+
     def test_message_is_automatically_approved_when_sender_is_government(self, message_from_government):
-        assert not message_from_government.is_from_user
         message_from_government.moderation_status = None
 
         message_from_government.clean()
@@ -121,12 +128,34 @@ class TestMessage(object):
         assert message_from_government.is_approved
 
     def test_message_is_not_automatically_approved_when_sender_is_user(self, message_from_user):
-        assert message_from_user.is_from_user
         message_from_user.moderation_status = None
 
         message_from_user.clean()
 
         assert not message_from_user.is_approved
+
+    def test_not_moderated_user_message_has_status_pending(self, message_from_user):
+        message_from_user.moderation_status = None
+
+        assert message_from_user.is_pending_moderation
+        assert message_from_user.status == Message.STATUS.pending
+
+    def test_rejected_user_message_has_status_rejected(self, message_from_user):
+        message_from_user.reject()
+
+        assert message_from_user.status == Message.STATUS.rejected
+
+    def test_approved_unsent_user_message_has_status_ready(self, message_from_user):
+        message_from_user.approve()
+        message_from_user.sent_at = None
+
+        assert message_from_user.status == Message.STATUS.ready
+
+    def test_sent_user_message_has_status_sent(self, message_from_user):
+        message_from_user.approve()
+        message_from_user.sent_at = timezone.now()
+
+        assert message_from_user.status == Message.STATUS.sent
 
 
 class TestFOIRequest(object):
@@ -179,6 +208,47 @@ class TestFOIRequest(object):
         foi_request.refresh_from_db()
         assert foi_request.protocol == original_protocol
 
+    @pytest.mark.django_db()
+    def test_last_message_returns_the_last_created_message(self, foi_request):
+        first_message = Message(foi_request=foi_request)
+        last_message = Message(foi_request=foi_request)
+
+        with transaction.atomic():
+            foi_request.save()
+            first_message.save()
+            last_message.save()
+
+        foi_request.refresh_from_db()
+        assert foi_request.last_message == last_message
+
+    @pytest.mark.django_db()
+    @pytest.mark.parametrize('sent_at,status', [
+        (timezone.now() - timezone.timedelta(days=FOIRequest.REPLY_DAYS), FOIRequest.STATUS.delayed),
+        (timezone.now() - timezone.timedelta(days=FOIRequest.REPLY_DAYS - 1), FOIRequest.STATUS.waiting_government),
+    ])
+    def test_status_last_message_is_sent_and_from_user(self, sent_at, status, foi_request_with_sent_user_message):
+        last_message = foi_request_with_sent_user_message.last_message
+        last_message.sent_at = sent_at
+        last_message.save()
+
+        assert status == foi_request_with_sent_user_message.status
+
+    @pytest.mark.django_db()
+    @pytest.mark.parametrize('sent_at,status', [
+        (timezone.now() - timezone.timedelta(days=FOIRequest.APPEAL_DAYS), FOIRequest.STATUS.finished),
+        (timezone.now() - timezone.timedelta(days=FOIRequest.APPEAL_DAYS - 1), FOIRequest.STATUS.waiting_user),
+    ])
+    def test_status_last_message_is_from_government(self, sent_at, status, foi_request, message_from_government):
+        with transaction.atomic():
+            foi_request.save()
+            message_from_government.foi_request = foi_request
+            message_from_government.sent_at = sent_at
+            _save_message(message_from_government)
+        foi_request.refresh_from_db()
+
+        assert not message_from_government.is_from_user
+        assert status == foi_request.status
+
 
 @pytest.fixture
 def public_body(esic):
@@ -201,6 +271,17 @@ def foi_request():
 
 
 @pytest.fixture
+def foi_request_with_sent_user_message(foi_request, message_from_user):
+    with transaction.atomic():
+        message_from_user.approve()
+        message_from_user.foi_request = foi_request
+        message_from_user.sent_at = timezone.now()
+        _save_message(message_from_user)
+    foi_request.refresh_from_db()
+    return foi_request
+
+
+@pytest.fixture
 def message_from_user(public_body):
     return Message(
         sender=None,
@@ -212,5 +293,23 @@ def message_from_user(public_body):
 def message_from_government(public_body):
     return Message(
         sender=public_body,
+        sent_at=timezone.now(),
         receiver=None
     )
+
+
+def _save_message(message):
+    # FIXME: Ideally a simple message.save() would save everything, but I
+    # couldn't find out how to do so in Django. Not yet.
+    with transaction.atomic():
+        if message.sender:
+            message.sender.esic.save()
+            message.sender.save()
+            message.sender_id = message.sender.id
+        if message.receiver:
+            message.receiver.esic.save()
+            message.receiver.save()
+            message.receiver_id = message.receiver.id
+        message.foi_request.save()
+        message.foi_request_id = message.foi_request.id
+        message.save()

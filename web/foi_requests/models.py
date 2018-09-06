@@ -1,8 +1,10 @@
 import os
+import enum
 from django.db import models
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
+
 from . import utils
 
 
@@ -68,6 +70,15 @@ class PublicBody(models.Model):
 
 
 class FOIRequest(models.Model):
+    class STATUS(enum.Enum):
+        delayed = _('Delayed')
+        finished = _('Finished')
+        waiting_government = _('Waiting for government reply')
+        waiting_user = _('Waiting for user reply')
+
+    REPLY_DAYS = 20  # Public body has to answer in X days
+    APPEAL_DAYS = 10  # Citizen can appeal in X days
+
     protocol = models.CharField(
         max_length=8,
         unique=True,
@@ -104,11 +115,41 @@ class FOIRequest(models.Model):
             return self._first_message.receiver
 
     @property
+    def status(self):
+        last_message = self.last_message
+
+        if not last_message.is_from_user:
+            appeal_deadline = timezone.now() - timezone.timedelta(days=self.APPEAL_DAYS)
+            if last_message.sent_at <= appeal_deadline:
+                return self.STATUS.finished
+            else:
+                return self.STATUS.waiting_user
+            pass
+        elif last_message.is_sent:
+            reply_deadline = timezone.now() - timezone.timedelta(days=self.REPLY_DAYS)
+            if last_message.sent_at <= reply_deadline:
+                return self.STATUS.delayed
+            else:
+                return self.STATUS.waiting_government
+        else:
+            return last_message.status
+
+    @property
     def _first_message(self):
         return self.message_set.order_by('created_at').first()
 
+    @property
+    def last_message(self):
+        return self.message_set.order_by('created_at').last()
+
 
 class Message(models.Model):
+    class STATUS(enum.Enum):
+        pending = _('Pending moderation')
+        rejected = _('Rejected')
+        ready = _('Ready to be sent')
+        sent = _('Sent')
+
     foi_request = models.ForeignKey(FOIRequest, on_delete=models.CASCADE)
     sender = models.ForeignKey(
         PublicBody,
@@ -140,6 +181,21 @@ class Message(models.Model):
     )
     moderation_message = models.TextField(blank=True)
     moderated_at = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def status(self):
+        status = None
+
+        if self.is_pending_moderation:
+            status = self.STATUS.pending
+        elif self.is_rejected:
+            status = self.STATUS.rejected
+        elif not self.is_sent:
+            status = self.STATUS.ready
+        else:
+            status = self.STATUS.sent
+
+        return status
 
     @property
     def sender_type(self):
@@ -176,6 +232,14 @@ class Message(models.Model):
     def is_rejected(self):
         return self.moderation_status is False
 
+    @property
+    def is_pending_moderation(self):
+        return self.moderation_status is None
+
+    @property
+    def is_sent(self):
+        return self.sent_at is not None
+
     class Meta:
         ordering = ['-created_at', '-moderation_status']
 
@@ -191,9 +255,14 @@ class Message(models.Model):
     def clean(self):
         self._update_moderated_at_if_needed()
 
-        # Government messages are automatically approved
-        if not self.is_from_user and not self.moderation_status:
-            self.approve()
+        if not self.is_from_user:
+            # Government messages are automatically approved
+            if not self.moderation_status:
+                self.approve()
+            if not self.sent_at:
+                raise ValidationError({
+                    'sent_at': _('Government messages must have a "sent_at" date.'),
+                })
 
         if self.is_from_user and not self.is_approved:
             if self.sent_at is not None:
