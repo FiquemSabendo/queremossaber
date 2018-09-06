@@ -25,11 +25,13 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),
     path('p/', include('web.foi_requests.urls')),
     path('admin/', admin.site.urls),
-    url(r'^upload/(?P<path>.*)$', serve, {
+]
+
+if not settings.ENABLE_GCLOUD:
+    urlpatterns += url(r'^upload/(?P<path>.*)$', serve, {
         'document_root': settings.MEDIA_ROOT,
         'show_indexes': False,
-    }),
-]
+    })
 
 if settings.DEBUG:
     import debug_toolbar

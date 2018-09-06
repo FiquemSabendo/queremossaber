@@ -217,7 +217,7 @@ class Message(models.Model):
         return '(%s) %s' % (self.sender_type, title)
 
     def _attached_file_path(self, filename):
-        return os.path.join(self.foi_request.protocol, filename)
+        return os.path.join(self.foi_request.protocol[:2], filename)
 
     attached_file = models.FileField(
         upload_to=_attached_file_path,

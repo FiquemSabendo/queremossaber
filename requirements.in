@@ -1,6 +1,7 @@
 django
 django-widget-tweaks
 django-environ
+django-storages[google]
 psycopg2
 libsass
 

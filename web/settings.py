@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import os
+import base64
+import json
 import environ
+from google.oauth2 import service_account
 import django_heroku
 
 
@@ -21,6 +24,7 @@ DEFAULT_ENV_PATH = os.path.join(BASE_DIR, '.env')
 env = environ.Env(
     DEBUG=(bool, False),
     ENV_PATH=(str, DEFAULT_ENV_PATH),
+    ENABLE_GCLOUD=(bool, False),
 )
 env.read_env(env.str('ENV_PATH'))
 
@@ -136,9 +140,35 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'web', 'static'),
 ]
 
-# Uploaded files variables
+# Uploaded files variables. Will only be used if ENABLE_GCLOUD is False.
 MEDIA_URL = '/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Setup uploads to Google Cloud
+def _get_google_credentials():
+    if 'GOOGLE_APPLICATION_CREDENTIALS' in os.environ:
+        return
+
+    credentials_b64 = env('GS_APPLICATION_CREDENTIALS_BASE64')
+    credentials = json.loads(base64.b64decode(credentials_b64))
+    return service_account.Credentials.from_service_account_info(credentials)
+
+ENABLE_GCLOUD = env('ENABLE_GCLOUD')
+if ENABLE_GCLOUD:
+    gcloud_env_keys = set([
+        'GOOGLE_APPLICATION_CREDENTIALS',
+        'GS_APPLICATION_CREDENTIALS_BASE64',
+    ])
+    assert gcloud_env_keys.intersection(set(os.environ.keys())), \
+        'To enable GCloud storage you must set one of {}'.format(gcloud_env_keys)
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    GS_DEFAULT_ACL = 'publicRead'
+    GS_BUCKET_NAME = env('GS_BUCKET_NAME')
+    GS_FILE_OVERWRITE = False
+    GS_LOCATION = 'uploads'
+    GS_CACHE_CONTROL = 'public, max-age=31556926'
+    GS_CREDENTIALS = _get_google_credentials()
 
 # Configure Heroku
 django_heroku.settings(locals())
