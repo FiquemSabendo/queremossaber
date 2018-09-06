@@ -117,22 +117,27 @@ class FOIRequest(models.Model):
     @property
     def status(self):
         last_message = self.last_message
+        status = None
 
-        if not last_message.is_from_user:
+        if not last_message:
+            status = self.STATUS.waiting_user
+        elif not last_message.is_from_user:
             appeal_deadline = timezone.now() - timezone.timedelta(days=self.APPEAL_DAYS)
             if last_message.sent_at <= appeal_deadline:
-                return self.STATUS.finished
+                status = self.STATUS.finished
             else:
-                return self.STATUS.waiting_user
+                status = self.STATUS.waiting_user
             pass
         elif last_message.is_sent:
             reply_deadline = timezone.now() - timezone.timedelta(days=self.REPLY_DAYS)
             if last_message.sent_at <= reply_deadline:
-                return self.STATUS.delayed
+                status = self.STATUS.delayed
             else:
-                return self.STATUS.waiting_government
+                status = self.STATUS.waiting_government
         else:
-            return last_message.status
+            status = last_message.status
+
+        return status
 
     @property
     def _first_message(self):

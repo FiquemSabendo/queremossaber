@@ -249,6 +249,10 @@ class TestFOIRequest(object):
         assert not message_from_government.is_from_user
         assert status == foi_request.status
 
+    def test_status_is_waiting_user_when_there_are_no_messages(self, foi_request):
+        assert foi_request.last_message is None
+        assert foi_request.status is FOIRequest.STATUS.waiting_user
+
 
 @pytest.fixture
 def public_body(esic):
