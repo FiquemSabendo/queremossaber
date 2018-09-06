@@ -267,6 +267,13 @@ class Message(models.Model):
     def clean(self):
         self._update_moderated_at_if_needed()
 
+        if self.sender and self.receiver:
+            msg = _('Message can either have a "sender" or a "receiver", not both.')
+            raise ValidationError({
+                'sender': msg,
+                'receiver': msg,
+            })
+
         if not self.is_from_user:
             # Government messages are automatically approved
             if not self.moderation_status:

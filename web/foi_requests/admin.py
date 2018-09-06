@@ -39,7 +39,6 @@ class MessageInline(admin.StackedInline):
 
     readonly_fields = (
         'moderated_at',
-        'receiver',
     )
     fieldsets = (
         ('Message', {

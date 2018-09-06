@@ -165,6 +165,16 @@ class TestMessage(object):
 
         assert generated_filename.endswith(expected_filename)
 
+    def test_message_cant_have_both_sender_and_receiver(self, message, public_body):
+        message.sender = public_body
+        message.receiver = public_body
+
+        with pytest.raises(ValidationError) as excinfo:
+            message.clean()
+
+        assert 'sender' in excinfo.value.error_dict
+        assert 'receiver' in excinfo.value.error_dict
+
 
 class TestFOIRequest(object):
     def test_protocol_is_automatically_generated(self):
