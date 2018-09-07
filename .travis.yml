@@ -3,10 +3,11 @@ python: 3.6
 addons:
   postgresql: "9.5"
 
-install: pip install tox
+install: pip install tox -rrequirements.txt
 before_script:
   - psql -c 'CREATE DATABASE lainonima;' -U postgres
   - cp .env.example .env
 script:
-  # For some reason, "-e ALL" misses the "py36" env
-  - tox -e py36,ALL
+  - tox
+  - python manage.py migrate
+  - make load_fixtures
