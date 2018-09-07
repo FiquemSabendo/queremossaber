@@ -7,4 +7,6 @@ install: pip install tox
 before_script:
   - psql -c 'CREATE DATABASE lainonima;' -U postgres
   - cp .env.example .env
-script: tox
+script:
+  - tox
+  - make load_fixtures
