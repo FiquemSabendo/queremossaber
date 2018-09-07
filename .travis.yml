@@ -8,5 +8,5 @@ before_script:
   - psql -c 'CREATE DATABASE lainonima;' -U postgres
   - cp .env.example .env
 script:
-  - tox
-  - make load_fixtures
+  # For some reason, "-e ALL" misses the "py36" env
+  - tox -e py36,ALL
