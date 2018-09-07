@@ -171,7 +171,7 @@ class Message(models.Model):
         related_name='messages_received',
         on_delete=models.PROTECT
     )
-    title = models.TextField(blank=True)
+    summary = models.TextField(blank=True)
     body = models.TextField(blank=False)
     sent_at = models.DateTimeField(null=True, blank=True, verbose_name="Sent date")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -211,11 +211,11 @@ class Message(models.Model):
         return sender_type
 
     def __str__(self):
-        title = self.title
-        if not title:
-            title = self.body[0:100]
+        summary = self.summary
+        if not summary:
+            summary = self.body[0:100]
 
-        return '(%s) %s' % (self.sender_type, title)
+        return '(%s) %s' % (self.sender_type, summary)
 
     def _attached_file_path(self, filename):
         root, ext = os.path.splitext(filename)

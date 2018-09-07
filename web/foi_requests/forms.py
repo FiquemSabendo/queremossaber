@@ -8,11 +8,11 @@ class MessageForm(ModelForm):
         model = Message
         fields = [
             'receiver',
-            'title',
+            'summary',
             'body',
         ]
 
-    title = CharField()
+    summary = CharField()
 
 
 class EsicForm(ModelForm):
