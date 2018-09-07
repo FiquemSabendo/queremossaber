@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'raven.contrib.django.raven_compat',
     'livesync',
     'django.contrib.staticfiles',
     'widget_tweaks',
