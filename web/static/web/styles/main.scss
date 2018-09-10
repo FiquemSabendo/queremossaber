@@ -66,22 +66,15 @@ footer {
   }
 }
 
-header,
-footer {
-  background-color: rgba($pale, .45);
-}
-
 footer {
   margin-top: auto;
 }
 
 header {
-  .wrapper {
-    @media (min-width: 48rem) {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+  text-align: center;
+
+  @media (min-width: 48rem) {
+    margin-top: 4rem;
   }
 
   p {
@@ -100,16 +93,22 @@ header {
   .logo,
   .logo:link,
   .logo:visited {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 900;
     text-decoration: none;
     color: $black;
+
+    @media (min-width: 48rem) {
+      font-size: 3.5rem;
+    }
   }
 
   .request {
     @media (min-width: 48rem) {
       display: flex;
       align-items: center;
+      justify-content: center;
+      margin: 2rem 0;
     }
 
     form {
@@ -146,12 +145,19 @@ header {
 }
 
 main {
+  svg {
+    display: block;
+    max-width: 100%;
+    margin: 3rem auto;
+  }
+
   h2 {
-    font-size: 2.5rem;
-    margin: 0;
+    font-size: 1.5rem;
+    margin: 5rem 0 .5rem;
+    text-align: center;
 
     @media (min-width: 48rem) {
-      font-size: 4.5rem;
+      font-size: 2.5rem;
     }
   }
 
