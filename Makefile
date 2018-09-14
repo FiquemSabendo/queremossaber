@@ -1,5 +1,6 @@
 watch_sass:
-	watchmedo shell-command --patterns="*.scss" --recursive --command 'sassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap' web/static/web/styles
+	make sass  # Ensure we have compiled the latest SASS files
+	watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
 
 sass:
 	sassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
