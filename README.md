@@ -24,6 +24,15 @@ pip install -r requirements.txt
 A partir desse momento, você já pode acessar o projeto em
 [http://localhost:8000](http://localhost:8000).
 
+## Pedidos de exemplo
+
+Quando você carrega as fixtures no seu banco de dados, os seguintes pedidos de exemplo são criados:
+
+* Rejeitado em moderação: SL6F4L46
+* Aprovado mas não enviado: H4BRYOXF
+* Respondido com um PDF: HQCYR6KQ
+* Aguardando resposta atrasada do órgão público: GQ2XOQM7
+
 ## Configurando uploads para Google Cloud
 
 Durante desenvolvimento, os arquivos enviados são salvos no filesystem local.
