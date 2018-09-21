@@ -1,5 +1,15 @@
-watch_sass:
-	make sass  # Ensure we have compiled the latest SASS files
+.PHONY: help watch_sass sass encode_gcloud_credentials load_fixtures migrate server create_admin
+
+help:
+	@echo 'create_admin: create a superuser (admin)'
+	@echo 'encode_gcloud_credentials'
+	@echo 'load_fixtures: load database fixtures'
+	@echo 'migrate: migrate database'
+	@echo 'sass: compile styles'
+	@echo 'server: start server'
+	@echo 'watch_sass: watch changes and compile'
+
+watch_sass: sass
 	watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
 
 sass:
@@ -19,12 +29,3 @@ server:
 
 create_admin:
 	python manage.py createsuperuser
-
-help:
-	@echo 'create_admin: create a superuser (admin)'
-	@echo 'encode_gcloud_credentials'
-	@echo 'load_fixtures: load database fixtures'
-	@echo 'migrate: migrate database'
-	@echo 'sass: compile styles'
-	@echo 'server: start server'
-	@echo 'watch_sass: watch changes and compile'
