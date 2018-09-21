@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+{{ block.super }}
+{% include "foi_requests/_load_selectize.html" %}
+{% endblock %}
+
+{% block content %}
+{% load widget_tweaks %}
+<div>
+  <h2>
+    Novo pedido
+  </h2>
+
+  <form
+    action="{% url 'foi_request_new' %}"
+    method="post">
+    {% csrf_token %}
+
+    <div class="form-field">
+      {{ message_form.receiver.errors }}
+      <label for="{{ message_form.receiver.id_for_label }}">
+        Órgão Público
+      </label>
+      {% render_field message_form.receiver class+="selectize" %}
+      <small>
+        Não encontrou o órgão público que queria? <a href="{% url 'publicbody_new' %}">Cadastre um novo órgão</a>.
+      </small>
+    </div>
+
+    <div class="form-field">
+      {{ message_form.summary.errors }}
+      <label for="{{ message_form.summary.id_for_label }}">
+        Resumo
+      </label>
+      {% render_field message_form.summary placeholder="Qual o resumo do seu pedido?" %}
+    </div>
+
+    <div class="form-field">
+      {{ message_form.body.errors }}
+      <label for="{{ message_form.body.id_for_label }}">
+        Pedido
+      </label>
+      {% render_field message_form.body placeholder="Descreva seu pedido de forma direta e detalhada, evitando quaisquer detalhes que possam te identificar." %}
+    </div>
+
+    <div class="form-field form-field-checkbox">
+      {{ foi_request_form.can_publish.errors }}
+      <label for="{{ foi_request_form.can_publish.id_for_label }}">
+        {% render_field foi_request_form.can_publish %}
+        Eu autorizo a publicação deste pedido após sua forma. Dessa forma, outros cidadãos também terão acesso a resposta do órgão.
+      </label>
+    </div>
+
+    <div class="form-submit">
+      <button type="submit">
+        Enviar pedido
+      </button>
+      ou
+      <a class="link-dimmed" href="{% url 'index' %}">cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

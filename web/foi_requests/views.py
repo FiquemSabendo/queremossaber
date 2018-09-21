@@ -1,20 +1,59 @@
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import RedirectView
+from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.db import transaction
 
-from .forms import MessageForm, EsicForm, PublicBodyForm
+from .forms import MessageForm, EsicForm, PublicBodyForm, FOIRequestForm
 from .models import FOIRequest, PublicBody
 
 
 class CreateMessageView(CreateView):
     form_class = MessageForm
-    template_name = 'foi_requests/message_new.html'
+    template_name = 'foi_requests/foi_request_new.html'
 
     def get_initial(self):
         return {
             'receiver': self.request.GET.get('receiver'),
         }
+
+
+class CreateFOIRequestView(TemplateView):
+    template_name = 'foi_requests/foi_request_new.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateFOIRequestView, self).get_context_data(**kwargs)
+
+        message_form_initial = {}
+
+        if hasattr(self, 'request'):
+            message_form_initial['receiver'] = self.request.GET.get('receiver')
+
+        forms = {
+            'message_form': kwargs.get('message_form', MessageForm(initial=message_form_initial)),
+            'foi_request_form': kwargs.get('foi_request_form', FOIRequestForm()),
+        }
+
+        return {**context, **forms}
+
+    def post(self, request):
+        message_form = MessageForm(request.POST)
+        foi_request_form = FOIRequestForm(request.POST)
+        context = {
+            'message_form': message_form,
+            'foi_request_form': foi_request_form,
+        }
+
+        if all([message_form.is_valid(), foi_request_form.is_valid()]):
+            with transaction.atomic():
+                foi_request = foi_request_form.save()
+                message_form.instance.foi_request = foi_request
+                message_form.save()
+                return redirect(foi_request)
+
+        return render(request, self.template_name, context)
 
 
 class CreatePublicBodyView(CreateView):
@@ -43,7 +82,7 @@ class CreatePublicBodyView(CreateView):
 
     def get_success_url(self):
         return '{url}?receiver={receiver}'.format(
-            url=reverse('message_new'),
+            url=reverse('foi_request_new'),
             receiver=self.object.id
         )
 

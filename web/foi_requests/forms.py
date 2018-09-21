@@ -1,6 +1,6 @@
 from django.forms import ModelForm, CharField
 
-from .models import Message, Esic, PublicBody
+from .models import Message, Esic, PublicBody, FOIRequest
 
 
 class MessageForm(ModelForm):
@@ -17,6 +17,15 @@ class MessageForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
         self.fields['receiver'].required = True
+
+
+class FOIRequestForm(ModelForm):
+    class Meta:
+        model = FOIRequest
+        fields = [
+            'can_publish',
+        ]
+
 
 class EsicForm(ModelForm):
     class Meta:

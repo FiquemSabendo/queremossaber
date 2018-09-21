@@ -5,7 +5,8 @@ from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-from ..models import Message, FOIRequest, Esic, PublicBody
+from ..models import Message, FOIRequest, PublicBody
+from .conftest import save_message
 
 
 class TestMessage(object):
@@ -36,16 +37,8 @@ class TestMessage(object):
 
         assert message.foi_request == foi_request
 
-    @pytest.mark.django_db()
-    def test_absolute_url_points_to_foi_request_url(self):
-        message = Message()
-        message.save()
-        expected_url = reverse(
-            'foirequest_detail',
-            args=[message.foi_request.protocol]
-        )
-
-        assert message.get_absolute_url() == expected_url
+    def test_get_absolute_url_points_to_foi_request_absolute_url(self, message):
+        assert message.get_absolute_url() == message.foi_request.get_absolute_url()
 
     @pytest.mark.django_db()
     def test_message_updates_moderated_at_when_moderation_status_is_set(self):
@@ -261,7 +254,7 @@ class TestFOIRequest(object):
             foi_request.save()
             message_from_government.foi_request = foi_request
             message_from_government.sent_at = sent_at
-            _save_message(message_from_government)
+            save_message(message_from_government)
         foi_request.refresh_from_db()
 
         assert not message_from_government.is_from_user
@@ -288,74 +281,10 @@ class TestFOIRequest(object):
     def test_summary_returns_none_if_there_are_no_messages(self):
         assert FOIRequest().summary is None
 
+    def test_get_absolute_url(self, foi_request):
+        expected_url = reverse(
+            'foirequest_detail',
+            args=[foi_request.protocol]
+        )
 
-@pytest.fixture
-def public_body(esic):
-    return PublicBody(
-        name='example',
-        esic=esic
-    )
-
-
-@pytest.fixture
-def esic():
-    return Esic(
-        url='http://example.com'
-    )
-
-
-@pytest.fixture
-def foi_request():
-    return FOIRequest()
-
-
-@pytest.fixture
-def message(foi_request):
-    return Message(
-        foi_request=foi_request
-    )
-
-
-@pytest.fixture
-def foi_request_with_sent_user_message(foi_request, message_from_user):
-    with transaction.atomic():
-        message_from_user.approve()
-        message_from_user.foi_request = foi_request
-        message_from_user.sent_at = timezone.now()
-        _save_message(message_from_user)
-    foi_request.refresh_from_db()
-    return foi_request
-
-
-@pytest.fixture
-def message_from_user(public_body):
-    return Message(
-        sender=None,
-        receiver=public_body
-    )
-
-
-@pytest.fixture
-def message_from_government(public_body):
-    return Message(
-        sender=public_body,
-        sent_at=timezone.now(),
-        receiver=None
-    )
-
-
-def _save_message(message):
-    # FIXME: Ideally a simple message.save() would save everything, but I
-    # couldn't find out how to do so in Django. Not yet.
-    with transaction.atomic():
-        if message.sender:
-            message.sender.esic.save()
-            message.sender.save()
-            message.sender_id = message.sender.id
-        if message.receiver:
-            message.receiver.esic.save()
-            message.receiver.save()
-            message.receiver_id = message.receiver.id
-        message.foi_request.save()
-        message.foi_request_id = message.foi_request.id
-        message.save()
+        assert foi_request.get_absolute_url() == expected_url

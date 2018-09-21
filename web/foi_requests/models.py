@@ -88,6 +88,7 @@ class FOIRequest(models.Model):
     esic_protocol = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    can_publish = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_at']
@@ -106,6 +107,10 @@ class FOIRequest(models.Model):
                 {'protocol': _('Protocol can not be changed.')}
             )
         return super(FOIRequest, self).clean(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('foirequest_detail', args=[self.protocol])
 
     def __str__(self):
         return self.protocol
@@ -308,8 +313,7 @@ class Message(models.Model):
         self.moderation_status = False
 
     def get_absolute_url(self):
-        from django.urls import reverse
-        return reverse('foirequest_detail', args=[self.foi_request.protocol])
+        return self.foi_request.get_absolute_url()
 
     def _create_or_update_foi_request_id(self):
         '''If there is a foi_request, use its ID, otherwise create one.'''

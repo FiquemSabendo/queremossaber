@@ -19,7 +19,7 @@
       </label>
       {% render_field form.name placeholder="Qual o nome do órgão público?" %}
       <small>
-        Antes de cadastrar um novo órgão, por favor confira se ele já não existe <a href="{% url 'message_new' %}">aqui</a>.
+        Antes de cadastrar um novo órgão, por favor confira se ele já não existe <a href="{% url 'foi_request_new' %}">aqui</a>.
       </small>
     </div>
 
@@ -54,7 +54,7 @@
         Cadastrar
       </button>
       ou
-      <a class="link-dimmed" href="{% url 'message_new' %}">cancelar</a>
+      <a class="link-dimmed" href="{% url 'foi_request_new' %}">cancelar</a>
     </div>
   </form>
 </div>

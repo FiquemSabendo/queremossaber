@@ -236,6 +236,19 @@ textarea {
   padding: 2rem 0;
 }
 
+.form-field-checkbox {
+  input[type="checkbox"] {
+    vertical-align: middle;
+  }
+
+  label {
+    font-size: 1rem;
+    display: unset;
+    text-transform: unset;
+    font-weight: unset;
+  }
+}
+
 .form-submit {
   padding: 1rem 0;
   font-size: .875rem;
