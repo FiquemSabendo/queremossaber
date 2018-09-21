@@ -67,7 +67,11 @@ footer {
 }
 
 footer {
-  margin-top: auto;
+  text-align: center;
+
+  .wrapper {
+    border-top: 1px solid $pale;
+  }
 }
 
 header {
