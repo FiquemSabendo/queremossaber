@@ -8,17 +8,14 @@
 {% block content %}
 {% load widget_tweaks %}
 <div>
-  <p class="warning">
-    O maior risco é você ser identificado através do pedido em si. Além de não escrever nenhuma informação pessoal, evite pedir informações particulares.
-  </p>
+  <h2>
+    Novo pedido
+  </h2>
+
   <form
     action="{% url 'message_new' %}"
     method="post">
     {% csrf_token %}
-
-    <h2>
-      Novo Pedido
-    </h2>
 
     <div class="form-field">
       {{ form.receiver.errors }}
@@ -26,8 +23,9 @@
         Órgão Público
       </label>
       {% render_field form.receiver class+="selectize" %}
-      <br>
-      <a class="button button-tiny" href="{% url 'publicbody_new' %}">Criar novo</a>
+      <small>
+        Não encontrou o órgão público que queria? <a href="{% url 'publicbody_new' %}">Cadastre um novo órgão</a>.
+      </small>
     </div>
 
     <div class="form-field">
@@ -54,10 +52,5 @@
       <a class="link-dimmed" href="{% url 'index' %}">cancelar</a>
     </div>
   </form>
-  <p>
-    <small>
-      Nós não gravamos o endereço IP do seu computador, então a única forma de você ser identificado por esse caminho é se alguém conseguir invadir nossos servidores e alterar o nosso sistema. Tomamos precauções para que isso não aconteça, mas você pode garantir sua anonimidade mesmo caso nosso servidor esteja comprometido usando o <a href="https://www.torproject.org/projects/torbrowser.html">navegador Tor</a>.
-    </small>
-  </p>
 </div>
 {% endblock %}

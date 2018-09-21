@@ -4,11 +4,12 @@
 {% load widget_tweaks %}
 
 <div>
+  <h2>Cadastrar órgão público</h2>
+
   <form
     action="{% url 'publicbody_new' %}"
     method="post">
     {% csrf_token %}
-    <h2>Novo Órgão</h2>
 
     <div class="form-field">
       {{ form.name.errors }}
@@ -16,7 +17,10 @@
       <label for="{{ form.name.id_for_label }}">
         Nome
       </label>
-      {% render_field form.name %}
+      {% render_field form.name placeholder="Qual o nome do órgão público?" %}
+      <small>
+        Antes de cadastrar um novo órgão, por favor confira se ele já não existe <a href="{% url 'message_new' %}">aqui</a>.
+      </small>
     </div>
 
     <div class="form-field">
@@ -40,14 +44,14 @@
     <div class="form-field">
       {{ esic_form.url.errors }}
       <label for="{{ form.esic_url.id_for_label }}">
-        URL
+        URL do Sistema de Informação ao Cidadão
       </label>
-      {% render_field esic_form.url %}
+      {% render_field esic_form.url placeholder="Qual o endereço da página onde podemos enviar pedidos? (ex.: http://exemplo.gov.br/esic)" %}
     </div>
 
     <div class="form-submit">
       <button type="submit">
-        Criar
+        Cadastrar
       </button>
       ou
       <a class="link-dimmed" href="{% url 'message_new' %}">cancelar</a>
