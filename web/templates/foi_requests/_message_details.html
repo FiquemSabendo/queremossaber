@@ -12,14 +12,6 @@
     <dd>
       {{ message.sent_at | default:"Não enviado" }}
     </dd>
-    {% if message.summary %}
-      <dt>
-        Resumo
-      </dt>
-      <dd>
-        {{ message.summary }}
-      </dd>
-    {% endif %}
     {% if message.attached_file %}
       <dt>
         Arquivos anexos

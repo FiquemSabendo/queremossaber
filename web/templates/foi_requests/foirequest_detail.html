@@ -32,6 +32,14 @@
       <dd>
         {{ object.public_body.name }}
       </dd>
+      {% if object.summary %}
+        <dt>
+          Resumo
+        </dt>
+        <dd>
+          {{ object.summary }}
+        </dd>
+      {% endif %}
     </dl>
   </section>
 

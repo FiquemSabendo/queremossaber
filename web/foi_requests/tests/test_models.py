@@ -271,6 +271,23 @@ class TestFOIRequest(object):
         assert foi_request.last_message is None
         assert foi_request.status is FOIRequest.STATUS.waiting_user
 
+    @pytest.mark.django_db()
+    def test_summary_returns_first_messages_summary(self):
+        foi_request = FOIRequest()
+
+        with transaction.atomic():
+            foi_request.save()
+            first_message = Message(foi_request=foi_request, summary='First message')
+            last_message = Message(foi_request=foi_request, summary='Last message')
+            first_message.save()
+            last_message.save()
+            foi_request.message_set.set([first_message, last_message])
+
+        assert foi_request.summary == first_message.summary
+
+    def test_summary_returns_none_if_there_are_no_messages(self):
+        assert FOIRequest().summary is None
+
 
 @pytest.fixture
 def public_body(esic):

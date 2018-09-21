@@ -112,8 +112,13 @@ class FOIRequest(models.Model):
 
     @property
     def public_body(self):
-        if self._first_message:
-            return self._first_message.receiver
+        if self.first_message:
+            return self.first_message.receiver
+
+    @property
+    def summary(self):
+        if self.first_message:
+            return self.first_message.summary
 
     @property
     def status(self):
@@ -141,7 +146,7 @@ class FOIRequest(models.Model):
         return status
 
     @property
-    def _first_message(self):
+    def first_message(self):
         return self.message_set.order_by('created_at').first()
 
     @property
