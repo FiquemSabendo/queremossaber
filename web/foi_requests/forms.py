@@ -14,6 +14,9 @@ class MessageForm(ModelForm):
 
     summary = CharField()
 
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        self.fields['receiver'].required = True
 
 class EsicForm(ModelForm):
     class Meta:
