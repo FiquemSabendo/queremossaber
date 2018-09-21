@@ -1,0 +1,2 @@
+web: python manage.py runserver
+sass: make watch_sass

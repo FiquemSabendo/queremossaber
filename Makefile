@@ -15,7 +15,7 @@ migrate:
 	python manage.py migrate
 
 server:
-	python manage.py runserver
+	honcho -f Procfile.dev start
 
 create_admin:
 	python manage.py createsuperuser

@@ -10,6 +10,7 @@ libsass
 django-livesync
 django-debug-toolbar
 watchdog
+honcho
 
 # heroku
 gunicorn
