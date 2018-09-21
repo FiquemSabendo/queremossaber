@@ -10,7 +10,7 @@
       Enviado em
     </dt>
     <dd>
-      {{ message.sent_at }}
+      {{ message.sent_at | default:"Não enviado" }}
     </dd>
     {% if message.summary %}
       <dt>
