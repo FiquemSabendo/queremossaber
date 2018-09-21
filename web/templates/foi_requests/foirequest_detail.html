@@ -1,43 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="request-details">
-  <div class="info">
+<article class="request-details">
+  <section class="info">
     <h2>
       Pedido: {{ object.protocol }}
     </h2>
     <p>
-      ATENÇÃO: Anote em um lugar seguro o número de protocolo acima.
-      Esse número é a sua única maneira de acompanhar o andamento do pedido.
+      ATENÇÃO: Anote esse número de protocolo em um lugar seguro.
+      Ele é a única maneira de acompanhar o andamento do pedido.
     </p>
-  </div>
-  <p>
-    Detalhes do seu pedido:
-  </p>
-  <dl>
-    <dt>Etapa</dt>
-    <dd>
-      <div class="request-status request-status-waiting">
-        {{ object.status.value }}
-      </div>
-    </dd>
-    <dt>
-      Aberto em
-    </dt>
-    <dd>
-      {{ object.created_at }}
-    </dd>
-    <dt>
-      Órgão
-    </dt>
-    <dd>
-      {{ object.public_body.name }}
-    </dd>
-    {% for message in object.message_set.all %}
+  </section>
+
+  <section>
+    <dl>
+      <dt>Etapa</dt>
       <dd>
-        {% include "foi_requests/_message_details.html" %}
+        <div class="request-status request-status-waiting">
+          {{ object.status.value }}
+        </div>
       </dd>
-    {% endfor %}
-  </dl>
-</div>
+      <dt>
+        Aberto em
+      </dt>
+      <dd>
+        {{ object.created_at }}
+      </dd>
+      <dt>
+        Órgão
+      </dt>
+      <dd>
+        {{ object.public_body.name }}
+      </dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Mensagens</h2>
+  {% for message in object.message_set.all %}
+    {% include "foi_requests/_message_details.html" %}
+  {% endfor %}
+  </section>
+</article>
 {% endblock %}

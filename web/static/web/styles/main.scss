@@ -347,6 +347,8 @@ button,
   p {
     font-size: 1rem;
   }
+
+  margin-bottom: 1rem;
 }
 
 .warning {
@@ -354,9 +356,6 @@ button,
   color: $black;
 }
 
-ul,
-ol,
-li,
 dl,
 dt,
 dd {
@@ -377,6 +376,29 @@ dt {
   dd {
     margin-bottom: 1rem;
   }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+}
+
+.message-details {
+  border: 1px solid $pale;
+  padding: 1rem;
+  margin-bottom: 2rem;
+
+  .message-meta {
+    border-bottom: 1px solid $pale;
+  }
+  .message-body {
+    white-space: pre-line;
+  }
+}
+
+.message-publicbody {
+  background-color: rgba($yellow, .2);
 }
 
 .request-status {
