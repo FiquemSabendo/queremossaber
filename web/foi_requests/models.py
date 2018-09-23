@@ -2,7 +2,7 @@ import os
 import enum
 import hashlib
 from django.db import models
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -270,7 +270,6 @@ class Message(models.Model):
         self._original_moderation_status = self.moderation_status
 
     def save(self, *args, **kwargs):
-        self._create_or_update_foi_request_id()
         self.clean()
         return super(Message, self).save(*args, **kwargs)
 
@@ -314,19 +313,6 @@ class Message(models.Model):
 
     def get_absolute_url(self):
         return self.foi_request.get_absolute_url()
-
-    def _create_or_update_foi_request_id(self):
-        '''If there is a foi_request, use its ID, otherwise create one.'''
-        try:
-            foi_request = self.foi_request
-            self.foi_request_id = foi_request.id
-        except ObjectDoesNotExist:
-            pass
-
-        if not self.foi_request_id:
-            foi_request = FOIRequest()
-            foi_request.save()
-            self.foi_request = foi_request
 
     def _update_moderated_at_if_needed(self):
         if self._original_moderation_status != self.moderation_status:

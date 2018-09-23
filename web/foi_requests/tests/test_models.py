@@ -11,13 +11,6 @@ from .conftest import save_message
 
 class TestMessage(object):
     @pytest.mark.django_db()
-    def test_creating_message_creates_foi_request(self):
-        message = Message()
-        message.save()
-
-        assert message.foi_request
-
-    @pytest.mark.django_db()
     def test_foi_request_isnt_created_if_message_creation_fails(self):
         initial_foi_requests_count = FOIRequest.objects.count()
         message = Message()
@@ -41,13 +34,11 @@ class TestMessage(object):
         assert message.get_absolute_url() == message.foi_request.get_absolute_url()
 
     @pytest.mark.django_db()
-    def test_message_updates_moderated_at_when_moderation_status_is_set(self):
-        message = Message(moderated_at=None)
+    def test_message_updates_moderated_at_when_moderation_status_is_set(self, message):
         assert message.moderated_at is None
 
-        with transaction.atomic():
-            message.moderation_status = True
-            message.save()
+        message.moderation_status = True
+        save_message(message)
 
         assert message.moderated_at is not None
 
@@ -187,20 +178,12 @@ class TestFOIRequest(object):
         assert foi_request.protocol in str(foi_request)
 
     @pytest.mark.django_db()
-    def test_public_body_returns_first_messages_receiver(self, public_body):
-        # FIXME: The knowledge of saving the esic shouldn't be here. Ideally,
-        # the public_body received would already be saved.
-        public_body.esic.save()
-        public_body.save()
+    def test_public_body_returns_first_messages_receiver(self, public_body, foi_request):
+        first_message = Message(foi_request=foi_request, receiver=public_body)
+        last_message = Message(foi_request=foi_request, receiver=None)
 
-        with transaction.atomic():
-            foi_request = FOIRequest()
-            first_message = Message(foi_request=foi_request, receiver=public_body)
-            last_message = Message(foi_request=foi_request, receiver=None)
-
-            foi_request.save()
-            first_message.save()
-            last_message.save()
+        save_message(first_message)
+        save_message(last_message)
 
         assert foi_request.public_body == first_message.receiver
 
@@ -224,10 +207,8 @@ class TestFOIRequest(object):
         first_message = Message(foi_request=foi_request)
         last_message = Message(foi_request=foi_request)
 
-        with transaction.atomic():
-            foi_request.save()
-            first_message.save()
-            last_message.save()
+        save_message(first_message)
+        save_message(last_message)
 
         foi_request.refresh_from_db()
         assert foi_request.last_message == last_message
