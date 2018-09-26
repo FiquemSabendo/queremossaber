@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-26 15:53+0100\n"
+"POT-Creation-Date: 2018-09-26 17:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,6 @@ msgid "Delayed"
 msgstr "Atrasado"
 
 #: web/foi_requests/models.py:76
-#: web/templates/foi_requests/foirequest_detail.html:5
 msgid "Finished"
 msgstr "Finalizado"
 
@@ -93,6 +92,6 @@ msgstr "Somente mensagens aprovadas podem ser marcadas como enviadas."
 msgid "A message can not be rejected without an explanation."
 msgstr "Uma mensagem não pode ser rejeitada sem uma explicação."
 
-#: web/settings.py:130
+#: web/settings.py:129
 msgid "Brazilian Portuguese"
 msgstr "Português brasileiro"
