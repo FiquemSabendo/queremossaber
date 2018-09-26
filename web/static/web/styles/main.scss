@@ -424,23 +424,11 @@ dt {
   border-radius: .25rem;
   display: inline-block;
 
-  &-waiting {
-    background-color: $pale;
-    color: $black;
-  }
-
-  &-submitted {
-    background-color: $blue;
-    color: $white;
-  }
+  background-color: $pale;
+  color: $black;
 
   &-rejected {
     background-color: $red;
-    color: $white;
-  }
-
-  &-approved {
-    background-color: $green;
     color: $white;
   }
 }

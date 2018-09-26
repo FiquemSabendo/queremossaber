@@ -14,9 +14,9 @@
 
   <section>
     <dl>
-      <dt>Etapa</dt>
+      <dt>Status</dt>
       <dd>
-        <div class="request-status request-status-waiting">
+        <div class="request-status request-status-{{ object.status.name }}">
           {{ object.status.value }}
         </div>
       </dd>
