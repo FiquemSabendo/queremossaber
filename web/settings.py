@@ -14,6 +14,7 @@ import base64
 import json
 import environ
 from google.oauth2 import service_account
+from django.utils.translation import gettext_lazy as _
 import django_heroku
 
 
@@ -123,6 +124,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'pt-br'
+
+LANGUAGES = [
+    ('pt-br', _('Brazilian Portuguese')),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 TIME_ZONE = 'Brazil/East'
 

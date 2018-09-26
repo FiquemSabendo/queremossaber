@@ -5,3 +5,5 @@ echo "-----> Compiling SCSS"
 make sass
 echo "-----> Collecting static files"
 python manage.py collectstatic --noinput --traceback
+echo "-----> Compiling translation files"
+make compile_translations

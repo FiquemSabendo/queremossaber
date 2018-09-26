@@ -295,7 +295,7 @@ class Message(models.Model):
         if self.is_from_user and not self.is_approved:
             if self.sent_at is not None:
                 raise ValidationError({
-                    'sent_at': _('Only approved user messages can be sent.'),
+                    'sent_at': _('Only approved user messages can be marked as sent.'),
                 })
 
         if self.is_rejected and not self.moderation_message:

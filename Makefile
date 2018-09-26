@@ -8,6 +8,8 @@ help:
 	@echo 'sass: compile styles'
 	@echo 'server: start server'
 	@echo 'watch_sass: watch changes and compile'
+	@echo 'make_translations: regenerate translation files'
+	@echo 'compile_translations: compile translation files'
 
 watch_sass: sass
 	watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
@@ -29,3 +31,11 @@ server:
 
 create_admin:
 	python manage.py createsuperuser
+
+make_translations:
+	django-admin makemessages --all --ignore "env*"
+
+compile_translations:
+	# FIXME: This will compile all .po files in the current folder, including in
+	# `.tox` and `env`
+	django-admin compilemessages
