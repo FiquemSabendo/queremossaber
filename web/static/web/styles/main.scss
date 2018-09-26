@@ -151,7 +151,12 @@ main {
   svg {
     display: block;
     max-width: 100%;
+    height: 12rem;
     margin: 3rem auto;
+
+    text {
+      font-size: 1rem;
+    }
   }
 
   h2 {
@@ -176,6 +181,14 @@ main {
       @media (min-width: 48rem) {
         font-size: .875rem;
       }
+    }
+  }
+
+  li {
+    font-size: 1rem;
+
+    @media (min-width: 48rem) {
+      font-size: 1.375rem;
     }
   }
 }
