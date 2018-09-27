@@ -48,6 +48,7 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
     'web.foi_requests',
+    'web.whoami',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

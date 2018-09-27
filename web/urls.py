@@ -25,6 +25,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('p/', include('web.foi_requests.urls')),
     path('admin/', admin.site.urls),
+    path('whoami/', include('web.whoami.urls')),
 ]
 
 if not settings.ENABLE_GCLOUD:
