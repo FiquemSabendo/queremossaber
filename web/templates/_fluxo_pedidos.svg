@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1016"
+   height="228"
+   viewBox="0 0 1016 228"
+   id="fluxo-pedidos"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="_fluxo_pedidos.svg">
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs88" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     id="namedview86"
+     showgrid="false"
+     inkscape:zoom="0.9075465"
+     inkscape:cx="308.16249"
+     inkscape:cy="118.98951"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g4" />
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g4">
+    <g
+       fill-rule="nonzero"
+       transform="translate(27 27)"
+       id="g6">
+      <circle
+         cx="81"
+         cy="81"
+         r="94.5"
+         fill="#C8D6E5"
+         stroke="#C8D6E5"
+         stroke-width="27"
+         id="circle8" />
+      <path
+         fill="#222F3E"
+         d="M145.093797,130.533965 C130.278599,149.675851 107.078529,162 81,162 C54.9214711,162 31.7214014,149.675851 16.906203,130.533965 C22.3705384,115.205673 33.1775579,102.413477 47.0855146,94.3991226 C42.4057815,87.6990885 39.6608051,79.5477113 39.6608051,70.7552105 C39.6608051,47.9242036 58.1689931,29.4160156 81,29.4160156 C103.831007,29.4160156 122.339195,47.9242036 122.339195,70.7552105 C122.339195,79.5477113 119.594219,87.6990885 114.914485,94.3991226 C128.822442,102.413477 139.629462,115.205673 145.093797,130.533965 Z"
+         id="path10" />
+    </g>
+    <g
+       transform="translate(401)"
+       id="g12">
+      <rect
+         width="216"
+         height="216"
+         fill="#2E86DE"
+         fill-rule="nonzero"
+         rx="10"
+         id="rect14" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:118.93777466px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="29.918049"
+         y="151.35306"
+         id="text4218"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4220"
+           x="29.918049"
+           y="151.35306"
+           style="fill:#ffffff">PA</tspan></text>
+    </g>
+    <g
+       fill-rule="nonzero"
+       transform="translate(826 27)"
+       id="g18">
+      <circle
+         cx="81.457"
+         cy="81"
+         r="94.5"
+         fill="#C8D6E5"
+         stroke="#C8D6E5"
+         stroke-width="27"
+         id="circle20" />
+      <path
+         fill="#222F3E"
+         d="M56.8523847,108.493795 L72.7488594,108.493795 L72.7488594,58.8409949 L90.3584717,58.8409949 L90.3584717,108.493795 L107.809497,108.493795 L107.809497,58.8409949 L125.419109,58.8409949 L125.419109,108.493795 L137.345564,108.493795 L137.345564,116.011697 L26.7656011,116.011697 L26.7656011,108.493795 L39.2427724,108.493795 L39.2427724,58.8409949 L56.8523847,58.8409949 L56.8523847,108.493795 Z M26.4662357,137.443808 L26.4662357,119.834196 L137.644929,119.834196 L137.644929,137.443808 L26.4662357,137.443808 Z M26.4662357,55.0184964 L26.4662357,37.4088841 L82.0555823,15.8678422 L137.644929,37.4088841 L137.644929,55.0184964 L26.4662357,55.0184964 Z"
+         id="path22" />
+    </g>
+    <g
+       transform="translate(237.2296,72.5)"
+       id="g24"
+       style="fill-rule:nonzero">
+      <g
+         id="g26"
+         style="fill:#7ed321">
+        <polygon
+           points="132.622,11 137,15 132.622,19 0,19 0,11 "
+           id="polygon28" />
+        <rect
+           width="18.267"
+           height="8"
+           x="118.825"
+           y="6.7360001"
+           transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,45.069529,-87.335468)"
+           id="rect30" />
+        <rect
+           width="18.267"
+           height="8"
+           x="118.825"
+           y="15.243"
+           transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,51.085264,123.33074)"
+           id="rect32" />
+      </g>
+      <g
+         transform="matrix(-1,0,0,1,136.5,41.993)"
+         id="g34"
+         style="fill:#2e86de">
+        <rect
+           width="131"
+           height="8"
+           x="0.096000001"
+           y="10.435"
+           id="rect36" />
+        <rect
+           width="20"
+           height="8"
+           x="115.587"
+           y="6.1030002"
+           transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,43.92748,-85.844319)"
+           id="rect38" />
+        <rect
+           width="20"
+           height="8"
+           x="115.587"
+           y="14.648"
+           transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,49.969633,120.63737)"
+           id="rect40" />
+      </g>
+    </g>
+    <g
+       transform="translate(645.83415,72.5)"
+       id="g42"
+       style="fill-rule:nonzero">
+      <g
+         id="g44"
+         style="fill:#7ed321">
+        <polygon
+           points="0,11 132.622,11 137,15 132.622,19 0,19 "
+           id="polygon46" />
+        <rect
+           width="18.267"
+           height="8"
+           x="118.825"
+           y="6.7360001"
+           transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,45.069529,-87.335468)"
+           id="rect48" />
+        <rect
+           width="18.267"
+           height="8"
+           x="118.825"
+           y="15.243"
+           transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,51.085264,123.33074)"
+           id="rect50" />
+      </g>
+      <g
+         transform="matrix(-1,0,0,1,136.5,41.993)"
+         id="g52"
+         style="fill:#2e86de">
+        <rect
+           width="131"
+           height="8"
+           x="0.096000001"
+           y="10.435"
+           id="rect54" />
+        <rect
+           width="20"
+           height="8"
+           x="115.587"
+           y="6.1030002"
+           transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,43.92748,-85.844319)"
+           id="rect56" />
+        <rect
+           width="20"
+           height="8"
+           x="115.587"
+           y="14.648"
+           transform="matrix(0.70710678,-0.70710678,-0.70710678,-0.70710678,49.969633,120.63737)"
+           id="rect58" />
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="714.3739"
+       y="30.774044"
+       id="text4226"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4228"
+         x="714.3739"
+         y="30.774044"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">fazemos</tspan><tspan
+         sodipodi:role="line"
+         x="714.3739"
+         y="55.774048"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle"
+         id="tspan4230">seu pedido</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="717.96118"
+       y="179.88995"
+       id="text4232"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4234"
+         x="717.96118"
+         y="179.88995"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">o órgão</tspan><tspan
+         sodipodi:role="line"
+         x="717.96118"
+         y="204.88995"
+         id="tspan4236"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">responde</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="305.85724"
+       y="166.98956"
+       id="text4238"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4240"
+         x="305.85724"
+         y="166.98956"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">cadastramos o</tspan><tspan
+         sodipodi:role="line"
+         x="305.85724"
+         y="191.98956"
+         id="tspan4242"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">pedido no seu</tspan><tspan
+         sodipodi:role="line"
+         x="305.85724"
+         y="216.98956"
+         id="tspan4244"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">protocolo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="305.44708"
+       y="31.174435"
+       id="text4246"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4248"
+         x="305.44708"
+         y="31.174435"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">você faz um</tspan><tspan
+         sodipodi:role="line"
+         x="305.44708"
+         y="56.174431"
+         id="tspan4250"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Menlo-Bold, Menlo;-inkscape-font-specification:'Menlo-Bold, Menlo Bold';text-align:center;text-anchor:middle">pedido anônimo</tspan></text>
+  </g>
+</svg>

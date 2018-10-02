@@ -1,6 +1,9 @@
-# Lainonima
+# Pedidos Anônimos
 
-[![Travis](https://travis-ci.org/vitorbaptista/lainonima.svg?branch=master)](https://travis-ci.org/vitorbaptista/lainonima)
+[![Travis](https://travis-ci.org/okfn-brasil/pedidosanonimos.svg?branch=master)](https://travis-ci.org/okfn-brasil/pedidosanonimos)
+
+Plataforma que permite o envio de pedidos anônimos pela Lei de Acesso à
+Informação.
 
 ## Instalando
 
