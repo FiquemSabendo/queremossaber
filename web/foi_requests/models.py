@@ -229,12 +229,13 @@ class Message(models.Model):
 
     def _attached_file_path(self, filename):
         root, ext = os.path.splitext(filename)
+        hash_size = 24
 
         hasher = hashlib.sha256()
         hasher.update(root.encode('utf-8'))
-        hashed_filename = '{}{}'.format(hasher.hexdigest(), ext)
+        hashed_filename = '{}{}'.format(hasher.hexdigest()[:hash_size], ext)
 
-        return os.path.join(self.foi_request.protocol[:2], hashed_filename)
+        return hashed_filename
 
     attached_file = models.FileField(
         upload_to=_attached_file_path,

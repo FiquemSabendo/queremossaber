@@ -36,28 +36,11 @@ Quando você carrega as fixtures no seu banco de dados, os seguintes pedidos de 
 * Respondido com um PDF: HQCYR6KQ
 * Aguardando resposta atrasada do órgão público: GQ2XOQM7
 
-## Configurando uploads para Google Cloud
+## Configurando uploads para Digital Ocean Spaces
 
 Durante desenvolvimento, os arquivos enviados são salvos no filesystem local.
-Em produção, usamos o Google Cloud Storage. Para habilitá-lo, precisamos do
-JSON com as credenciais do GCloud. Como usamos o Heroku para deploy, não
-podemos apontar diretamente para o arquivo (o filesystem do Heroku é efêmero).
-Ao invés disso, codificamos esse JSON em base64 e o colocamos na variável
-`GS_APPLICATION_CREDENTIALS_BASE64`.
-
-Considerando que suas credenciais estejam em `gcloud-credentials.json`, execute:
-
-`make encode_gcloud_credentials path=gcloud-credentials.json`
-
-Esse comando irá retornar o arquivo codificado em base64, daí basta alterar as
-variáveis de ambiente no arquivo `.env`:
-
-1. `GS_APPLICATION_CREDENTIALS_BASE64` com o conteúdo do comando anterior
-1. `ENABLE_GCLOUD=True`
-1. Configure o nome do seu bucket em `GS_BUCKET_NAME`
-
-Reinicie o servidor Django, e os próximos arquivos enviados já irão para o
-GCloud.
+Em produção, usamos o Digital Ocean Spaces. Para habilitá-lo, configure as
+variáveis que iniciam com `AWS_` no arquivo `.env` e adicione `ENABLE_S3=True`.
 
 ## Rodando testes
 

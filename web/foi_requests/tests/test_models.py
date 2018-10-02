@@ -143,7 +143,7 @@ class TestMessage(object):
 
     def test_attached_file_hashes_filename(self, message):
         filename = 'foo.pdf'
-        expected_filename = '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae.pdf'
+        expected_filename = '2c26b46b68ffc68ff99b453c.pdf'
 
         generated_filename = message.attached_file.field.upload_to(message, filename)
 

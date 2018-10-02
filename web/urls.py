@@ -28,7 +28,7 @@ urlpatterns = [
     path('a/', admin.site.urls),
 ]
 
-if not settings.ENABLE_GCLOUD:
+if not settings.ENABLE_S3:
     urlpatterns = [
         url(r'^upload/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
