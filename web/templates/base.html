@@ -6,7 +6,7 @@
       Pedidos Anônimos
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:200,400,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
     <link rel="stylesheet" href="{% static '/web/styles/main.css' %}">
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
@@ -16,7 +16,7 @@
       <div class="wrapper">
         <div class="logo-wrapper">
           <a class="logo" href="{% url 'index' %}">
-            Pedidos Anônimos
+            {% include '_logo.svg' %}
           </a>
           <p>
             Faça pedidos de acesso à informação a qualquer órgão público sem revelar sua identidade.
@@ -40,12 +40,16 @@
     </main>
     <footer>
       <div class="wrapper">
-        <p>
-          O <a href="{% url 'index' %}">Pedidos Anônimos</a> é um projeto sem fins lucrativos desenvolvido por cidadãos interessados em um Brasil mais transparente com apoio da <a href="https://br.okfn.org" rel="external">Open Knowledge Brasil</a>.
+        <div style="width:70%; float:left;">
+          O <a href="{% url 'index' %}">Pedidos Anônimos</a> é um projeto sem fins lucrativos desenvolvido por cidadãos interessados em um Brasil mais transparente. Entre em contato pelo e-mail <a href="mailto:queremossaber@ok.org.br">queremossaber@ok.org.br</a>.
         </p>
-        <p>
-          Contato via <a href="mailto:queremossaber@ok.org.br">queremossaber@ok.org.br</a>.
-        </p>
+        </div>
+        <div style="width:30%; float:right;">
+          <p align="center">
+            Apoio<br>
+            <a href="https://br.okfn.org" rel="external">{% include '_logo_okbr.svg' %}</a>
+          </p>
+        </div>
       </div>
     </footer>
     {% block scripts %}{% endblock %}
