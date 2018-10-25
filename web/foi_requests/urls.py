@@ -7,7 +7,7 @@ urlpatterns = [
     path('new/', views.CreateFOIRequestView.as_view(), name='foi_request_new'),
     path('public_body/new/', views.CreatePublicBodyView.as_view(), name='publicbody_new'),
     re_path(
-        '^(?P<slug>[\w\d]+)/$',
+        r'^(?P<slug>[\w\d]+)/$',
         views.FOIRequestView.as_view(),
         name='foirequest_detail'
     ),
