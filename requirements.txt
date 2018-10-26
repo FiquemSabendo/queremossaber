@@ -14,7 +14,7 @@ django-heroku==0.3.1
 django-livesync==0.4
 django-storages==1.7.1
 django-widget-tweaks==1.4.2
-django==2.1.1
+django==2.1.2
 docutils==0.14            # via botocore
 gunicorn==19.9.0
 honcho==1.0.1
