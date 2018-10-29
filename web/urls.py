@@ -23,6 +23,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
     path('p/', include('web.foi_requests.urls')),
     path('whoami/', include('web.whoami.urls')),
     path('a/', admin.site.urls),

@@ -213,6 +213,18 @@ main {
   }
 }
 
+.faq {
+  dt {
+    text-transform: unset;
+    font-size: 1rem;
+    color: $black;
+    margin-bottom: 0.5rem;
+  }
+
+  dd {
+    margin-bottom: 2rem;
+  }
+}
 label {
   display: block;
   font-size: .75rem;
