@@ -88,7 +88,7 @@ class FOIRequest(models.Model):
     esic_protocol = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    can_publish = models.BooleanField(default=False)
+    can_publish = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-created_at']
