@@ -1,9 +1,9 @@
-# Pedidos Anônimos
+# Queremos Saber
 
 [![Travis](https://travis-ci.org/okfn-brasil/pedidosanonimos.svg?branch=master)](https://travis-ci.org/okfn-brasil/pedidosanonimos)
 
-Plataforma que permite o envio de pedidos anônimos pela Lei de Acesso à
-Informação.
+Plataforma que permite o envio de pedidos pela Lei de Acesso à
+Informação sem revelar sua identidade.
 
 ## Instalando
 

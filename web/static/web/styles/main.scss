@@ -214,10 +214,16 @@ main {
 }
 
 .faq {
-  dt {
-    text-transform: unset;
-    font-size: 1rem;
+  dt,
+  dd,
+  p {
     color: $black;
+    font-size: 1rem;
+  }
+
+  dt {
+    color: $black;
+    text-transform: unset;
     margin-bottom: 0.5rem;
   }
 

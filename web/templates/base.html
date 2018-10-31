@@ -3,7 +3,7 @@
 <html lang="pt-br">
   <head>
     <title>
-      Pedidos Anônimos
+      Queremos Saber
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto:200,400,900" rel="stylesheet">
@@ -23,14 +23,12 @@
           </p>
         </div>
 
-        {% if request.get_full_path == '/' %}
-          <div class="request">
-            {% include '_search_request.html' %}
-            <a class="button" href="{% url 'foi_request_new' %}">
-              Fazer Pedido
-            </a>
-          </div>
-        {% endif %}
+        <div class="request">
+          {% include '_search_request.html' %}
+          <a class="button" href="{% url 'foi_request_new' %}">
+            Fazer Pedido
+          </a>
+        </div>
       </div>
     </header>
     <main>
@@ -41,8 +39,16 @@
     <footer>
       <div class="wrapper">
         <div style="width:70%; float:left;">
-          O <a href="{% url 'index' %}">Pedidos Anônimos</a> é um projeto sem fins lucrativos desenvolvido por cidadãos interessados em um Brasil mais transparente. Entre em contato pelo e-mail <a href="mailto:queremossaber@ok.org.br">queremossaber@ok.org.br</a>.
-        </p>
+          <p>
+          O <a href="{% url 'index' %}">Queremos Saber</a> é um projeto sem fins lucrativos desenvolvido por cidadãos interessados em um Brasil mais transparente. Entre em contato pelo e-mail <a href="mailto:queremossaber@ok.org.br">queremossaber@ok.org.br</a>.
+          </p>
+          <p>
+            <a href="{% url 'foi_request_new' %}">Faça um pedido</a>
+            |
+            <a href="{% url 'faq' %}">Perguntas Frequentes</a>
+            |
+            <a href="mailto:queremossaber@ok.org.br">Contato</a>
+          </p>
         </div>
         <div style="width:30%; float:right;">
           <p align="right">
