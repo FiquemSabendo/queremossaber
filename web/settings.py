@@ -174,4 +174,5 @@ django_heroku.settings(locals())
 
 # FIXME: This is a workaround because WhiteNoise's files storage raises error 500.
 # http://whitenoise.evans.io/en/stable/django.html#troubleshooting-the-whitenoise-storage-backend
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# 'django.contrib.staticfiles.storage.StaticFilesStorage'
