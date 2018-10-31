@@ -19,11 +19,22 @@ from django.urls import include, path
 from django.conf import settings
 from django.views.static import serve
 from django.conf.urls import url
+from django.views.decorators.cache import cache_page
 
+
+ONE_DAY = 60 * 60 * 24
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html'), name='index'),
-    path('faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
+    path(
+        '',
+        cache_page(ONE_DAY)(TemplateView.as_view(template_name='index.html')),
+        name='index'
+    ),
+    path(
+        'faq/',
+        cache_page(ONE_DAY)(TemplateView.as_view(template_name='faq.html')),
+        name='faq'
+    ),
     path('p/', include('web.foi_requests.urls')),
     path('whoami/', include('web.whoami.urls')),
     path('a/', admin.site.urls),
