@@ -22,7 +22,7 @@ $link-visited: $green;
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
-  font-weight: 200;
+  font-weight: 400;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -121,7 +121,6 @@ header {
 
     svg {
       fill: $dark-grey;
-      width: 400px;
     }
   }
 
@@ -174,7 +173,12 @@ main {
     margin: 3rem auto;
 
     text {
-      font-size: 1rem;
+      font-size: 1.2rem;
+
+      @media (max-width: 48rem) {
+        font-size: 1.375rem;
+        font-weight: 400;
+      }
     }
   }
 
