@@ -23,6 +23,8 @@ env = environ.Env(
     DEBUG=(bool, False),
     ENV_PATH=(str, DEFAULT_ENV_PATH),
     ENABLE_S3=(bool, False),
+    CSRF_COOKIE_SECURE=(bool, False),
+    CSRF_COOKIE_DOMAIN=(str, None),
 )
 env.read_env(env.str('ENV_PATH'))
 
@@ -40,6 +42,9 @@ ALLOWED_HOSTS = []
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
+CSRF_COOKIE_DOMAIN = env('CSRF_COOKIE_DOMAIN')
 
 # Application definition
 
