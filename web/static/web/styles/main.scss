@@ -223,6 +223,10 @@ main {
   p {
     color: $black;
     font-size: 1rem;
+
+    @media (min-width: 48rem) {
+      font-size: 1.375rem;
+    }
   }
 
   dt {
