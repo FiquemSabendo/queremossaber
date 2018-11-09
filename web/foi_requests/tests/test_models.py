@@ -271,6 +271,26 @@ class TestFOIRequest(object):
 
         assert foi_request.summary == first_message.summary
 
+    @pytest.mark.django_db()
+    def test_moderation_message_returns_first_messages_moderation_message(self, foi_request):
+        first_message = Message(
+            foi_request=foi_request,
+            moderation_message='first'
+        )
+        last_message = Message(
+            foi_request=foi_request,
+            moderation_message='last'
+        )
+
+        save_message(first_message)
+        save_message(last_message)
+
+        foi_request.refresh_from_db()
+        assert foi_request.moderation_message == first_message.moderation_message
+
+    def test_moderation_message_is_none_if_there_are_no_messages(self, foi_request):
+        assert foi_request.moderation_message is None
+
     def test_summary_returns_none_if_there_are_no_messages(self):
         assert FOIRequest().summary is None
 
