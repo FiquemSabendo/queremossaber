@@ -151,6 +151,12 @@ class FOIRequest(models.Model):
         return status
 
     @property
+    def moderation_message(self):
+        first_message = self.first_message
+        if first_message:
+            return first_message.moderation_message
+
+    @property
     def first_message(self):
         return self.message_set.order_by('created_at').first()
 

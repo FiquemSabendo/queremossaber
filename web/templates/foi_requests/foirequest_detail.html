@@ -19,6 +19,14 @@
         <div class="request-status request-status-{{ object.status.name }}">
           {{ object.status.value }}
         </div>
+      {% if object.moderation_message %}
+        <dt>
+          Comentários da moderação
+        </dt>
+        <dd>
+          {{ object.moderation_message }}
+        </dd>
+      {% endif %}
       </dd>
       <dt>
         Aberto em
