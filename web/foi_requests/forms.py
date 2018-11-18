@@ -1,4 +1,4 @@
-from django.forms import ModelForm, CharField
+from django.forms import ModelForm, CharField, Textarea
 
 from .models import Message, Esic, PublicBody, FOIRequest
 
@@ -13,10 +13,11 @@ class MessageForm(ModelForm):
         ]
 
     summary = CharField()
+    body = CharField(min_length=55, widget=Textarea)
 
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
-        self.fields['receiver'].required = True
+        self.fields['receiver'].required  = True
 
 
 class FOIRequestForm(ModelForm):
