@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-26 17:10+0100\n"
+"POT-Creation-Date: 2018-12-10 19:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "moderation status"
 msgstr "status de moderação"
 
-#: web/foi_requests/admin.py:13 web/foi_requests/admin.py:99
+#: web/foi_requests/admin.py:13 web/foi_requests/admin.py:120
 msgid "Pending"
 msgstr "Aguardando"
 
@@ -30,20 +30,32 @@ msgstr "Aguardando"
 msgid "Approved"
 msgstr "Aprovado"
 
-#: web/foi_requests/admin.py:15 web/foi_requests/admin.py:102
-#: web/foi_requests/models.py:165
+#: web/foi_requests/admin.py:15 web/foi_requests/admin.py:123
+#: web/foi_requests/models.py:170
 msgid "Rejected"
 msgstr "Rejeitado"
 
-#: web/foi_requests/admin.py:90
+#: web/foi_requests/admin.py:30
+msgid "sender type"
+msgstr "remetente"
+
+#: web/foi_requests/admin.py:35
+msgid "User"
+msgstr "Usuário"
+
+#: web/foi_requests/admin.py:36
+msgid "Government"
+msgstr "Governo"
+
+#: web/foi_requests/admin.py:111
 msgid "status"
 msgstr "status"
 
-#: web/foi_requests/admin.py:100
+#: web/foi_requests/admin.py:121
 msgid "Approved (not sent)"
 msgstr "Aprovado (não enviado)"
 
-#: web/foi_requests/admin.py:101 web/foi_requests/models.py:167
+#: web/foi_requests/admin.py:122 web/foi_requests/models.py:172
 msgid "Sent"
 msgstr "Enviado"
 
@@ -67,31 +79,31 @@ msgstr "Aguardando resposta do cidadão"
 msgid "Protocol can not be changed."
 msgstr "Protocolo não pode ser modificado"
 
-#: web/foi_requests/models.py:164
+#: web/foi_requests/models.py:169
 msgid "Pending moderation"
 msgstr "Aguardando moderação"
 
-#: web/foi_requests/models.py:166
+#: web/foi_requests/models.py:171
 msgid "Ready to be sent"
 msgstr "Aguardando envio"
 
-#: web/foi_requests/models.py:280
+#: web/foi_requests/models.py:286
 msgid "Message can either have a \"sender\" or a \"receiver\", not both."
 msgstr "Mensagem pode ter ou um \"sender\" ou um \"receiver\", não ambos."
 
-#: web/foi_requests/models.py:292
+#: web/foi_requests/models.py:298
 msgid "Government messages must have a \"sent_at\" date."
 msgstr ""
 "Mensagens vindas do órgão público devem ter uma data de envio \"sent_at\"."
 
-#: web/foi_requests/models.py:298
+#: web/foi_requests/models.py:304
 msgid "Only approved user messages can be marked as sent."
 msgstr "Somente mensagens aprovadas podem ser marcadas como enviadas."
 
-#: web/foi_requests/models.py:303
+#: web/foi_requests/models.py:309
 msgid "A message can not be rejected without an explanation."
 msgstr "Uma mensagem não pode ser rejeitada sem uma explicação."
 
-#: web/settings.py:129
+#: web/settings.py:127
 msgid "Brazilian Portuguese"
 msgstr "Português brasileiro"

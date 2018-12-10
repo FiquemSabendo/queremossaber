@@ -17,14 +17,30 @@ class ModerationStatusListFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         value = self.value()
-        moderation_status = None
-        if self.value() == 'approved':
-            moderation_status = True
-        elif self.value() == 'rejected':
-            moderation_status = False
+        moderation_status = {
+            'approved': True,
+            'rejected': None,
+        }
 
         if value is not None:
-            return queryset.filter(moderation_status=moderation_status)
+            return queryset.filter(moderation_status=moderation_status[value])
+
+
+class ModerationSenderTypeFilter(admin.SimpleListFilter):
+    title = _('sender type')
+    parameter_name = 'sender_type'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('user', _('User')),
+            ('government', _('Government')),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value is not None:
+            sender_is_null = (value == 'government')
+            return queryset.exclude(sender_id__isnull=sender_is_null)
 
 
 class MessageInline(admin.StackedInline):
@@ -145,6 +161,7 @@ class MessageAdmin(admin.ModelAdmin):
 
     list_filter = (
         ModerationStatusListFilter,
+        ModerationSenderTypeFilter,
     )
 
     fieldsets = (
