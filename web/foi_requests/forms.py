@@ -17,7 +17,7 @@ class MessageForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
-        self.fields['receiver'].required  = True
+        self.fields['receiver'].required = True
 
 
 class FOIRequestForm(ModelForm):
