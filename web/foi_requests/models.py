@@ -121,6 +121,11 @@ class FOIRequest(models.Model):
             return self.first_message.receiver
 
     @property
+    def esic(self):
+        if self.public_body:
+            return self.public_body.esic
+
+    @property
     def summary(self):
         if self.first_message:
             return self.first_message.summary

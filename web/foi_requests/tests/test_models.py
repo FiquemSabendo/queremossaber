@@ -191,6 +191,18 @@ class TestFOIRequest(object):
         assert FOIRequest().public_body is None
 
     @pytest.mark.django_db()
+    def test_esic_returns_public_body_esic(self, public_body, foi_request):
+        assert public_body.esic
+        message = Message(foi_request=foi_request, receiver=public_body)
+
+        save_message(message)
+
+        assert foi_request.esic == foi_request.public_body.esic
+
+    def test_esic_returns_none_if_there_are_no_messages(self):
+        assert FOIRequest().public_body is None
+
+    @pytest.mark.django_db()
     def test_protocol_cant_be_changed(self, foi_request):
         foi_request.save()
         original_protocol = foi_request.protocol

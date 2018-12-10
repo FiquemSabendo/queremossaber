@@ -67,6 +67,11 @@ class MessageInline(admin.StackedInline):
 class FOIRequestAdmin(admin.ModelAdmin):
     list_display = (
         'protocol',
+        'esic_protocol',
+        'public_body',
+        'esic',
+        'status',
+        'can_publish',
     )
 
     readonly_fields = (
