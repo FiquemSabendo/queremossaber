@@ -136,6 +136,7 @@ class MessageAdmin(admin.ModelAdmin):
         'foi_request',
         'moderation_status',
         'sender_type',
+        'receiver',
         'summary',
         'body',
         'sent_at',
