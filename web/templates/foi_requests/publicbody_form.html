@@ -3,6 +3,8 @@
 {% block content %}
 {% load widget_tweaks %}
 
+{% load static %}
+
 <div>
   <h2>Cadastrar órgão público</h2>
 
@@ -21,6 +23,15 @@
       <small>
         Antes de cadastrar um novo órgão, por favor confira se ele já não existe <a href="{% url 'foi_request_new' %}">aqui</a>.
       </small>
+    </div>
+
+    <div class="form-field">
+      {{ form.name.errors }}
+
+      <label for="{{ form.level.id_for_label }}">
+        Esfera
+      </label>
+      {% render_field form.level %}
     </div>
 
     <div class="form-field">
@@ -58,4 +69,25 @@
     </div>
   </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script>
+  $('#id_level').on('change', function(){
+    let municipality = $('#id_municipality');
+    let uf = $('#id_uf');
+
+    if(this.value === 'State'){
+      municipality.prop('disabled', true);
+      uf.prop('disabled', false);
+    }else if(this.value === 'Federal'){
+      municipality.prop('disabled', true);
+      uf.prop('disabled', true);
+    }else{
+      municipality.prop('disabled', false);
+      uf.prop('disabled', false);
+    }
+  });
+</script>
 {% endblock %}

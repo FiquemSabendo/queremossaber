@@ -24,6 +24,12 @@ class Esic(models.Model):
 
 
 class PublicBody(models.Model):
+    LEVELS = (
+        ('Local', 'Municipal'),
+        ('State', 'Estadual'),
+        ('Federal', 'Federal'),
+    )
+
     UFS = (
         ('AC', 'Acre'),
         ('AL', 'Alagoas'),
@@ -61,6 +67,7 @@ class PublicBody(models.Model):
     # same Esic system. This is a pretty clear relationship.
     esic = models.ForeignKey(Esic, null=True, blank=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=255, blank=False, unique=True)
+    level = models.CharField(max_length=255, choices=LEVELS, default='Federal')
     municipality = models.CharField(max_length=255, blank=True)
     uf = models.CharField(max_length=2, choices=UFS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
