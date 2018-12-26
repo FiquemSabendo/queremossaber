@@ -31,7 +31,7 @@ class PublicBody(models.Model):
         ('AP', 'Amapá'),
         ('BA', 'Bahia'),
         ('CE', 'Ceará'),
-        ('DF', 'DF'),
+        ('DF', 'Distrito Federal'),
         ('ES', 'Espírito Santo'),
         ('GO', 'Goiás'),
         ('MA', 'Maranhão'),
