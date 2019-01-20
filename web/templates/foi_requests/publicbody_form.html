@@ -72,21 +72,21 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/jquery.min.js' %}"></script>
 <script>
-  $('#id_level').on('change', function(){
-    let municipality = $('#id_municipality');
-    let uf = $('#id_uf');
+  let level = document.getElementById('{{ form.level.id_for_label }}');
+  let municipality = document.getElementById('{{ form.municipality.id_for_label }}');
+  let uf = document.getElementById('{{ form.uf.id_for_label }}');
 
+  level.addEventListener('change', function(){
     if(this.value === 'State'){
-      municipality.prop('disabled', true);
-      uf.prop('disabled', false);
+      municipality.disabled = true;
+      uf.disabled =  false;
     }else if(this.value === 'Federal'){
-      municipality.prop('disabled', true);
-      uf.prop('disabled', true);
+      municipality.disabled = true;
+      uf.classList.disabled = true;
     }else{
-      municipality.prop('disabled', false);
-      uf.prop('disabled', false);
+      municipality.disabled = false;
+      uf.disabled = false;
     }
   });
 </script>
