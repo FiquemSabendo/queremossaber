@@ -92,14 +92,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'web.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': env.db(),
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -172,6 +164,15 @@ if ENABLE_S3:
 
 # Configure Heroku
 django_heroku.settings(locals())
+
+
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+DATABASES = {
+    'default': env.db(),
+}
+
 
 # FIXME: This is a workaround because WhiteNoise's files storage raises error 500.
 # http://whitenoise.evans.io/en/stable/django.html#troubleshooting-the-whitenoise-storage-backend
