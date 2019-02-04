@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from . import utils
+from . import querysets, utils
 
 
 class Esic(models.Model):
@@ -65,6 +65,8 @@ class PublicBody(models.Model):
     uf = models.CharField(max_length=2, choices=UFS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = querysets.PublicBodyQueryset().as_manager()
 
     def __str__(self):
         return self.name
