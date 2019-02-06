@@ -1,4 +1,4 @@
-django
+django>=2.1.5
 django-widget-tweaks
 django-environ
 django-storages
