@@ -23,6 +23,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     ENV_PATH=(str, DEFAULT_ENV_PATH),
     ENABLE_S3=(bool, False),
+    HEROKU_APP_ID=(str, None),
 )
 env.read_env(env.str('ENV_PATH'))
 
@@ -171,7 +172,8 @@ if ENABLE_S3:
     }
 
 # Configure Heroku
-django_heroku.settings(locals())
+if env('HEROKU_APP_ID'):
+    django_heroku.settings(locals())
 
 # FIXME: This is a workaround because WhiteNoise's files storage raises error 500.
 # http://whitenoise.evans.io/en/stable/django.html#troubleshooting-the-whitenoise-storage-backend
