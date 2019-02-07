@@ -220,11 +220,5 @@ class MessageAdmin(admin.ModelAdmin):
         return self.readonly_fields + extra_readonly_fields
 
 
-@admin.register(PublicBody)
-class PublicBodyAdmin(admin.ModelAdmin):
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).order_by_name()
-
-
+admin.site.register(PublicBody)
 admin.site.register(Esic)
