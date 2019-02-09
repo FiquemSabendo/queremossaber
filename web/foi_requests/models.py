@@ -67,7 +67,7 @@ class PublicBody(models.Model):
     # same Esic system. This is a pretty clear relationship.
     esic = models.ForeignKey(Esic, null=True, blank=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=255, blank=False, unique=True)
-    level = models.CharField(max_length=255, choices=LEVELS, default='Federal')
+    level = models.CharField(max_length=255, choices=LEVELS, default='Local')
     municipality = models.CharField(max_length=255, blank=True)
     uf = models.CharField(max_length=2, choices=UFS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

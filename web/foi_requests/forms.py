@@ -42,9 +42,8 @@ class PublicBodyForm(ModelForm):
             'name',
             'municipality',
             'uf',
-            'level'
+            'level',
         ]
 
     def __init__(self, *args, **kwargs):
         super(PublicBodyForm, self).__init__(*args, **kwargs)
-        self.fields['level'].initial = 'Local'
