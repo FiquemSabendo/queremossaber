@@ -26,6 +26,7 @@ class TestCreatePublicBodyView(object):
         request = rf.post('/p/public_body/new/', {
             'url': url,
             'name': name,
+            'level': 'Federal',
         })
 
         CreatePublicBodyView.as_view()(request)

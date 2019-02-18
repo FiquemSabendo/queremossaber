@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='publicbody',
             name='level',
-            field=models.CharField(choices=[('Local', 'Municipal'), ('State', 'Estadual'), ('Federal', 'Federal')], default='Local', max_length=255),
+            field=models.CharField(choices=[('Local', 'Municipal'), ('State', 'Estadual'), ('Federal', 'Federal')], default='Local', max_length=10),
         ),
         migrations.AlterField(
             model_name='foirequest',

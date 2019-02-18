@@ -44,6 +44,3 @@ class PublicBodyForm(ModelForm):
             'uf',
             'level',
         ]
-
-    def __init__(self, *args, **kwargs):
-        super(PublicBodyForm, self).__init__(*args, **kwargs)

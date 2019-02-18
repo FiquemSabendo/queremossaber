@@ -67,7 +67,7 @@ class PublicBody(models.Model):
     # same Esic system. This is a pretty clear relationship.
     esic = models.ForeignKey(Esic, null=True, blank=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=255, blank=False, unique=True)
-    level = models.CharField(max_length=255, choices=LEVELS, default='Local')
+    level = models.CharField(max_length=10, choices=LEVELS, default='Local')
     municipality = models.CharField(max_length=255, blank=True)
     uf = models.CharField(max_length=2, choices=UFS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -75,6 +75,32 @@ class PublicBody(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self, *args, **kwargs):
+        error_data = {}
+
+        if self.level == 'Local':
+            if not self.uf:
+                error_data['uf'] = _('Local Public Bodies must have a "UF".')
+            if not self.municipality:
+                error_data['municipality'] = _('Local Public Bodies must have a "municipality".')
+        elif self.level == 'State':
+            if not self.uf:
+                error_data['uf'] = _('State Public Bodies must have a "UF".')
+            if self.municipality:
+                msg = _('State Public Bodies must not have a "municipality".')
+                error_data['municipality'] = msg
+        elif self.level == 'Federal':
+            if self.uf:
+                error_data['uf'] = _('Federal Public Bodies must not have a "UF".')
+            if self.municipality:
+                msg = _('Federal Public Bodies must not have a "municipality".')
+                error_data['municipality'] = msg
+
+        if error_data:
+            raise ValidationError(error_data)
+
+        return super(PublicBody, self).clean(*args, **kwargs)
 
 
 class FOIRequest(models.Model):

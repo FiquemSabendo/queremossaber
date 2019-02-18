@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-26 17:10+0100\n"
+"POT-Creation-Date: 2019-02-18 19:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgid "Approved"
 msgstr "Aprovado"
 
 #: web/foi_requests/admin.py:15 web/foi_requests/admin.py:102
-#: web/foi_requests/models.py:165
+#: web/foi_requests/models.py:198
 msgid "Rejected"
 msgstr "Rejeitado"
 
@@ -43,55 +43,81 @@ msgstr "status"
 msgid "Approved (not sent)"
 msgstr "Aprovado (não enviado)"
 
-#: web/foi_requests/admin.py:101 web/foi_requests/models.py:167
+#: web/foi_requests/admin.py:101 web/foi_requests/models.py:200
 msgid "Sent"
 msgstr "Enviado"
 
-#: web/foi_requests/models.py:75
+#: web/foi_requests/models.py:84
+msgid "Local Public Bodies must have a \"UF\"."
+msgstr "Órgãos municipais devem ter um \"Estado\"."
+
+#: web/foi_requests/models.py:86
+msgid "Local Public Bodies must have a \"municipality\"."
+msgstr "Órgãos municipais devem ter uma \"cidade\"."
+
+#: web/foi_requests/models.py:89
+#, fuzzy
+#| msgid "State PublicBodies must have a \"UF\"."
+msgid "State Public Bodies must have a \"UF\"."
+msgstr "Órgãos estaduais devem ter um \"Estado\"."
+
+#: web/foi_requests/models.py:91
+msgid "State Public Bodies must not have a \"municipality\"."
+msgstr "Órgãos estaduais não podem ter uma \"cidade\"."
+
+#: web/foi_requests/models.py:95
+msgid "Federal Public Bodies must not have a \"UF\"."
+msgstr "Órgãos federais não podem ter um \"Estado\"."
+
+#: web/foi_requests/models.py:97
+msgid "Federal Public Bodies must not have a \"municipality\"."
+msgstr "Órgãos federais não podem ter uma \"cidade\"."
+
+#: web/foi_requests/models.py:108
 msgid "Delayed"
 msgstr "Atrasado"
 
-#: web/foi_requests/models.py:76
+#: web/foi_requests/models.py:109
 msgid "Finished"
 msgstr "Finalizado"
 
-#: web/foi_requests/models.py:77
+#: web/foi_requests/models.py:110
 msgid "Waiting for government reply"
 msgstr "Aguardando resposta do órgão"
 
-#: web/foi_requests/models.py:78
+#: web/foi_requests/models.py:111
 msgid "Waiting for user reply"
 msgstr "Aguardando resposta do cidadão"
 
-#: web/foi_requests/models.py:107
+#: web/foi_requests/models.py:140
 msgid "Protocol can not be changed."
 msgstr "Protocolo não pode ser modificado"
 
-#: web/foi_requests/models.py:164
+#: web/foi_requests/models.py:197
 msgid "Pending moderation"
 msgstr "Aguardando moderação"
 
-#: web/foi_requests/models.py:166
+#: web/foi_requests/models.py:199
 msgid "Ready to be sent"
 msgstr "Aguardando envio"
 
-#: web/foi_requests/models.py:280
+#: web/foi_requests/models.py:314
 msgid "Message can either have a \"sender\" or a \"receiver\", not both."
 msgstr "Mensagem pode ter ou um \"sender\" ou um \"receiver\", não ambos."
 
-#: web/foi_requests/models.py:292
+#: web/foi_requests/models.py:326
 msgid "Government messages must have a \"sent_at\" date."
 msgstr ""
 "Mensagens vindas do órgão público devem ter uma data de envio \"sent_at\"."
 
-#: web/foi_requests/models.py:298
+#: web/foi_requests/models.py:332
 msgid "Only approved user messages can be marked as sent."
 msgstr "Somente mensagens aprovadas podem ser marcadas como enviadas."
 
-#: web/foi_requests/models.py:303
+#: web/foi_requests/models.py:337
 msgid "A message can not be rejected without an explanation."
 msgstr "Uma mensagem não pode ser rejeitada sem uma explicação."
 
-#: web/settings.py:129
+#: web/settings.py:127
 msgid "Brazilian Portuguese"
 msgstr "Português brasileiro"

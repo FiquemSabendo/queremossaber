@@ -4,7 +4,6 @@
 {% load widget_tweaks %}
 
 {% load static %}
-
 <div>
   <h2>Cadastrar órgão público</h2>
 
@@ -73,21 +72,29 @@
 
 {% block scripts %}
 <script>
-  let level = document.getElementById('{{ form.level.id_for_label }}');
-  let municipality = document.getElementById('{{ form.municipality.id_for_label }}');
-  let uf = document.getElementById('{{ form.uf.id_for_label }}');
+  (function(document) {
+      var level = document.getElementById('{{ form.level.id_for_label }}');
+      var municipality = document.getElementById('{{ form.municipality.id_for_label }}');
+      var uf = document.getElementById('{{ form.uf.id_for_label }}');
 
-  level.addEventListener('change', function(){
-    if(this.value === 'State'){
-      municipality.disabled = true;
-      uf.disabled =  false;
-    }else if(this.value === 'Federal'){
-      municipality.disabled = true;
-      uf.disabled = true;
-    }else{
-      municipality.disabled = false;
-      uf.disabled = false;
-    }
-  });
+      function updateMunicipalityAndUFStates() {
+        var value = level.value;
+
+        if (value === 'State') {
+          municipality.disabled = true;
+          uf.disabled =  false;
+        } else if (value === 'Federal') {
+          municipality.disabled = true;
+          uf.disabled = true;
+        } else {
+          municipality.disabled = false;
+          uf.disabled = false;
+        }
+      }
+
+      level.addEventListener('change', updateMunicipalityAndUFStates);
+
+      updateMunicipalityAndUFStates();
+  })(document);
 </script>
 {% endblock %}
