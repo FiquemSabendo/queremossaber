@@ -43,4 +43,5 @@ class PublicBodyForm(ModelForm):
             'name',
             'municipality',
             'uf',
+            'level',
         ]

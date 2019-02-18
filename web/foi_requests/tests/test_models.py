@@ -301,3 +301,32 @@ class TestFOIRequest(object):
         )
 
         assert foi_request.get_absolute_url() == expected_url
+
+
+class TestPublicBody:
+    @pytest.mark.parametrize('uf,municipality,level', (
+        ('AC', 'Rio Branco', 'Local'),
+        ('AC', '', 'State'),
+        ('', '', 'Federal'),
+    ))
+    def test_clean_valid_level(self, uf, municipality, level, public_body):
+        public_body.uf = uf
+        public_body.municipality = municipality
+        public_body.level = level
+
+        public_body.clean()
+
+    @pytest.mark.parametrize('uf,municipality,level', (
+        ('AC', '', 'Local'),
+        ('', 'Rio Branco', 'Local'),
+        ('', '', 'State'),
+        ('AC', '', 'Federal'),
+        ('AC', 'Rio Branco', 'Federal'),
+    ))
+    def test_clean_invalid_level(self, uf, municipality, level, public_body):
+        public_body.uf = uf
+        public_body.municipality = municipality
+        public_body.level = level
+
+        with pytest.raises(ValidationError):
+            public_body.clean()

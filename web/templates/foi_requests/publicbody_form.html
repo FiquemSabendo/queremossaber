@@ -24,6 +24,15 @@
     </div>
 
     <div class="form-field">
+      {{ form.name.errors }}
+
+      <label for="{{ form.level.id_for_label }}">
+        Esfera
+      </label>
+      {% render_field form.level %}
+    </div>
+
+    <div class="form-field">
       {{ form.uf.errors }}
 
       <label for="{{ form.uf.id_for_label }}">
@@ -58,4 +67,33 @@
     </div>
   </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function(document) {
+      var level = document.getElementById('{{ form.level.id_for_label }}');
+      var municipality = document.getElementById('{{ form.municipality.id_for_label }}');
+      var uf = document.getElementById('{{ form.uf.id_for_label }}');
+
+      function updateMunicipalityAndUFStates() {
+        var value = level.value;
+
+        if (value === 'State') {
+          municipality.disabled = true;
+          uf.disabled =  false;
+        } else if (value === 'Federal') {
+          municipality.disabled = true;
+          uf.disabled = true;
+        } else {
+          municipality.disabled = false;
+          uf.disabled = false;
+        }
+      }
+
+      level.addEventListener('change', updateMunicipalityAndUFStates);
+
+      updateMunicipalityAndUFStates();
+  })(document);
+</script>
 {% endblock %}
