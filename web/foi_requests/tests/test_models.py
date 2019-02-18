@@ -191,6 +191,18 @@ class TestFOIRequest(object):
         assert FOIRequest().public_body is None
 
     @pytest.mark.django_db()
+    def test_esic_returns_public_body_esic(self, public_body, foi_request):
+        assert public_body.esic
+        message = Message(foi_request=foi_request, receiver=public_body)
+
+        save_message(message)
+
+        assert foi_request.esic == foi_request.public_body.esic
+
+    def test_esic_returns_none_if_there_are_no_messages(self):
+        assert FOIRequest().public_body is None
+
+    @pytest.mark.django_db()
     def test_protocol_cant_be_changed(self, foi_request):
         foi_request.save()
         original_protocol = foi_request.protocol
@@ -258,6 +270,26 @@ class TestFOIRequest(object):
             foi_request.message_set.set([first_message, last_message])
 
         assert foi_request.summary == first_message.summary
+
+    @pytest.mark.django_db()
+    def test_moderation_message_returns_first_messages_moderation_message(self, foi_request):
+        first_message = Message(
+            foi_request=foi_request,
+            moderation_message='first'
+        )
+        last_message = Message(
+            foi_request=foi_request,
+            moderation_message='last'
+        )
+
+        save_message(first_message)
+        save_message(last_message)
+
+        foi_request.refresh_from_db()
+        assert foi_request.moderation_message == first_message.moderation_message
+
+    def test_moderation_message_is_none_if_there_are_no_messages(self, foi_request):
+        assert foi_request.moderation_message is None
 
     def test_summary_returns_none_if_there_are_no_messages(self):
         assert FOIRequest().summary is None

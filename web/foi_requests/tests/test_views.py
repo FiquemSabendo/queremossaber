@@ -69,7 +69,7 @@ class TestCreateFOIRequestView():
         context = {
             'receiver': public_body.pk,
             'summary': 'summary',
-            'body': 'body',
+            'body': 'body' * 100,
             'can_publish': True,
         }
 

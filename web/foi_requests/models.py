@@ -37,7 +37,7 @@ class PublicBody(models.Model):
         ('AP', 'Amapá'),
         ('BA', 'Bahia'),
         ('CE', 'Ceará'),
-        ('DF', 'DF'),
+        ('DF', 'Distrito Federal'),
         ('ES', 'Espírito Santo'),
         ('GO', 'Goiás'),
         ('MA', 'Maranhão'),
@@ -72,6 +72,9 @@ class PublicBody(models.Model):
     uf = models.CharField(max_length=2, choices=UFS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -154,6 +157,11 @@ class FOIRequest(models.Model):
             return self.first_message.receiver
 
     @property
+    def esic(self):
+        if self.public_body:
+            return self.public_body.esic
+
+    @property
     def summary(self):
         if self.first_message:
             return self.first_message.summary
@@ -182,6 +190,12 @@ class FOIRequest(models.Model):
             status = last_message.status
 
         return status
+
+    @property
+    def moderation_message(self):
+        first_message = self.first_message
+        if first_message:
+            return first_message.moderation_message
 
     @property
     def first_message(self):

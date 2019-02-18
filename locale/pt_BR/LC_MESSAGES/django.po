@@ -22,7 +22,7 @@ msgstr ""
 msgid "moderation status"
 msgstr "status de moderação"
 
-#: web/foi_requests/admin.py:13 web/foi_requests/admin.py:99
+#: web/foi_requests/admin.py:13 web/foi_requests/admin.py:120
 msgid "Pending"
 msgstr "Aguardando"
 
@@ -35,11 +35,23 @@ msgstr "Aprovado"
 msgid "Rejected"
 msgstr "Rejeitado"
 
-#: web/foi_requests/admin.py:90
+#: web/foi_requests/admin.py:30
+msgid "sender type"
+msgstr "remetente"
+
+#: web/foi_requests/admin.py:35
+msgid "User"
+msgstr "Usuário"
+
+#: web/foi_requests/admin.py:36
+msgid "Government"
+msgstr "Governo"
+
+#: web/foi_requests/admin.py:111
 msgid "status"
 msgstr "status"
 
-#: web/foi_requests/admin.py:100
+#: web/foi_requests/admin.py:121
 msgid "Approved (not sent)"
 msgstr "Aprovado (não enviado)"
 
