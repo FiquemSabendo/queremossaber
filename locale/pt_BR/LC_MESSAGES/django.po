@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 19:21+0000\n"
+"POT-Creation-Date: 2019-02-18 19:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,8 +56,6 @@ msgid "Local Public Bodies must have a \"municipality\"."
 msgstr "Órgãos municipais devem ter uma \"cidade\"."
 
 #: web/foi_requests/models.py:89
-#, fuzzy
-#| msgid "State PublicBodies must have a \"UF\"."
 msgid "State Public Bodies must have a \"UF\"."
 msgstr "Órgãos estaduais devem ter um \"Estado\"."
 
