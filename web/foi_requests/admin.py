@@ -77,6 +77,7 @@ class MessageInline(admin.StackedInline):
         })
     )
     ordering = ['created_at']
+    autocomplete_fields = ('sender', 'receiver')
 
 
 @admin.register(FOIRequest)
@@ -220,5 +221,5 @@ class MessageAdmin(admin.ModelAdmin):
         return self.readonly_fields + extra_readonly_fields
 
 
-admin.site.register(PublicBody)
+admin.site.register(PublicBody, search_fields=['name'])
 admin.site.register(Esic)
