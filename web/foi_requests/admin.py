@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from .models import PublicBody, Esic, FOIRequest, Message
 
@@ -96,6 +98,7 @@ class FOIRequestAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
     )
+
     inlines = (
         MessageInline,
     )
@@ -150,8 +153,7 @@ class MessageAdmin(admin.ModelAdmin):
     )
 
     list_display = (
-        'foi_request',
-        'moderation_status',
+        'foi_request_link',
         'sender_type',
         'receiver',
         'summary',
@@ -159,6 +161,9 @@ class MessageAdmin(admin.ModelAdmin):
         'sent_at',
         'created_at',
     )
+
+    # We change the messages on the FOIRequest change page instead
+    list_display_links = None
 
     list_filter = (
         ModerationStatusListFilter,
@@ -219,6 +224,15 @@ class MessageAdmin(admin.ModelAdmin):
             )
 
         return self.readonly_fields + extra_readonly_fields
+
+    def foi_request_link(self, obj):
+        foi_request = obj.foi_request
+        url = reverse(
+            f'admin:{foi_request._meta.app_label}_{foi_request._meta.model_name}_change',
+            args=(foi_request.pk,)
+        )
+        return mark_safe(f'<a href="{url}">{foi_request.protocol}</a>')
+    foi_request_link.short_description = _('FOI Request')
 
 
 admin.site.register(PublicBody, search_fields=['name'])
