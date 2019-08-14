@@ -25,6 +25,7 @@ class FOIRequestForm(ModelForm):
         model = FOIRequest
         fields = [
             'can_publish',
+            'previous_protocol',
         ]
 
 

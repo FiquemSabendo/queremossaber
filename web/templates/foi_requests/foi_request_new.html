@@ -25,7 +25,7 @@
     <div class="form-field">
       {{ message_form.receiver.errors }}
       <label for="{{ message_form.receiver.id_for_label }}">
-        Órgão Público
+        Órgão Público *
       </label>
       {% render_field message_form.receiver class+="selectize" %}
       <small>
@@ -36,7 +36,7 @@
     <div class="form-field">
       {{ message_form.summary.errors }}
       <label for="{{ message_form.summary.id_for_label }}">
-        Resumo
+        Resumo *
       </label>
       {% render_field message_form.summary placeholder="Qual o resumo do seu pedido?" %}
     </div>
@@ -44,9 +44,17 @@
     <div class="form-field">
       {{ message_form.body.errors }}
       <label for="{{ message_form.body.id_for_label }}">
-        Pedido
+        Pedido *
       </label>
       {% render_field message_form.body placeholder="Descreva seu pedido de forma direta e detalhada, evitando quaisquer detalhes que possam te identificar." %}
+    </div>
+
+    <div class="form-field">
+      {{ foi_request_form.summary.errors }}
+      <label for="{{ foi_request_form.previous_protocol.id_for_label }}">
+        Pedido anterior
+      </label>
+      {% render_field foi_request_form.previous_protocol placeholder="Protocolo de um pedido anterior relacionado a este, caso exista (e.x. ABCDEFGH)" %}
     </div>
 
     <div class="form-field form-field-checkbox">

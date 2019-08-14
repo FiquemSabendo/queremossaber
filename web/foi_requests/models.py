@@ -121,6 +121,10 @@ class FOIRequest(models.Model):
         unique=True,
         default=utils.generate_protocol
     )
+    # previous_protocol isn't a foreign key to avoid leaking the information on
+    # what protocols exist by raising an exception if a user adds an inexistent
+    # previous_protocol.
+    previous_protocol = models.CharField(max_length=8, blank=True)
     esic_protocol = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
