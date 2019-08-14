@@ -13,7 +13,7 @@ class MessageForm(ModelForm):
         ]
 
     summary = CharField()
-    body = CharField(min_length=55, widget=Textarea)
+    body = CharField(min_length=55, max_length=2000, widget=Textarea)
 
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
