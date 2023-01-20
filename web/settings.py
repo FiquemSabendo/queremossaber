@@ -187,3 +187,7 @@ if env('HEROKU_APP_ID'):
 # FIXME: This is a workaround because WhiteNoise's files storage raises error 500.
 # http://whitenoise.evans.io/en/stable/django.html#troubleshooting-the-whitenoise-storage-backend
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+DJANGO_LIVESYNC = {
+    'PORT': 9001,
+}
