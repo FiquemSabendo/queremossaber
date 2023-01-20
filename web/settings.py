@@ -18,8 +18,6 @@ from pathlib import Path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-IS_HEROKU = "DYNO" in os.environ
-
 DEFAULT_ENV_PATH = os.path.join(BASE_DIR, '.env')
 env = environ.Env(
     DEBUG=(bool, False),
@@ -187,10 +185,6 @@ if ENABLE_S3:
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'public, max-age=31556926',
     }
-
-# Configure Heroku
-if env('HEROKU_APP_ID'):
-    django_heroku.settings(locals())
 
 # FIXME: This is a workaround because WhiteNoise's files storage raises error 500.
 # http://whitenoise.evans.io/en/stable/django.html#troubleshooting-the-whitenoise-storage-backend
