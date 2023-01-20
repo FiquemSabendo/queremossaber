@@ -27,6 +27,7 @@ env = environ.Env(
     SESSION_COOKIE_SECURE=(bool, False),
     CSRF_COOKIE_SECURE=(bool, False),
     CSRF_COOKIE_DOMAIN=(str, None),
+    CSRF_TRUSTED_ORIGINS=(list, ['queremossaber.org.br']),
 )
 env.read_env(env.str('ENV_PATH'))
 
@@ -50,6 +51,7 @@ INTERNAL_IPS = [
 SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
 CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
 CSRF_COOKIE_DOMAIN = env('CSRF_COOKIE_DOMAIN')
+CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS')
 
 # Application definition
 
