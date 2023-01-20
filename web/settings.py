@@ -24,6 +24,9 @@ env = environ.Env(
     ENV_PATH=(str, DEFAULT_ENV_PATH),
     ENABLE_S3=(bool, False),
     HEROKU_APP_ID=(str, None),
+    SESSION_COOKIE_SECURE=(bool, False),
+    CSRF_COOKIE_SECURE=(bool, False),
+    CSRF_COOKIE_DOMAIN=(str, None),
 )
 env.read_env(env.str('ENV_PATH'))
 
@@ -36,11 +39,17 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'queremossaber.org.br',
+]
 
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE')
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
+CSRF_COOKIE_DOMAIN = env('CSRF_COOKIE_DOMAIN')
 
 # Application definition
 
