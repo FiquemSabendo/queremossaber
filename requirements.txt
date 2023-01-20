@@ -66,3 +66,5 @@ watchdog==2.2.1
     #   django-livesync
 websocket-client==0.56.0
     # via django-livesync
+whitenoise==5.3.0
+    # via -r requirements.in

@@ -1,4 +1,4 @@
-django>=2.1.6
+django>=2.1.6,<3
 django-widget-tweaks
 django-environ
 django-storages
@@ -6,6 +6,7 @@ boto3
 raven
 psycopg2-binary<2.9
 libsass
+whitenoise<6
 
 # dev environment
 django-livesync>=0.5
