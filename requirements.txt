@@ -10,19 +10,14 @@ botocore==1.12.143
     # via
     #   boto3
     #   s3transfer
-dj-database-url==0.5.0
-    # via django-heroku
 django==2.2.1
     # via
     #   -r requirements.in
     #   django-debug-toolbar
-    #   django-heroku
     #   django-storages
 django-debug-toolbar==1.11
     # via -r requirements.in
 django-environ==0.4.5
-    # via -r requirements.in
-django-heroku==0.3.1
     # via -r requirements.in
 django-livesync==0.5
     # via -r requirements.in
@@ -42,9 +37,7 @@ jmespath==0.9.4
     #   botocore
 libsass==0.18.0
     # via -r requirements.in
-psycopg2==2.9.5
-    # via django-heroku
-psycopg2-binary==2.9.5
+psycopg2-binary==2.8.6
     # via -r requirements.in
 python-dateutil==2.8.0
     # via botocore
@@ -73,5 +66,3 @@ watchdog==2.2.1
     #   django-livesync
 websocket-client==0.56.0
     # via django-livesync
-whitenoise==4.1.2
-    # via django-heroku

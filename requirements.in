@@ -4,7 +4,7 @@ django-environ
 django-storages
 boto3
 raven
-psycopg2-binary
+psycopg2-binary<2.9
 libsass
 
 # dev environment
@@ -15,4 +15,3 @@ watchdog
 
 # heroku
 gunicorn
-django-heroku
