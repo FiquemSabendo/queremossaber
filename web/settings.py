@@ -190,5 +190,6 @@ if env('HEROKU_APP_ID'):
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DJANGO_LIVESYNC = {
+    'HOST': 'localhost',
     'PORT': 9001,
 }
