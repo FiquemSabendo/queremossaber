@@ -49,8 +49,12 @@ jobs:
     - name: Test
       run: make test
 
-    - name: Run migrations
-      run: make migrate
+    - name: Run migrations and fixtures
+      run: |
+        make migrate
+        make load_fixtures
 
-    - name: Load fixtures
-      run: make load_fixtures
+    - name: Make translations
+      run: |
+        make make_translations
+        make compile_translations
