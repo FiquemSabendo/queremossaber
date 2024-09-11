@@ -16,7 +16,9 @@ from pathlib import Path
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Preciso converter pra str por causa de um erro no livesync. Talvez novas
+# versões aceitem Path.
+BASE_DIR = str(Path(__file__).resolve().parent.parent)
 
 DEFAULT_ENV_PATH = os.path.join(BASE_DIR, '.env')
 env = environ.Env(

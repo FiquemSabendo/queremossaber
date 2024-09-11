@@ -1,6 +1,8 @@
-.PHONY: help watch_sass sass load_fixtures migrate server create_admin
+.PHONY: install help watch_sass sass load_fixtures migrate server create_admin
 
 help:
+	@echo 'install: install dependencies'
+	@echo 'test: run tests'
 	@echo 'create_admin: create a superuser (admin)'
 	@echo 'encode_gcloud_credentials'
 	@echo 'load_fixtures: load database fixtures'
@@ -11,11 +13,17 @@ help:
 	@echo 'make_translations: regenerate translation files'
 	@echo 'compile_translations: compile translation files'
 
+install:
+	poetry install --no-root
+
+test:
+	poetry run pytest
+
 watch_sass: sass
 	watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
 
 sass:
-	sassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
+	pysassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
 
 load_fixtures:
 	python manage.py loaddata public_bodies_and_esics sample_foi_requests

@@ -7,10 +7,10 @@ Informação sem revelar sua identidade.
 
 ## Instalando
 
+Assumindo que você já tem o Python e `poetry` instalados, instale as dependências com:
+
 ```
-virtualenv --no-site-packages env
-. env/bin/activate
-pip install -r requirements.txt
+make install
 ```
 
 ## Executando
@@ -26,6 +26,18 @@ pip install -r requirements.txt
 
 A partir desse momento, você já pode acessar o projeto em
 [http://localhost:8000](http://localhost:8000).
+
+## Testes
+
+Para rodar os testes, primeiro se certifique que seu usuário do postgres tenha
+permissões para criar um banco de dados e executar comandos no banco de dados.
+
+```
+sudo -u postgres psql
+ALTER ROLE queremossaber WITH CREATEDB;
+```
+
+Isso permitirá que ele crie o banco de dados de testes durante sua execução.
 
 ## Pedidos de exemplo
 
