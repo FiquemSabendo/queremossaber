@@ -28,7 +28,7 @@ sass:
 	poetry run pysassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
 
 load_fixtures:
-	python manage.py loaddata public_bodies_and_esics sample_foi_requests
+	poetry run python manage.py loaddata public_bodies_and_esics sample_foi_requests
 
 migrate:
 	poetry run python manage.py migrate
