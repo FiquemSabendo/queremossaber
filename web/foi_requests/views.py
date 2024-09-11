@@ -12,28 +12,30 @@ from .models import FOIRequest, PublicBody
 
 class CreateMessageView(CreateView):
     form_class = MessageForm
-    template_name = 'foi_requests/foi_request_new.html'
+    template_name = "foi_requests/foi_request_new.html"
 
     def get_initial(self):
         return {
-            'receiver': self.request.GET.get('receiver'),
+            "receiver": self.request.GET.get("receiver"),
         }
 
 
 class CreateFOIRequestView(TemplateView):
-    template_name = 'foi_requests/foi_request_new.html'
+    template_name = "foi_requests/foi_request_new.html"
 
     def get_context_data(self, **kwargs):
         context = super(CreateFOIRequestView, self).get_context_data(**kwargs)
 
         message_form_initial = {}
 
-        if hasattr(self, 'request'):
-            message_form_initial['receiver'] = self.request.GET.get('receiver')
+        if hasattr(self, "request"):
+            message_form_initial["receiver"] = self.request.GET.get("receiver")
 
         forms = {
-            'message_form': kwargs.get('message_form', MessageForm(initial=message_form_initial)),
-            'foi_request_form': kwargs.get('foi_request_form', FOIRequestForm()),
+            "message_form": kwargs.get(
+                "message_form", MessageForm(initial=message_form_initial)
+            ),
+            "foi_request_form": kwargs.get("foi_request_form", FOIRequestForm()),
         }
 
         return {**context, **forms}
@@ -42,8 +44,8 @@ class CreateFOIRequestView(TemplateView):
         message_form = MessageForm(request.POST)
         foi_request_form = FOIRequestForm(request.POST)
         context = {
-            'message_form': message_form,
-            'foi_request_form': foi_request_form,
+            "message_form": message_form,
+            "foi_request_form": foi_request_form,
         }
 
         if all([message_form.is_valid(), foi_request_form.is_valid()]):
@@ -63,14 +65,14 @@ class CreatePublicBodyView(CreateView):
     def get_context_data(self, **kwargs):
         data = super(CreatePublicBodyView, self).get_context_data(**kwargs)
         if self.request.POST:
-            data['esic_form'] = EsicForm(self.request.POST)
+            data["esic_form"] = EsicForm(self.request.POST)
         else:
-            data['esic_form'] = EsicForm()
+            data["esic_form"] = EsicForm()
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
-        esic_form = context['esic_form']
+        esic_form = context["esic_form"]
 
         if esic_form.is_valid():
             # TODO: Add transactionwith transaction.commit_on_success():
@@ -81,21 +83,20 @@ class CreatePublicBodyView(CreateView):
         return super(CreatePublicBodyView, self).form_valid(form)
 
     def get_success_url(self):
-        return '{url}?receiver={receiver}'.format(
-            url=reverse('foi_request_new'),
-            receiver=self.object.id
+        return "{url}?receiver={receiver}".format(
+            url=reverse("foi_request_new"), receiver=self.object.id
         )
 
 
 class FOIRequestView(DetailView):
     model = FOIRequest
-    slug_field = 'protocol'
+    slug_field = "protocol"
 
 
 class FOIRequestRedirectView(RedirectView):
-    pattern_name = 'foirequest_search'
+    pattern_name = "foirequest_search"
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        protocol = self.request.GET.get('protocol')
-        return reverse('foirequest_detail', kwargs={'slug': protocol})
+        protocol = self.request.GET.get("protocol")
+        return reverse("foirequest_detail", kwargs={"slug": protocol})

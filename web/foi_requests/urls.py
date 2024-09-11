@@ -7,20 +7,20 @@ from . import views
 ONE_DAY = 60 * 60 * 24
 
 urlpatterns = [
-    path('', views.FOIRequestRedirectView.as_view(), name='foirequest_search'),
+    path("", views.FOIRequestRedirectView.as_view(), name="foirequest_search"),
     path(
-        'new/',
+        "new/",
         cache_page(ONE_DAY)(views.CreateFOIRequestView.as_view()),
-        name='foi_request_new'
+        name="foi_request_new",
     ),
     path(
-        'public_body/new/',
+        "public_body/new/",
         cache_page(ONE_DAY)(views.CreatePublicBodyView.as_view()),
-        name='publicbody_new'
+        name="publicbody_new",
     ),
     re_path(
-        r'^(?P<slug>[\w\d]+)/$',
+        r"^(?P<slug>[\w\d]+)/$",
         views.FOIRequestView.as_view(),
-        name='foirequest_detail'
+        name="foirequest_detail",
     ),
 ]

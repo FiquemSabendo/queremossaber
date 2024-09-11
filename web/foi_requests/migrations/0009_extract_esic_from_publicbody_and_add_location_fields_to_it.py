@@ -5,39 +5,83 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('foi_requests', '0008_auto_20180717_1131'),
+        ("foi_requests", "0008_auto_20180717_1131"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Esic',
+            name="Esic",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.URLField(unique=True)),
-                ('username', models.CharField(blank=True, max_length=255)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("url", models.URLField(unique=True)),
+                ("username", models.CharField(blank=True, max_length=255)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.RemoveField(
-            model_name='publicbody',
-            name='esic_url',
+            model_name="publicbody",
+            name="esic_url",
         ),
         migrations.AddField(
-            model_name='publicbody',
-            name='municipality',
+            model_name="publicbody",
+            name="municipality",
             field=models.CharField(blank=True, max_length=255),
         ),
         migrations.AddField(
-            model_name='publicbody',
-            name='uf',
-            field=models.CharField(blank=True, choices=[('AC', 'Acre'), ('AL', 'Alagoas'), ('AM', 'Amazonas'), ('AP', 'Amapá'), ('BA', 'Bahia'), ('CE', 'Ceará'), ('DF', 'DF'), ('ES', 'Espírito Santo'), ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MG', 'Minas Gerais'), ('MS', 'Mato Grosso do Sul'), ('MT', 'Mato Grosso'), ('PA', 'Pará'), ('PB', 'Paraíba'), ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('PR', 'Paraná'), ('RJ', 'Rio de Janeiro'), ('RN', 'Rio Grande do Norte'), ('RO', 'Rondônia'), ('RR', 'Roraima'), ('RS', 'Rio Grande do Sul'), ('SC', 'Santa Catarina'), ('SE', 'Sergipe'), ('SP', 'São Paulo'), ('TO', 'Tocantins')], max_length=2),
+            model_name="publicbody",
+            name="uf",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("AC", "Acre"),
+                    ("AL", "Alagoas"),
+                    ("AM", "Amazonas"),
+                    ("AP", "Amapá"),
+                    ("BA", "Bahia"),
+                    ("CE", "Ceará"),
+                    ("DF", "DF"),
+                    ("ES", "Espírito Santo"),
+                    ("GO", "Goiás"),
+                    ("MA", "Maranhão"),
+                    ("MG", "Minas Gerais"),
+                    ("MS", "Mato Grosso do Sul"),
+                    ("MT", "Mato Grosso"),
+                    ("PA", "Pará"),
+                    ("PB", "Paraíba"),
+                    ("PE", "Pernambuco"),
+                    ("PI", "Piauí"),
+                    ("PR", "Paraná"),
+                    ("RJ", "Rio de Janeiro"),
+                    ("RN", "Rio Grande do Norte"),
+                    ("RO", "Rondônia"),
+                    ("RR", "Roraima"),
+                    ("RS", "Rio Grande do Sul"),
+                    ("SC", "Santa Catarina"),
+                    ("SE", "Sergipe"),
+                    ("SP", "São Paulo"),
+                    ("TO", "Tocantins"),
+                ],
+                max_length=2,
+            ),
         ),
         migrations.AddField(
-            model_name='publicbody',
-            name='esic',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='foi_requests.Esic'),
+            model_name="publicbody",
+            name="esic",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="foi_requests.Esic",
+            ),
         ),
     ]

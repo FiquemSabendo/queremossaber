@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('foi_requests', '0010_rename_message_title_to_summary'),
+        ("foi_requests", "0010_rename_message_title_to_summary"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='foirequest',
-            name='can_publish',
+            model_name="foirequest",
+            name="can_publish",
             field=models.BooleanField(default=False),
         ),
     ]

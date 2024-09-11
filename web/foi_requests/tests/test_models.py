@@ -23,7 +23,9 @@ class TestMessage(object):
         assert initial_foi_requests_count == FOIRequest.objects.count()
 
     @pytest.mark.django_db()
-    def test_message_doesnt_create_new_foi_request_if_it_already_has_one(self, foi_request):
+    def test_message_doesnt_create_new_foi_request_if_it_already_has_one(
+        self, foi_request
+    ):
         foi_request.save()
         message = Message(foi_request=foi_request)
         message.save()
@@ -43,19 +45,13 @@ class TestMessage(object):
         assert message.moderated_at is not None
 
     def test_message_non_approved_can_not_have_sent_at(self):
-        message = Message(
-            moderation_status=None,
-            sent_at=timezone.now()
-        )
+        message = Message(moderation_status=None, sent_at=timezone.now())
 
         with pytest.raises(ValidationError):
             message.clean()
 
     def test_message_approved_can_have_sent_at(self):
-        message = Message(
-            moderation_status=True,
-            sent_at=timezone.now()
-        )
+        message = Message(moderation_status=True, sent_at=timezone.now())
 
         message.clean()
 
@@ -76,7 +72,7 @@ class TestMessage(object):
         assert message.is_rejected
 
     def test_message_reject_fails_if_moderation_message_is_empty(self):
-        message = Message(moderation_message='')
+        message = Message(moderation_message="")
 
         message.clean()
 
@@ -102,16 +98,20 @@ class TestMessage(object):
         with pytest.raises(ValidationError) as excinfo:
             message_from_government.clean()
 
-        assert 'sent_at' in excinfo.value.error_dict
+        assert "sent_at" in excinfo.value.error_dict
 
-    def test_message_is_automatically_approved_when_sender_is_government(self, message_from_government):
+    def test_message_is_automatically_approved_when_sender_is_government(
+        self, message_from_government
+    ):
         message_from_government.moderation_status = None
 
         message_from_government.clean()
 
         assert message_from_government.is_approved
 
-    def test_message_is_not_automatically_approved_when_sender_is_user(self, message_from_user):
+    def test_message_is_not_automatically_approved_when_sender_is_user(
+        self, message_from_user
+    ):
         message_from_user.moderation_status = None
 
         message_from_user.clean()
@@ -142,8 +142,8 @@ class TestMessage(object):
         assert message_from_user.status == Message.STATUS.sent
 
     def test_attached_file_hashes_filename(self, message):
-        filename = 'foo.pdf'
-        expected_filename = '2c26b46b68ffc68ff99b453c.pdf'
+        filename = "foo.pdf"
+        expected_filename = "2c26b46b68ffc68ff99b453c.pdf"
 
         generated_filename = message.attached_file.field.upload_to(message, filename)
 
@@ -156,8 +156,8 @@ class TestMessage(object):
         with pytest.raises(ValidationError) as excinfo:
             message.clean()
 
-        assert 'sender' in excinfo.value.error_dict
-        assert 'receiver' in excinfo.value.error_dict
+        assert "sender" in excinfo.value.error_dict
+        assert "receiver" in excinfo.value.error_dict
 
 
 class TestFOIRequest(object):
@@ -178,7 +178,9 @@ class TestFOIRequest(object):
         assert foi_request.protocol in str(foi_request)
 
     @pytest.mark.django_db()
-    def test_public_body_returns_first_messages_receiver(self, public_body, foi_request):
+    def test_public_body_returns_first_messages_receiver(
+        self, public_body, foi_request
+    ):
         first_message = Message(foi_request=foi_request, receiver=public_body)
         last_message = Message(foi_request=foi_request, receiver=None)
 
@@ -208,7 +210,7 @@ class TestFOIRequest(object):
         original_protocol = foi_request.protocol
 
         with pytest.raises(ValidationError):
-            foi_request.protocol = 'somethingelse'
+            foi_request.protocol = "somethingelse"
             foi_request.save()
 
         foi_request.refresh_from_db()
@@ -226,11 +228,22 @@ class TestFOIRequest(object):
         assert foi_request.last_message == last_message
 
     @pytest.mark.django_db()
-    @pytest.mark.parametrize('sent_at,status', [
-        (timezone.now() - timezone.timedelta(days=FOIRequest.REPLY_DAYS), FOIRequest.STATUS.delayed),
-        (timezone.now() - timezone.timedelta(days=FOIRequest.REPLY_DAYS - 1), FOIRequest.STATUS.waiting_government),
-    ])
-    def test_status_last_message_is_sent_and_from_user(self, sent_at, status, foi_request_with_sent_user_message):
+    @pytest.mark.parametrize(
+        "sent_at,status",
+        [
+            (
+                timezone.now() - timezone.timedelta(days=FOIRequest.REPLY_DAYS),
+                FOIRequest.STATUS.delayed,
+            ),
+            (
+                timezone.now() - timezone.timedelta(days=FOIRequest.REPLY_DAYS - 1),
+                FOIRequest.STATUS.waiting_government,
+            ),
+        ],
+    )
+    def test_status_last_message_is_sent_and_from_user(
+        self, sent_at, status, foi_request_with_sent_user_message
+    ):
         last_message = foi_request_with_sent_user_message.last_message
         last_message.sent_at = sent_at
         last_message.save()
@@ -238,11 +251,22 @@ class TestFOIRequest(object):
         assert status == foi_request_with_sent_user_message.status
 
     @pytest.mark.django_db()
-    @pytest.mark.parametrize('sent_at,status', [
-        (timezone.now() - timezone.timedelta(days=FOIRequest.APPEAL_DAYS), FOIRequest.STATUS.finished),
-        (timezone.now() - timezone.timedelta(days=FOIRequest.APPEAL_DAYS - 1), FOIRequest.STATUS.waiting_user),
-    ])
-    def test_status_last_message_is_from_government(self, sent_at, status, foi_request, message_from_government):
+    @pytest.mark.parametrize(
+        "sent_at,status",
+        [
+            (
+                timezone.now() - timezone.timedelta(days=FOIRequest.APPEAL_DAYS),
+                FOIRequest.STATUS.finished,
+            ),
+            (
+                timezone.now() - timezone.timedelta(days=FOIRequest.APPEAL_DAYS - 1),
+                FOIRequest.STATUS.waiting_user,
+            ),
+        ],
+    )
+    def test_status_last_message_is_from_government(
+        self, sent_at, status, foi_request, message_from_government
+    ):
         with transaction.atomic():
             foi_request.save()
             message_from_government.foi_request = foi_request
@@ -263,8 +287,8 @@ class TestFOIRequest(object):
 
         with transaction.atomic():
             foi_request.save()
-            first_message = Message(foi_request=foi_request, summary='First message')
-            last_message = Message(foi_request=foi_request, summary='Last message')
+            first_message = Message(foi_request=foi_request, summary="First message")
+            last_message = Message(foi_request=foi_request, summary="Last message")
             first_message.save()
             last_message.save()
             foi_request.message_set.set([first_message, last_message])
@@ -272,15 +296,11 @@ class TestFOIRequest(object):
         assert foi_request.summary == first_message.summary
 
     @pytest.mark.django_db()
-    def test_moderation_message_returns_first_messages_moderation_message(self, foi_request):
-        first_message = Message(
-            foi_request=foi_request,
-            moderation_message='first'
-        )
-        last_message = Message(
-            foi_request=foi_request,
-            moderation_message='last'
-        )
+    def test_moderation_message_returns_first_messages_moderation_message(
+        self, foi_request
+    ):
+        first_message = Message(foi_request=foi_request, moderation_message="first")
+        last_message = Message(foi_request=foi_request, moderation_message="last")
 
         save_message(first_message)
         save_message(last_message)
@@ -295,20 +315,20 @@ class TestFOIRequest(object):
         assert FOIRequest().summary is None
 
     def test_get_absolute_url(self, foi_request):
-        expected_url = reverse(
-            'foirequest_detail',
-            args=[foi_request.protocol]
-        )
+        expected_url = reverse("foirequest_detail", args=[foi_request.protocol])
 
         assert foi_request.get_absolute_url() == expected_url
 
 
 class TestPublicBody:
-    @pytest.mark.parametrize('uf,municipality,level', (
-        ('AC', 'Rio Branco', 'Local'),
-        ('AC', '', 'State'),
-        ('', '', 'Federal'),
-    ))
+    @pytest.mark.parametrize(
+        "uf,municipality,level",
+        (
+            ("AC", "Rio Branco", "Local"),
+            ("AC", "", "State"),
+            ("", "", "Federal"),
+        ),
+    )
     def test_clean_valid_level(self, uf, municipality, level, public_body):
         public_body.uf = uf
         public_body.municipality = municipality
@@ -316,13 +336,16 @@ class TestPublicBody:
 
         public_body.clean()
 
-    @pytest.mark.parametrize('uf,municipality,level', (
-        ('AC', '', 'Local'),
-        ('', 'Rio Branco', 'Local'),
-        ('', '', 'State'),
-        ('AC', '', 'Federal'),
-        ('AC', 'Rio Branco', 'Federal'),
-    ))
+    @pytest.mark.parametrize(
+        "uf,municipality,level",
+        (
+            ("AC", "", "Local"),
+            ("", "Rio Branco", "Local"),
+            ("", "", "State"),
+            ("AC", "", "Federal"),
+            ("AC", "Rio Branco", "Federal"),
+        ),
+    )
     def test_clean_invalid_level(self, uf, municipality, level, public_body):
         public_body.uf = uf
         public_body.municipality = municipality

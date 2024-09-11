@@ -6,38 +6,47 @@ import web.foi_requests.utils
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('foi_requests', '0001_initial'),
+        ("foi_requests", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='foirequest',
-            options={'ordering': ['-created_at', '-moderation_status']},
+            name="foirequest",
+            options={"ordering": ["-created_at", "-moderation_status"]},
         ),
         migrations.AlterModelOptions(
-            name='message',
-            options={'ordering': ['-created_at']},
+            name="message",
+            options={"ordering": ["-created_at"]},
         ),
         migrations.AddField(
-            model_name='message',
-            name='attached_file',
-            field=models.FileField(blank=True, null=True, upload_to=web.foi_requests.models.Message._attached_file_path),
+            model_name="message",
+            name="attached_file",
+            field=models.FileField(
+                blank=True,
+                null=True,
+                upload_to=web.foi_requests.models.Message._attached_file_path,
+            ),
         ),
         migrations.AlterField(
-            model_name='foirequest',
-            name='esic_protocol',
+            model_name="foirequest",
+            name="esic_protocol",
             field=models.CharField(blank=True, max_length=255),
         ),
         migrations.AlterField(
-            model_name='foirequest',
-            name='moderation_status',
-            field=models.NullBooleanField(choices=[(None, 'Pending'), (True, 'Approved'), (False, 'Rejected')]),
+            model_name="foirequest",
+            name="moderation_status",
+            field=models.NullBooleanField(
+                choices=[(None, "Pending"), (True, "Approved"), (False, "Rejected")]
+            ),
         ),
         migrations.AlterField(
-            model_name='foirequest',
-            name='protocol',
-            field=models.CharField(default=web.foi_requests.utils.generate_protocol, max_length=8, unique=True),
+            model_name="foirequest",
+            name="protocol",
+            field=models.CharField(
+                default=web.foi_requests.utils.generate_protocol,
+                max_length=8,
+                unique=True,
+            ),
         ),
     ]

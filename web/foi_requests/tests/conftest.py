@@ -7,17 +7,12 @@ from ..models import Message, FOIRequest, Esic, PublicBody
 
 @pytest.fixture
 def public_body(esic):
-    return PublicBody(
-        name='example',
-        esic=esic
-    )
+    return PublicBody(name="example", esic=esic)
 
 
 @pytest.fixture
 def esic():
-    return Esic(
-        url='http://example.com'
-    )
+    return Esic(url="http://example.com")
 
 
 @pytest.fixture
@@ -27,9 +22,7 @@ def foi_request():
 
 @pytest.fixture
 def message(foi_request):
-    return Message(
-        foi_request=foi_request
-    )
+    return Message(foi_request=foi_request)
 
 
 @pytest.fixture
@@ -45,19 +38,12 @@ def foi_request_with_sent_user_message(foi_request, message_from_user):
 
 @pytest.fixture
 def message_from_user(public_body):
-    return Message(
-        sender=None,
-        receiver=public_body
-    )
+    return Message(sender=None, receiver=public_body)
 
 
 @pytest.fixture
 def message_from_government(public_body):
-    return Message(
-        sender=public_body,
-        sent_at=timezone.now(),
-        receiver=None
-    )
+    return Message(sender=public_body, sent_at=timezone.now(), receiver=None)
 
 
 def save_message(message):

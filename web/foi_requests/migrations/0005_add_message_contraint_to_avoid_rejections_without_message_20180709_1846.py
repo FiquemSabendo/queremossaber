@@ -4,20 +4,23 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('foi_requests', '0004_auto_20180709_1804'),
+        ("foi_requests", "0004_auto_20180709_1804"),
     ]
 
     operations = [
         migrations.RunSQL(
-            ['''
+            [
+                """
             ALTER TABLE foi_requests_message ADD CONSTRAINT rejected_messages_have_moderation_message CHECK (
                 moderation_status IS NOT FALSE OR (moderation_message IS NOT NULL AND moderation_message != '')
             );
-            '''],
-            ['''
+            """
+            ],
+            [
+                """
             ALTER TABLE foi_requests_message DROP CONSTRAINT rejected_messages_have_moderation_message;
-            ''']
+            """
+            ],
         )
     ]

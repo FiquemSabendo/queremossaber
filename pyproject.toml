@@ -26,10 +26,10 @@ watchdog = "2.2.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest-django = "^4.9.0"
+pre-commit = "^3.8.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "web.settings"
 
-[build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

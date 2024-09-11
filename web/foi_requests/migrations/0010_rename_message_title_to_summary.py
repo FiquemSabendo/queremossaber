@@ -4,15 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('foi_requests', '0009_extract_esic_from_publicbody_and_add_location_fields_to_it'),
+        (
+            "foi_requests",
+            "0009_extract_esic_from_publicbody_and_add_location_fields_to_it",
+        ),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='message',
-            old_name='title',
-            new_name='summary',
+            model_name="message",
+            old_name="title",
+            new_name="summary",
         ),
     ]

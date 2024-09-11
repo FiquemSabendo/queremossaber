@@ -10,24 +10,24 @@ from ..admin import (
 class TestModerationStatusListFilter:
     def test_lookups_are_as_expected(self):
         list_filter = self._create_list_filter()
-        lookup_keys = [
-            lookup[0]
-            for lookup in list_filter.lookups(None, None)
-        ]
+        lookup_keys = [lookup[0] for lookup in list_filter.lookups(None, None)]
         assert lookup_keys == [
-            'pending',
-            'approved_not_sent',
-            'sent',
-            'rejected',
+            "pending",
+            "approved_not_sent",
+            "sent",
+            "rejected",
         ]
 
-    @pytest.mark.parametrize('value,filters', (
-        (None, {}),
-        ('pending', {'moderation_status': None}),
-        ('approved_not_sent', {'moderation_status': True, 'sent_at__isnull': True}),
-        ('sent', {'moderation_status': True, 'sent_at__isnull': False}),
-        ('rejected', {'moderation_status': False}),
-    ))
+    @pytest.mark.parametrize(
+        "value,filters",
+        (
+            (None, {}),
+            ("pending", {"moderation_status": None}),
+            ("approved_not_sent", {"moderation_status": True, "sent_at__isnull": True}),
+            ("sent", {"moderation_status": True, "sent_at__isnull": False}),
+            ("rejected", {"moderation_status": False}),
+        ),
+    )
     def test_queryset(self, value, filters):
         list_filter = self._create_list_filter(value)
         queryset = mock.Mock()
@@ -43,15 +43,18 @@ class TestModerationStatusListFilter:
             None,  # request
             params,  # params
             None,  # Model
-            None  # ModelAdmin
+            None,  # ModelAdmin
         )
 
 
 class TestModerationSenderTypeFilter:
-    @pytest.mark.parametrize('value,filters', (
-        ('user', {'sender_id__isnull': False}),
-        ('government', {'sender_id__isnull': True}),
-    ))
+    @pytest.mark.parametrize(
+        "value,filters",
+        (
+            ("user", {"sender_id__isnull": False}),
+            ("government", {"sender_id__isnull": True}),
+        ),
+    )
     def test_queryset(self, value, filters):
         list_filter = self._create_list_filter(value)
         queryset = mock.Mock()
@@ -74,5 +77,5 @@ class TestModerationSenderTypeFilter:
             None,  # request
             params,  # params
             None,  # Model
-            None  # ModelAdmin
+            None,  # ModelAdmin
         )

@@ -4,15 +4,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('foi_requests', '0007_add_constraint_foi_requests_message_can_only_send_approved_messages_20180710_1228'),
+        (
+            "foi_requests",
+            "0007_add_constraint_foi_requests_message_can_only_send_approved_messages_20180710_1228",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='publicbody',
-            name='name',
+            model_name="publicbody",
+            name="name",
             field=models.CharField(max_length=255, unique=True),
         ),
     ]

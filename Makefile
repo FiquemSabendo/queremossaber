@@ -15,9 +15,11 @@ help:
 
 install:
 	poetry install --no-root
+	poetry run pre-commit install
 
 test:
 	poetry run pytest
+	poetry run pre-commit run --all-files
 
 watch_sass: sass
 	watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles

@@ -25,39 +25,39 @@ class Esic(models.Model):
 
 class PublicBody(models.Model):
     LEVELS = (
-        ('Local', 'Municipal'),
-        ('State', 'Estadual'),
-        ('Federal', 'Federal'),
+        ("Local", "Municipal"),
+        ("State", "Estadual"),
+        ("Federal", "Federal"),
     )
 
     UFS = (
-        ('AC', 'Acre'),
-        ('AL', 'Alagoas'),
-        ('AM', 'Amazonas'),
-        ('AP', 'Amapá'),
-        ('BA', 'Bahia'),
-        ('CE', 'Ceará'),
-        ('DF', 'Distrito Federal'),
-        ('ES', 'Espírito Santo'),
-        ('GO', 'Goiás'),
-        ('MA', 'Maranhão'),
-        ('MG', 'Minas Gerais'),
-        ('MS', 'Mato Grosso do Sul'),
-        ('MT', 'Mato Grosso'),
-        ('PA', 'Pará'),
-        ('PB', 'Paraíba'),
-        ('PE', 'Pernambuco'),
-        ('PI', 'Piauí'),
-        ('PR', 'Paraná'),
-        ('RJ', 'Rio de Janeiro'),
-        ('RN', 'Rio Grande do Norte'),
-        ('RO', 'Rondônia'),
-        ('RR', 'Roraima'),
-        ('RS', 'Rio Grande do Sul'),
-        ('SC', 'Santa Catarina'),
-        ('SE', 'Sergipe'),
-        ('SP', 'São Paulo'),
-        ('TO', 'Tocantins'),
+        ("AC", "Acre"),
+        ("AL", "Alagoas"),
+        ("AM", "Amazonas"),
+        ("AP", "Amapá"),
+        ("BA", "Bahia"),
+        ("CE", "Ceará"),
+        ("DF", "Distrito Federal"),
+        ("ES", "Espírito Santo"),
+        ("GO", "Goiás"),
+        ("MA", "Maranhão"),
+        ("MG", "Minas Gerais"),
+        ("MS", "Mato Grosso do Sul"),
+        ("MT", "Mato Grosso"),
+        ("PA", "Pará"),
+        ("PB", "Paraíba"),
+        ("PE", "Pernambuco"),
+        ("PI", "Piauí"),
+        ("PR", "Paraná"),
+        ("RJ", "Rio de Janeiro"),
+        ("RN", "Rio Grande do Norte"),
+        ("RO", "Rondônia"),
+        ("RR", "Roraima"),
+        ("RS", "Rio Grande do Sul"),
+        ("SC", "Santa Catarina"),
+        ("SE", "Sergipe"),
+        ("SP", "São Paulo"),
+        ("TO", "Tocantins"),
     )
 
     # NOTE: We might add a "parent_public_body" attribute later to deal with
@@ -67,14 +67,14 @@ class PublicBody(models.Model):
     # same Esic system. This is a pretty clear relationship.
     esic = models.ForeignKey(Esic, null=True, blank=True, on_delete=models.PROTECT)
     name = models.CharField(max_length=255, blank=False, unique=True)
-    level = models.CharField(max_length=10, choices=LEVELS, default='Local')
+    level = models.CharField(max_length=10, choices=LEVELS, default="Local")
     municipality = models.CharField(max_length=255, blank=True)
     uf = models.CharField(max_length=2, choices=UFS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -82,23 +82,25 @@ class PublicBody(models.Model):
     def clean(self, *args, **kwargs):
         error_data = {}
 
-        if self.level == 'Local':
+        if self.level == "Local":
             if not self.uf:
-                error_data['uf'] = _('Local Public Bodies must have a "UF".')
+                error_data["uf"] = _('Local Public Bodies must have a "UF".')
             if not self.municipality:
-                error_data['municipality'] = _('Local Public Bodies must have a "municipality".')
-        elif self.level == 'State':
+                error_data["municipality"] = _(
+                    'Local Public Bodies must have a "municipality".'
+                )
+        elif self.level == "State":
             if not self.uf:
-                error_data['uf'] = _('State Public Bodies must have a "UF".')
+                error_data["uf"] = _('State Public Bodies must have a "UF".')
             if self.municipality:
                 msg = _('State Public Bodies must not have a "municipality".')
-                error_data['municipality'] = msg
-        elif self.level == 'Federal':
+                error_data["municipality"] = msg
+        elif self.level == "Federal":
             if self.uf:
-                error_data['uf'] = _('Federal Public Bodies must not have a "UF".')
+                error_data["uf"] = _('Federal Public Bodies must not have a "UF".')
             if self.municipality:
                 msg = _('Federal Public Bodies must not have a "municipality".')
-                error_data['municipality'] = msg
+                error_data["municipality"] = msg
 
         if error_data:
             raise ValidationError(error_data)
@@ -108,18 +110,16 @@ class PublicBody(models.Model):
 
 class FOIRequest(models.Model):
     class STATUS(enum.Enum):
-        delayed = _('Delayed')
-        finished = _('Finished')
-        waiting_government = _('Waiting for government reply')
-        waiting_user = _('Waiting for user reply')
+        delayed = _("Delayed")
+        finished = _("Finished")
+        waiting_government = _("Waiting for government reply")
+        waiting_user = _("Waiting for user reply")
 
     REPLY_DAYS = 20  # Public body has to answer in X days
     APPEAL_DAYS = 10  # Citizen can appeal in X days
 
     protocol = models.CharField(
-        max_length=8,
-        unique=True,
-        default=utils.generate_protocol
+        max_length=8, unique=True, default=utils.generate_protocol
     )
     # previous_protocol isn't a foreign key to avoid leaking the information on
     # what protocols exist by raising an exception if a user adds an inexistent
@@ -131,7 +131,7 @@ class FOIRequest(models.Model):
     can_publish = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def __init__(self, *args, **kwargs):
         super(FOIRequest, self).__init__(*args, **kwargs)
@@ -143,14 +143,13 @@ class FOIRequest(models.Model):
 
     def clean(self, *args, **kwargs):
         if self._original_protocol != self.protocol:
-            raise ValidationError(
-                {'protocol': _('Protocol can not be changed.')}
-            )
+            raise ValidationError({"protocol": _("Protocol can not be changed.")})
         return super(FOIRequest, self).clean(*args, **kwargs)
 
     def get_absolute_url(self):
         from django.urls import reverse
-        return reverse('foirequest_detail', args=[self.protocol])
+
+        return reverse("foirequest_detail", args=[self.protocol])
 
     def __str__(self):
         return self.protocol
@@ -203,34 +202,34 @@ class FOIRequest(models.Model):
 
     @property
     def first_message(self):
-        return self.message_set.order_by('created_at').first()
+        return self.message_set.order_by("created_at").first()
 
     @property
     def last_message(self):
-        return self.message_set.order_by('created_at').last()
+        return self.message_set.order_by("created_at").last()
 
 
 class Message(models.Model):
     class STATUS(enum.Enum):
-        pending = _('Pending moderation')
-        rejected = _('Rejected')
-        ready = _('Ready to be sent')
-        sent = _('Sent')
+        pending = _("Pending moderation")
+        rejected = _("Rejected")
+        ready = _("Ready to be sent")
+        sent = _("Sent")
 
     foi_request = models.ForeignKey(FOIRequest, on_delete=models.CASCADE)
     sender = models.ForeignKey(
         PublicBody,
         null=True,
         blank=True,
-        related_name='messages_sent',
-        on_delete=models.PROTECT
+        related_name="messages_sent",
+        on_delete=models.PROTECT,
     )
     receiver = models.ForeignKey(
         PublicBody,
         null=True,
         blank=True,
-        related_name='messages_received',
-        on_delete=models.PROTECT
+        related_name="messages_received",
+        on_delete=models.PROTECT,
     )
     summary = models.TextField(blank=True)
     body = models.TextField(blank=False)
@@ -241,9 +240,9 @@ class Message(models.Model):
     # Moderation-related attributes
     moderation_status = models.NullBooleanField(
         choices=(
-            (None, 'Pending'),
-            (True, 'Approved'),
-            (False, 'Rejected'),
+            (None, "Pending"),
+            (True, "Approved"),
+            (False, "Rejected"),
         )
     )
     moderation_message = models.TextField(blank=True)
@@ -266,9 +265,9 @@ class Message(models.Model):
 
     @property
     def sender_type(self):
-        sender_type = 'user'
+        sender_type = "user"
         if self.sender is not None:
-            sender_type = 'government'
+            sender_type = "government"
         return sender_type
 
     def __str__(self):
@@ -276,22 +275,20 @@ class Message(models.Model):
         if not summary:
             summary = self.body[0:100]
 
-        return '(%s) %s' % (self.sender_type, summary)
+        return "(%s) %s" % (self.sender_type, summary)
 
     def _attached_file_path(self, filename):
         root, ext = os.path.splitext(filename)
         hash_size = 24
 
         hasher = hashlib.sha256()
-        hasher.update(root.encode('utf-8'))
-        hashed_filename = '{}{}'.format(hasher.hexdigest()[:hash_size], ext)
+        hasher.update(root.encode("utf-8"))
+        hashed_filename = "{}{}".format(hasher.hexdigest()[:hash_size], ext)
 
         return hashed_filename
 
     attached_file = models.FileField(
-        upload_to=_attached_file_path,
-        blank=True,
-        null=True
+        upload_to=_attached_file_path, blank=True, null=True
     )
 
     @property
@@ -315,7 +312,7 @@ class Message(models.Model):
         return self.sent_at is not None
 
     class Meta:
-        ordering = ['-created_at', '-moderation_status']
+        ordering = ["-created_at", "-moderation_status"]
 
     def __init__(self, *args, **kwargs):
         super(Message, self).__init__(*args, **kwargs)
@@ -330,30 +327,42 @@ class Message(models.Model):
 
         if self.sender and self.receiver:
             msg = _('Message can either have a "sender" or a "receiver", not both.')
-            raise ValidationError({
-                'sender': msg,
-                'receiver': msg,
-            })
+            raise ValidationError(
+                {
+                    "sender": msg,
+                    "receiver": msg,
+                }
+            )
 
         if not self.is_from_user:
             # Government messages are automatically approved
             if not self.moderation_status:
                 self.approve()
             if not self.sent_at:
-                raise ValidationError({
-                    'sent_at': _('Government messages must have a "sent_at" date.'),
-                })
+                raise ValidationError(
+                    {
+                        "sent_at": _('Government messages must have a "sent_at" date.'),
+                    }
+                )
 
         if self.is_from_user and not self.is_approved:
             if self.sent_at is not None:
-                raise ValidationError({
-                    'sent_at': _('Only approved user messages can be marked as sent.'),
-                })
+                raise ValidationError(
+                    {
+                        "sent_at": _(
+                            "Only approved user messages can be marked as sent."
+                        ),
+                    }
+                )
 
         if self.is_rejected and not self.moderation_message:
-            raise ValidationError({
-                'moderation_status': _('A message can not be rejected without an explanation.'),  # noqa: E501
-            })
+            raise ValidationError(
+                {
+                    "moderation_status": _(
+                        "A message can not be rejected without an explanation."
+                    ),  # noqa: E501
+                }
+            )
 
     def approve(self):
         self.moderated_at = timezone.now()

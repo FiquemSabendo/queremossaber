@@ -7,9 +7,9 @@ class MessageForm(ModelForm):
     class Meta:
         model = Message
         fields = [
-            'receiver',
-            'summary',
-            'body',
+            "receiver",
+            "summary",
+            "body",
         ]
 
     summary = CharField()
@@ -17,15 +17,15 @@ class MessageForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
-        self.fields['receiver'].required = True
+        self.fields["receiver"].required = True
 
 
 class FOIRequestForm(ModelForm):
     class Meta:
         model = FOIRequest
         fields = [
-            'can_publish',
-            'previous_protocol',
+            "can_publish",
+            "previous_protocol",
         ]
 
 
@@ -33,7 +33,7 @@ class EsicForm(ModelForm):
     class Meta:
         model = Esic
         fields = [
-            'url',
+            "url",
         ]
 
 
@@ -41,8 +41,8 @@ class PublicBodyForm(ModelForm):
     class Meta:
         model = PublicBody
         fields = [
-            'name',
-            'municipality',
-            'uf',
-            'level',
+            "name",
+            "municipality",
+            "uf",
+            "level",
         ]
