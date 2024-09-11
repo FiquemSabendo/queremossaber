@@ -43,7 +43,7 @@ jobs:
 
     - name: Copy environment file
       run: |
-        grep -v DATABASE_URL .env.example > .env
+        cp .env.example .env
         cat .env
 
     - name: Test
