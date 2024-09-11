@@ -1,0 +1,71 @@
+name: Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+
+    services:
+      postgres:
+        image: postgres:9.5
+        env:
+          POSTGRES_DB: queremossaber
+          POSTGRES_USER: queremossaber
+          POSTGRES_PASSWORD: queremossaber
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pypoetry
+          ~/.cache/pre-commit
+        key: ${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/.pre-commit-config.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-py${{ matrix.python-version }}-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip poetry
+        sudo apt-get update && sudo apt-get install -y gettext
+        make install
+
+    - name: Copy environment file
+      run: |
+        cp .env.example .env
+        cat .env
+
+    - name: Test
+      run: make test
+
+    - name: Run migrations and fixtures
+      run: |
+        make migrate
+        make load_fixtures
+
+    - name: Make translations
+      run: |
+        make make_translations
+        make compile_translations
