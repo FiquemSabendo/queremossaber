@@ -39,6 +39,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip poetry
+        sudo apt-get update && sudo apt-get install -y gettext
         make install
 
     - name: Copy environment file
