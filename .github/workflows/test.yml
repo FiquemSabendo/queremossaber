@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-    POSTGRES_DB: queremossaber
-    POSTGRES_USER: queremossaber
-    POSTGRES_PASSWORD: queremossaber
-    DATABASE_URL: postgresql://queremossaber:queremossaber@postgres:5432/queremossaber
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,6 +16,12 @@ jobs:
     services:
       postgres:
         image: postgres:9.5
+        env:
+          POSTGRES_DB: queremossaber
+          POSTGRES_USER: queremossaber
+          POSTGRES_PASSWORD: queremossaber
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
