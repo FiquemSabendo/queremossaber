@@ -44,7 +44,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
     'queremossaber.org.br',
-]
+] + ['localhost', '127.0.0.1'] if DEBUG else []
 
 INTERNAL_IPS = [
     '127.0.0.1',
