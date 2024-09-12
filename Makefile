@@ -22,27 +22,27 @@ test:
 	poetry run pre-commit run --all-files
 
 watch_sass: sass
-	watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
+	poetry run watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
 
 sass:
-	pysassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
+	poetry run pysassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
 
 load_fixtures:
-	python manage.py loaddata public_bodies_and_esics sample_foi_requests
+	poetry run python manage.py loaddata public_bodies_and_esics sample_foi_requests
 
 migrate:
-	python manage.py migrate
+	poetry run python manage.py migrate
 
 server:
-	honcho -f Procfile.dev start
+	poetry run honcho -f Procfile.dev start
 
 create_admin:
-	python manage.py createsuperuser
+	poetry run python manage.py createsuperuser
 
 make_translations:
-	django-admin makemessages --all --ignore "env*"
+	poetry run django-admin makemessages --all --ignore "env*"
 
 compile_translations:
 	# FIXME: This will compile all .po files in the current folder, including in
 	# `.tox` and `env`
-	django-admin compilemessages
+	poetry run django-admin compilemessages

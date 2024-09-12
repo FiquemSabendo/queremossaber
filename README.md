@@ -1,6 +1,6 @@
 # Queremos Saber
 
-[![Travis](https://travis-ci.org/okfn-brasil/pedidosanonimos.svg?branch=master)](https://travis-ci.org/okfn-brasil/pedidosanonimos)
+[![Test](https://github.com/FiquemSabendo/queremossaber/actions/workflows/test.yml/badge.svg)](https://github.com/FiquemSabendo/queremossaber/actions/workflows/test.yml)
 
 Plataforma que permite o envio de pedidos pela Lei de Acesso à
 Informação sem revelar sua identidade.
