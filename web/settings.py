@@ -31,6 +31,7 @@ env = environ.Env(
     CSRF_COOKIE_SECURE=(bool, False),
     CSRF_COOKIE_DOMAIN=(str, None),
     CSRF_TRUSTED_ORIGINS=(list, ["queremossaber.org.br"]),
+    ENV=(str, "dev"),
 )
 env.read_env(env.str("ENV_PATH"))
 
