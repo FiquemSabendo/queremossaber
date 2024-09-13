@@ -68,7 +68,7 @@ CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 extra_apps = []
 if ENV == "dev":
-    extra_apps += ["livesync"]
+    extra_apps += ["livesync", "debug_toolbar"]
 
 INSTALLED_APPS = [
     "web.foi_requests",
@@ -81,13 +81,13 @@ INSTALLED_APPS = [
     "raven.contrib.django.raven_compat",
     "django.contrib.staticfiles",
     "widget_tweaks",
-    "debug_toolbar",
 ] + extra_apps
 
 extra_middleware = []
 if ENV == "dev":
     extra_middleware += [
         "livesync.core.middleware.DjangoLiveSyncMiddleware",
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
 MIDDLEWARE = [
@@ -99,8 +99,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "livesync.core.middleware.DjangoLiveSyncMiddleware",
 ] + extra_middleware
 
 ROOT_URLCONF = "web.urls"
