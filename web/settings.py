@@ -43,6 +43,8 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
+ENV = env("ENV", default="dev")
+
 ALLOWED_HOSTS = (
     [
         "queremossaber.org.br",
@@ -63,6 +65,10 @@ CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 # Application definition
 
+extra_apps = []
+if ENV == "dev":
+    extra_apps += ["livesync"]
+
 INSTALLED_APPS = [
     "web.foi_requests",
     "web.whoami",
@@ -72,11 +78,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "raven.contrib.django.raven_compat",
-    "livesync",
     "django.contrib.staticfiles",
     "widget_tweaks",
     "debug_toolbar",
-]
+] + extra_apps
+
+extra_middleware = []
+if ENV == "dev":
+    extra_middleware += [
+        "livesync.core.middleware.DjangoLiveSyncMiddleware",
+    ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -89,7 +100,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "livesync.core.middleware.DjangoLiveSyncMiddleware",
-]
+] + extra_middleware
 
 ROOT_URLCONF = "web.urls"
 
