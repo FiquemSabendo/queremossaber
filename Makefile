@@ -46,3 +46,13 @@ compile_translations:
 	# FIXME: This will compile all .po files in the current folder, including in
 	# `.tox` and `env`
 	poetry run django-admin compilemessages
+
+poetry.lock:
+	@if [ ! -f $@ ]; then \
+		echo "Error: $@ does not exist. Please generate it externally."; \
+		exit 1; \
+	fi
+
+# Esse arquivo é necessário pro DigitalOcean Apps detectar que é Python
+requirements.txt: poetry.lock
+	poetry export --format=requirements.txt > $@

@@ -38,6 +38,11 @@ ALTER ROLE queremossaber WITH CREATEDB;
 ```
 
 Isso permitirá que ele crie o banco de dados de testes durante sua execução.
+Uma vez isso esteja configurado, para rodar os testes basta executar:
+
+```
+make test
+```
 
 ## Pedidos de exemplo
 
@@ -53,10 +58,3 @@ Quando você carrega as fixtures no seu banco de dados, os seguintes pedidos de 
 Durante desenvolvimento, os arquivos enviados são salvos no filesystem local.
 Em produção, usamos o Digital Ocean Spaces. Para habilitá-lo, configure as
 variáveis que iniciam com `AWS_` no arquivo `.env` e adicione `ENABLE_S3=True`.
-
-## Rodando testes
-
-```
-pip install tox
-tox
-```
