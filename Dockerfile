@@ -8,6 +8,9 @@ ENV PYTHONUNBUFFERED 1
 # Set the working directory in the container
 WORKDIR /app
 
+# Debug envs
+RUN env
+
 # Install system dependencies, including gettext
 RUN apt-get update && apt-get install -y \
     gettext \
