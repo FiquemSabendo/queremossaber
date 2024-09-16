@@ -1,15 +1,9 @@
 # Build stage
 FROM python:3.9 AS builder
 
-ARG SECRET_KEY
-
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV SECRET_KEY ${SECRET_KEY}
-
-# Validate SECRET_KEY
-RUN [ -z "${SECRET_KEY}" ] && echo "ERROR: SECRET_KEY environment variable is not set or empty" && exit 1 || true
 
 # Set the working directory in the container
 WORKDIR /app
@@ -31,6 +25,10 @@ RUN poetry config virtualenvs.create false \
 
 # Copy the project code into the container
 COPY . .
+
+# Ensure the env variables are present -- although they won't be used
+# during the build, they need to be set.
+COPY .env.example .env
 
 # Install the project itself
 RUN poetry install --no-interaction --no-ansi --no-root
