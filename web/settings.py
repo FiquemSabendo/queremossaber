@@ -49,6 +49,7 @@ ENV = env("ENV")
 ALLOWED_HOSTS = (
     [
         "queremossaber.org.br",
+        "staging.queremossaber.org.br",
     ]
     + ["localhost", "127.0.0.1"]
     if DEBUG
