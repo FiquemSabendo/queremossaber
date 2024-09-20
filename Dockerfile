@@ -34,6 +34,7 @@ COPY .env.example .env
 RUN poetry install --no-interaction --no-ansi --no-root
 
 # Collect static files
+RUN make sass
 RUN python manage.py collectstatic --noinput
 
 # Compile translations

@@ -46,15 +46,14 @@ DEBUG = env("DEBUG")
 
 ENV = env("ENV")
 
-ALLOWED_HOSTS = (
-    [
-        "queremossaber.org.br",
-        "staging.queremossaber.org.br",
-    ]
-    + ["localhost", "127.0.0.1"]
-    if DEBUG
-    else []
-)
+allowed_hosts_dev = []
+if ENV == "dev":
+    allowed_hosts_dev = ["localhost", "127.0.0.1"]
+
+ALLOWED_HOSTS = [
+    "queremossaber.org.br",
+    "staging.queremossaber.org.br",
+] + allowed_hosts_dev
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -210,4 +209,25 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 DJANGO_LIVESYNC = {
     "HOST": "localhost",
     "PORT": 9001,
+}
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "propagate": True,
+            "level": "DEBUG",
+        },
+        "whitenoise": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    },
 }
