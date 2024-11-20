@@ -1,5 +1,5 @@
 # Build stage
-FROM python:3.9 AS builder
+FROM python:3.12 AS builder
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -41,7 +41,7 @@ RUN python manage.py collectstatic --noinput
 RUN python manage.py compilemessages
 
 # Run stage
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -52,7 +52,7 @@ ENV PORT 8000
 WORKDIR /app
 
 # Copy the installed dependencies and project files from the builder stage
-COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 COPY --from=builder /app /app
 

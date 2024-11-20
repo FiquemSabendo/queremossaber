@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import environ
+import warnings
 from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 
@@ -234,3 +235,12 @@ LOGGING = {
         },
     },
 }
+
+## Warnings
+
+# This is deprecated and will be removed in Django 6. By then, we just need to
+# remove this.
+warnings.filterwarnings(
+    "ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated."
+)
+FORMS_URLFIELD_ASSUME_HTTPS = True

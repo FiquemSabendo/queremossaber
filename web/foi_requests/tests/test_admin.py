@@ -37,7 +37,7 @@ class TestModerationStatusListFilter:
 
     def _create_list_filter(self, params_value=None):
         params = {
-            ModerationStatusListFilter.parameter_name: params_value,
+            ModerationStatusListFilter.parameter_name: [params_value],
         }
         return ModerationStatusListFilter(
             None,  # request
@@ -71,7 +71,7 @@ class TestModerationSenderTypeFilter:
 
     def _create_list_filter(self, params_value=None):
         params = {
-            ModerationSenderTypeFilter.parameter_name: params_value,
+            ModerationSenderTypeFilter.parameter_name: [params_value],
         }
         return ModerationSenderTypeFilter(
             None,  # request
