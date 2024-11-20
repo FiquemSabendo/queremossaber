@@ -126,6 +126,7 @@ class FOIRequest(models.Model):
     # previous_protocol.
     previous_protocol = models.CharField(max_length=8, blank=True)
     esic_protocol = models.CharField(max_length=255, blank=True)
+    esic_protocol_password = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     can_publish = models.BooleanField(default=True)
