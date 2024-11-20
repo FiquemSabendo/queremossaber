@@ -197,16 +197,22 @@ class FOIRequest(models.Model):
 
     @property
     def moderation_message(self):
+        if not self.pk:
+            return None
         first_message = self.first_message
         if first_message:
             return first_message.moderation_message
 
     @property
     def first_message(self):
+        if not self.pk:
+            return None
         return self.message_set.order_by("created_at").first()
 
     @property
     def last_message(self):
+        if not self.pk:
+            return None
         return self.message_set.order_by("created_at").last()
 
 

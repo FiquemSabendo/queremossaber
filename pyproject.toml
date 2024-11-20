@@ -8,7 +8,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.10"
-django = "<3.3"
+django = "4.2"
 django-widget-tweaks = "1.4.3"
 django-environ = "0.11.2"
 django-storages = {extras = ["s3"], version = "^1.14.4"}
@@ -29,7 +29,8 @@ pytest-django = "^4.9.0"
 pre-commit = "^3.8.0"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "web.settings"
+DJANGO_SETTINGS_MODULE = "web.settings_test"
 
+[build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

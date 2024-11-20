@@ -30,7 +30,7 @@ env = environ.Env(
     SESSION_COOKIE_SECURE=(bool, False),
     CSRF_COOKIE_SECURE=(bool, False),
     CSRF_COOKIE_DOMAIN=(str, None),
-    CSRF_TRUSTED_ORIGINS=(list, ["queremossaber.org.br"]),
+    CSRF_TRUSTED_ORIGINS=(list, ["https://queremossaber.org.br"]),
     ENV=(str, "dev"),
 )
 env.read_env(env.str("ENV_PATH"))
@@ -165,8 +165,6 @@ TIME_ZONE = "Brazil/East"
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
 
@@ -178,7 +176,15 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "web", "static"),
 ]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Uploaded files variables. Will only be used if ENABLE_S3 is False.
 MEDIA_URL = "/upload/"
@@ -200,10 +206,6 @@ if ENABLE_S3:
     AWS_S3_OBJECT_PARAMETERS = {
         "CacheControl": "public, max-age=31556926",
     }
-
-# FIXME: This is a workaround because WhiteNoise's files storage raises error 500.
-# http://whitenoise.evans.io/en/stable/django.html#troubleshooting-the-whitenoise-storage-backend
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 DJANGO_LIVESYNC = {
     "HOST": "localhost",
