@@ -68,7 +68,7 @@ CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 extra_apps = []
 if ENV == "dev":
-    extra_apps += ["livesync"]
+    extra_apps += ["livesync", "debug_toolbar"]
 
 INSTALLED_APPS = [
     "web.foi_requests",
@@ -86,6 +86,7 @@ INSTALLED_APPS = [
 extra_middleware = []
 if ENV == "dev":
     extra_middleware += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
         "livesync.core.middleware.DjangoLiveSyncMiddleware",
     ]
 

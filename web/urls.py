@@ -53,8 +53,6 @@ if not settings.ENABLE_S3:
     ] + urlpatterns
 
 if settings.DEBUG:
-    import debug_toolbar
+    import debug_toolbar.toolbar
 
-    urlpatterns = [
-        re_path(r"^__debug__/", include(debug_toolbar.urls)),
-    ] + urlpatterns
+    urlpatterns += debug_toolbar.toolbar.debug_toolbar_urls()
