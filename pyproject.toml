@@ -9,7 +9,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = ">=3.9,<3.10"
 django = "^4.2.16"
-django-widget-tweaks = "1.4.3"
+django-widget-tweaks = "^1.5.0"
 django-environ = "0.11.2"
 django-storages = {extras = ["s3"], version = "^1.14.4"}
 raven = "6.10.0"
