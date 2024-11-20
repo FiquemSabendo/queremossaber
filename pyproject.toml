@@ -13,7 +13,7 @@ django-widget-tweaks = "1.4.3"
 django-environ = "0.11.2"
 django-storages = {extras = ["s3"], version = "^1.14.4"}
 raven = "6.10.0"
-psycopg2-binary = "<2.9"
+psycopg2-binary = "^2.9.10"
 libsass = "0.18.0"
 whitenoise = "5.3.0"
 gunicorn = "^23.0.0"
