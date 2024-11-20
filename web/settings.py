@@ -196,18 +196,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 ENABLE_S3 = env("ENABLE_S3")
 if ENABLE_S3:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
-    AWS_DEFAULT_ACL = "public-read"
-    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-    AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME")
-    AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")
-    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-    AWS_LOCATION = env("AWS_LOCATION")
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_QUERYSTRING_AUTH = False
-    AWS_S3_OBJECT_PARAMETERS = {
-        "CacheControl": "public, max-age=31556926",
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "access_key": env("AWS_ACCESS_KEY_ID"),
+            "secret_key": env("AWS_SECRET_ACCESS_KEY"),
+            "region_name": env("AWS_S3_REGION_NAME"),
+            "endpoint_url": env("AWS_S3_ENDPOINT_URL"),
+            "bucket_name": env("AWS_STORAGE_BUCKET_NAME"),
+            "location": env("AWS_LOCATION"),
+            "default_acl": "public-read",
+            "file_overwrite": False,
+            "querystring_auth": False,
+            "object_parameters": {
+                "CacheControl": "public, max-age=31556926",
+            },
+        },
     }
 
 DJANGO_LIVESYNC = {
