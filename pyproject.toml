@@ -21,10 +21,10 @@ gunicorn = "^23.0.0"
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^4.4.6"
 django-livesync = "0.5"
-honcho = "1.0.1"
-pre-commit = "^3.8.0"
+honcho = "^2.0.0"
+pre-commit = "^4.0.1"
 pytest-django = "^4.9.0"
-watchdog = "2.2.1"
+watchdog = "^6.0.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "web.settings_test"
