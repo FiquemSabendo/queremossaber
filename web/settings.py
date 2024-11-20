@@ -187,7 +187,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 ENABLE_S3 = env("ENABLE_S3")
 if ENABLE_S3:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
     AWS_DEFAULT_ACL = "public-read"
     AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
