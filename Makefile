@@ -12,6 +12,7 @@ help:
 	@echo 'watch_sass: watch changes and compile'
 	@echo 'make_translations: regenerate translation files'
 	@echo 'compile_translations: compile translation files'
+	@echo 'setup_bucket_policy: applies bucket-policy.json policy to s3://queremosaber'
 
 install:
 	poetry install --no-root
@@ -46,3 +47,6 @@ compile_translations:
 	# FIXME: This will compile all .po files in the current folder, including in
 	# `.tox` and `env`
 	poetry run django-admin compilemessages
+
+setup_bucket_policy:
+	s3cmd setpolicy bucket-policy.json s3://queremossaber
