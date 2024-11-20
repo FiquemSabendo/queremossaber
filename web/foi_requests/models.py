@@ -239,12 +239,13 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Moderation-related attributes
-    moderation_status = models.NullBooleanField(
+    moderation_status = models.BooleanField(
+        null=True,
         choices=(
             (None, "Pending"),
             (True, "Approved"),
             (False, "Rejected"),
-        )
+        ),
     )
     moderation_message = models.TextField(blank=True)
     moderated_at = models.DateTimeField(null=True, blank=True)

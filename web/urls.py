@@ -16,10 +16,9 @@ Including another URLconf
 
 from django.views.generic import TemplateView
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.views.static import serve
-from django.conf.urls import url
 from django.views.decorators.cache import cache_page
 
 
@@ -43,7 +42,7 @@ urlpatterns = [
 
 if not settings.ENABLE_S3:
     urlpatterns = [
-        url(
+        re_path(
             r"^upload/(?P<path>.*)$",
             serve,
             {
@@ -57,5 +56,5 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
-        url(r"^__debug__/", include(debug_toolbar.urls)),
+        re_path(r"^__debug__/", include(debug_toolbar.urls)),
     ] + urlpatterns

@@ -68,7 +68,7 @@ CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 extra_apps = []
 if ENV == "dev":
-    extra_apps += ["livesync", "debug_toolbar"]
+    extra_apps += ["livesync"]
 
 INSTALLED_APPS = [
     "web.foi_requests",
@@ -78,7 +78,6 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "raven.contrib.django.raven_compat",
     "django.contrib.staticfiles",
     "widget_tweaks",
 ] + extra_apps
@@ -87,7 +86,6 @@ extra_middleware = []
 if ENV == "dev":
     extra_middleware += [
         "livesync.core.middleware.DjangoLiveSyncMiddleware",
-        "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
 MIDDLEWARE = [
@@ -131,6 +129,7 @@ DATABASES = {
     "default": env.db(),
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
