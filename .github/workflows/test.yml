@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.12"]
 
     services:
       postgres:
-        image: postgres:9.5
+        image: postgres:14
         env:
           POSTGRES_DB: queremossaber
           POSTGRES_USER: queremossaber
