@@ -38,7 +38,7 @@
     </main>
     <footer>
       <div class="wrapper">
-        <div style="width:70%; float:left;">
+        <div style="width:65%; float:left;">
           <p>
           O <a href="{% url 'index' %}">Queremos Saber</a> é um projeto sem fins lucrativos desenvolvido por cidadãos interessados em um Brasil mais transparente. Entre em contato pelo e-mail <a href="mailto:queremossaber@fiquemsabendo.com.br">queremossaber@fiquemsabendo.com.br</a>.
           </p>
@@ -50,10 +50,13 @@
             <a href="mailto:queremossaber@fiquemsabendo.com.br">Contato</a>
           </p>
         </div>
-        <div style="width:30%; float:right;">
+        <div style="width:35%; float:right;">
           <p align="right">
             Apoio<br>
-            <a class="okbr-logo" href="https://br.okfn.org" rel="external">
+            <a class="fs-logo" href="https://fiquemsabendo.com.br" rel="external">
+              {% include '_logo_fs.svg' %}
+            </a>
+            <a class="okbr-logo" href="https://ok.org.br" rel="external">
               {% include '_logo_okbr.svg' %}
             </a>
           </p>
