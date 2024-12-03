@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
     <link rel="stylesheet" href="{% static 'web/styles/main.css' %}">
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Queremos Saber">
+    <meta property="og:description" content="Faça pedidos de acesso à informação sem revelar sua identidade.">
+    <meta property="og:image" content="{% static 'web/images/logo.png' %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'index' %}">
+    <meta property="og:type" content="website">
   </head>
   <body>
     <header>
