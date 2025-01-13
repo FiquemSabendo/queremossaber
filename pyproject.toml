@@ -17,6 +17,7 @@ psycopg2-binary = "^2.9.10"
 libsass = "^0.23.0"
 whitenoise = "^6.8.2"
 gunicorn = "^23.0.0"
+sentry-sdk = {extras = ["django"], version = "^2.19.2"}
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^4.4.6"

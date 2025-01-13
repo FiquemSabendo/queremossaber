@@ -15,6 +15,7 @@ import environ
 import warnings
 from django.utils.translation import gettext_lazy as _
 from pathlib import Path
+import sentry_sdk
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -49,9 +50,10 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 
 ENV = env("ENV")
+IN_DEV = ENV == "dev"
 
 allowed_hosts_dev = []
-if ENV == "dev":
+if IN_DEV:
     allowed_hosts_dev = ["localhost", "127.0.0.1"]
 
 ALLOWED_HOSTS = [
@@ -71,7 +73,7 @@ CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 # Application definition
 
 extra_apps = []
-if ENV == "dev":
+if IN_DEV:
     extra_apps += ["livesync", "debug_toolbar"]
 
 INSTALLED_APPS = [
@@ -88,7 +90,7 @@ INSTALLED_APPS = [
 ] + extra_apps
 
 extra_middleware = []
-if ENV == "dev":
+if IN_DEV:
     extra_middleware += [
         "debug_toolbar.middleware.DebugToolbarMiddleware",
         "livesync.core.middleware.DjangoLiveSyncMiddleware",
@@ -255,3 +257,15 @@ warnings.filterwarnings(
     "ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated."
 )
 FORMS_URLFIELD_ASSUME_HTTPS = True
+
+if not IN_DEV:
+    sentry_sdk.init(
+        dsn="https://fba9f8fa2d6ca1301b2eef8056066ecf@o1430401.ingest.us.sentry.io/4508636591816704",
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for tracing.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+    )
