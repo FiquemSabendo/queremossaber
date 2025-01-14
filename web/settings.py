@@ -34,7 +34,7 @@ env = environ.Env(
     CSRF_COOKIE_DOMAIN=(str, None),
     CSRF_TRUSTED_ORIGINS=(
         list,
-        ["https://queremossaber.org.br", "https://staging.queremossaber.org.br"],
+        ["https://queremossaber.org.br"],
     ),
     ENV=(str, "dev"),
 )
@@ -58,7 +58,6 @@ if IN_DEV:
 
 ALLOWED_HOSTS = [
     "queremossaber.org.br",
-    "staging.queremossaber.org.br",
 ] + allowed_hosts_dev
 
 INTERNAL_IPS = [
