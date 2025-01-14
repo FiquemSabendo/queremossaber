@@ -62,6 +62,8 @@ class CreateFOIRequestView(TemplateView):
         return render(request, self.template_name, context)
 
 
+# Disabilita cache para não cachearmos o CSRF token
+@method_decorator(never_cache, name="dispatch")
 class CreatePublicBodyView(CreateView):
     form_class = PublicBodyForm
     model = PublicBody
