@@ -2,6 +2,8 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import RedirectView
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db import transaction
@@ -20,6 +22,8 @@ class CreateMessageView(CreateView):
         }
 
 
+# Disabilita cache para não cachearmos o CSRF token
+@method_decorator(never_cache, name="dispatch")
 class CreateFOIRequestView(TemplateView):
     template_name = "foi_requests/foi_request_new.html"
 
