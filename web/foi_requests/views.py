@@ -22,7 +22,7 @@ class CreateMessageView(CreateView):
         }
 
 
-# Disabilita cache para não cachearmos o CSRF token
+# Desabilita cache para não cachearmos o CSRF token
 @method_decorator(never_cache, name="dispatch")
 class CreateFOIRequestView(TemplateView):
     template_name = "foi_requests/foi_request_new.html"
@@ -62,7 +62,7 @@ class CreateFOIRequestView(TemplateView):
         return render(request, self.template_name, context)
 
 
-# Disabilita cache para não cachearmos o CSRF token
+# Desabilita cache para não cachearmos o CSRF token
 @method_decorator(never_cache, name="dispatch")
 class CreatePublicBodyView(CreateView):
     form_class = PublicBodyForm
