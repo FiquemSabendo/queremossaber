@@ -36,6 +36,10 @@ env = environ.Env(
         list,
         ["https://queremossaber.org.br"],
     ),
+    ALLOWED_HOSTS=(
+        list,
+        ["queremossaber.org.br"],
+    ),
     ENV=(str, "dev"),
 )
 env.read_env(env.str("ENV_PATH"))
@@ -56,9 +60,7 @@ allowed_hosts_dev = []
 if IN_DEV:
     allowed_hosts_dev = ["localhost", "127.0.0.1"]
 
-ALLOWED_HOSTS = [
-    "queremossaber.org.br",
-] + allowed_hosts_dev
+ALLOWED_HOSTS = env("ALLOWED_HOSTS") + allowed_hosts_dev
 
 INTERNAL_IPS = [
     "127.0.0.1",
