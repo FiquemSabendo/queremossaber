@@ -60,4 +60,4 @@ COPY --from=builder /app /app
 EXPOSE ${PORT}
 
 # Start the application
-CMD gunicorn --bind 0.0.0.0:${PORT} web.wsgi:application
+CMD gunicorn --bind 0.0.0.0:${PORT} --workers ${GUNICORN_WORKERS:-2} --threads ${GUNICORN_THREADS:-2} --timeout ${GUNICORN_TIMEOUT:-120} --max-requests 1000 --max-requests-jitter 50 web.wsgi:application
