@@ -6,14 +6,15 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 from ..models import Message, FOIRequest, PublicBody
-from .conftest import save_message
+from .conftest import save_message, save_public_body
 
 
 class TestMessage(object):
     @pytest.mark.django_db()
-    def test_foi_request_isnt_created_if_message_creation_fails(self):
+    def test_foi_request_isnt_created_if_message_creation_fails(self, public_body):
         initial_foi_requests_count = FOIRequest.objects.count()
-        message = Message()
+        save_public_body(public_body)
+        message = Message(receiver=public_body)
         message.body = None
 
         with transaction.atomic():
@@ -24,10 +25,11 @@ class TestMessage(object):
 
     @pytest.mark.django_db()
     def test_message_doesnt_create_new_foi_request_if_it_already_has_one(
-        self, foi_request
+        self, foi_request, public_body
     ):
         foi_request.save()
-        message = Message(foi_request=foi_request)
+        save_public_body(public_body)
+        message = Message(foi_request=foi_request, receiver=public_body)
         message.save()
 
         assert message.foi_request == foi_request
@@ -50,8 +52,10 @@ class TestMessage(object):
         with pytest.raises(ValidationError):
             message.clean()
 
-    def test_message_approved_can_have_sent_at(self):
-        message = Message(moderation_status=True, sent_at=timezone.now())
+    def test_message_approved_can_have_sent_at(self, public_body):
+        message = Message(
+            moderation_status=True, sent_at=timezone.now(), receiver=public_body
+        )
 
         message.clean()
 
@@ -71,8 +75,8 @@ class TestMessage(object):
 
         assert message.is_rejected
 
-    def test_message_reject_fails_if_moderation_message_is_empty(self):
-        message = Message(moderation_message="")
+    def test_message_reject_fails_if_moderation_message_is_empty(self, public_body):
+        message = Message(moderation_message="", receiver=public_body)
 
         message.clean()
 
@@ -159,6 +163,13 @@ class TestMessage(object):
         assert "sender" in excinfo.value.error_dict
         assert "receiver" in excinfo.value.error_dict
 
+    def test_message_must_have_sender_or_receiver(self, message):
+        message.sender = None
+        message.receiver = None
+
+        with pytest.raises(ValidationError):
+            message.clean()
+
 
 class TestFOIRequest(object):
     def test_protocol_is_automatically_generated(self):
@@ -182,7 +193,9 @@ class TestFOIRequest(object):
         self, public_body, foi_request
     ):
         first_message = Message(foi_request=foi_request, receiver=public_body)
-        last_message = Message(foi_request=foi_request, receiver=None)
+        last_message = Message(
+            foi_request=foi_request, sender=public_body, sent_at=timezone.now()
+        )
 
         save_message(first_message)
         save_message(last_message)
@@ -217,9 +230,11 @@ class TestFOIRequest(object):
         assert foi_request.protocol == original_protocol
 
     @pytest.mark.django_db()
-    def test_last_message_returns_the_last_created_message(self, foi_request):
-        first_message = Message(foi_request=foi_request)
-        last_message = Message(foi_request=foi_request)
+    def test_last_message_returns_the_last_created_message(
+        self, foi_request, public_body
+    ):
+        first_message = Message(foi_request=foi_request, receiver=public_body)
+        last_message = Message(foi_request=foi_request, receiver=public_body)
 
         save_message(first_message)
         save_message(last_message)
@@ -282,13 +297,18 @@ class TestFOIRequest(object):
         assert foi_request.status is FOIRequest.STATUS.waiting_user
 
     @pytest.mark.django_db()
-    def test_summary_returns_first_messages_summary(self):
+    def test_summary_returns_first_messages_summary(self, public_body):
         foi_request = FOIRequest()
 
         with transaction.atomic():
             foi_request.save()
-            first_message = Message(foi_request=foi_request, summary="First message")
-            last_message = Message(foi_request=foi_request, summary="Last message")
+            save_public_body(public_body)
+            first_message = Message(
+                foi_request=foi_request, receiver=public_body, summary="First message"
+            )
+            last_message = Message(
+                foi_request=foi_request, receiver=public_body, summary="Last message"
+            )
             first_message.save()
             last_message.save()
             foi_request.message_set.set([first_message, last_message])
@@ -297,10 +317,14 @@ class TestFOIRequest(object):
 
     @pytest.mark.django_db()
     def test_moderation_message_returns_first_messages_moderation_message(
-        self, foi_request
+        self, foi_request, public_body
     ):
-        first_message = Message(foi_request=foi_request, moderation_message="first")
-        last_message = Message(foi_request=foi_request, moderation_message="last")
+        first_message = Message(
+            foi_request=foi_request, receiver=public_body, moderation_message="first"
+        )
+        last_message = Message(
+            foi_request=foi_request, receiver=public_body, moderation_message="last"
+        )
 
         save_message(first_message)
         save_message(last_message)

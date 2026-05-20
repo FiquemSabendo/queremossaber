@@ -321,6 +321,13 @@ class Message(models.Model):
 
     class Meta:
         ordering = ["-created_at", "-moderation_status"]
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(sender__isnull=False)
+                | models.Q(receiver__isnull=False),
+                name="message_must_have_sender_or_receiver",
+            ),
+        ]
 
     def __init__(self, *args, **kwargs):
         super(Message, self).__init__(*args, **kwargs)
@@ -340,6 +347,11 @@ class Message(models.Model):
                     "sender": msg,
                     "receiver": msg,
                 }
+            )
+
+        if not self.sender and not self.receiver:
+            raise ValidationError(
+                _('Message must have either a "sender" or a "receiver".')
             )
 
         if not self.is_from_user:

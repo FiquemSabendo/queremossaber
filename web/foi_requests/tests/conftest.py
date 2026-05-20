@@ -21,8 +21,8 @@ def foi_request():
 
 
 @pytest.fixture
-def message(foi_request):
-    return Message(foi_request=foi_request)
+def message(foi_request, public_body):
+    return Message(foi_request=foi_request, receiver=public_body)
 
 
 @pytest.fixture
