@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block title %}Fazer um pedido — Queremos Saber{% endblock %}
+{% block meta_description %}Cadastre um novo pedido de acesso à informação. Nós enviamos em nosso nome para proteger sua identidade.{% endblock %}
+{% block social_title %}Fazer um pedido — Queremos Saber{% endblock %}
+{% block social_description %}Cadastre um novo pedido de acesso à informação. Nós enviamos em nosso nome para proteger sua identidade.{% endblock %}
+
 {% block scripts %}
 {{ block.super }}
 {% include "foi_requests/_load_selectize.html" %}
@@ -8,9 +13,9 @@
 {% block content %}
 {% load widget_tweaks %}
 <div>
-  <h2>
+  <h1>
     Novo pedido
-  </h2>
+  </h1>
 
   <small>
     Por favor, só use esse site para pedidos sensíveis, quando você não queira

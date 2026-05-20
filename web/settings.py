@@ -58,6 +58,7 @@ if IN_DEV:
 
 ALLOWED_HOSTS = [
     "queremossaber.org.br",
+    "6435-2804-1b0-f415-ac6f-be6e-e2ff-fedb-1041.ngrok-free.app",
 ] + allowed_hosts_dev
 
 INTERNAL_IPS = [
@@ -68,6 +69,17 @@ SESSION_COOKIE_SECURE = env("SESSION_COOKIE_SECURE")
 CSRF_COOKIE_SECURE = env("CSRF_COOKIE_SECURE")
 CSRF_COOKIE_DOMAIN = env("CSRF_COOKIE_DOMAIN")
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
+
+if not IN_DEV:
+    # The reverse proxy terminates TLS and forwards via HTTP with this header,
+    # so Django can tell that the original request was secure.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 365  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    # SECURE_HSTS_PRELOAD only matters once the domain is submitted to
+    # https://hstspreload.org — set it to True after that submission, not before.
+    SECURE_HSTS_PRELOAD = False
 
 # Application definition
 

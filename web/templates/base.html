@@ -1,23 +1,65 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
-    <title>
-      Queremos Saber
-    </title>
+    <title>{% block title %}Queremos Saber — pedidos anônimos pela Lei de Acesso à Informação{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Faça pedidos de acesso à informação sem revelar sua identidade.">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <meta name="description" content="{% block meta_description %}Faça pedidos de acesso à informação sem revelar sua identidade.{% endblock %}">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+
+    <link rel="preload" href="{% static 'web/fonts/roboto-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{% static 'web/styles/main.css' %}">
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
 
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Queremos Saber">
-    <meta property="og:description" content="Faça pedidos de acesso à informação sem revelar sua identidade.">
+    {# When a child template overrides `title` / `meta_description` it should #}
+    {# also override `social_title` / `social_description` with the same value. #}
+    {# (Stock Django can't read one block's content from another, so the duplication is intentional.) #}
+    <meta property="og:site_name" content="Queremos Saber">
+    <meta property="og:title" content="{% block social_title %}Queremos Saber — pedidos anônimos pela Lei de Acesso à Informação{% endblock %}">
+    <meta property="og:description" content="{% block social_description %}Faça pedidos de acesso à informação sem revelar sua identidade.{% endblock %}">
     <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'web/images/_logo.png' %}">
-    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'index' %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'web/images/_logo.png' %}">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
+          "name": "Queremos Saber",
+          "url": "{{ request.scheme }}://{{ request.get_host }}/",
+          "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'web/images/_logo.png' %}",
+          "email": "queremossaber@fiquemsabendo.com.br",
+          "sameAs": ["https://github.com/FiquemSabendo/queremossaber"],
+          "parentOrganization": {
+            "@type": "Organization",
+            "name": "Fiquem Sabendo",
+            "url": "https://fiquemsabendo.com.br/"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+          "url": "{{ request.scheme }}://{{ request.get_host }}/",
+          "name": "Queremos Saber",
+          "inLanguage": "pt-BR",
+          "publisher": {"@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"},
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ request.scheme }}://{{ request.get_host }}/p/?protocol={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
+    {% block extra_head %}{% endblock %}
   </head>
   <body>
     <header>

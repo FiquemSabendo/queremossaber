@@ -36,7 +36,13 @@ sitemaps = {
 
 def robots_txt(request):
     sitemap_url = request.build_absolute_uri(reverse("sitemap"))
-    body = "User-agent: *\nDisallow:\nSitemap: {}\n".format(sitemap_url)
+    body = (
+        "User-agent: *\n"
+        "Disallow: /a/\n"
+        "Disallow: /upload/\n"
+        "Disallow: /p/public_body/new/\n"
+        "Sitemap: {}\n"
+    ).format(sitemap_url)
     return HttpResponse(body, content_type="text/plain")
 
 

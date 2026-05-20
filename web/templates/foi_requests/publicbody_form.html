@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
+{% block title %}Cadastrar órgão público — Queremos Saber{% endblock %}
+{% block meta_description %}Cadastre um novo órgão público para que possamos enviar pedidos de acesso à informação a ele.{% endblock %}
+{% block social_title %}Cadastrar órgão público — Queremos Saber{% endblock %}
+{% block social_description %}Cadastre um novo órgão público para que possamos enviar pedidos de acesso à informação a ele.{% endblock %}
+
 {% block content %}
 {% load widget_tweaks %}
 
 <div>
-  <h2>Cadastrar órgão público</h2>
+  <h1>Cadastrar órgão público</h1>
 
   <form
     action="{% url 'publicbody_new' %}"

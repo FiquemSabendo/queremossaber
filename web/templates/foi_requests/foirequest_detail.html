@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}Pedido {{ object.protocol }} — {{ object.public_body.name }} — Queremos Saber{% endblock %}
+{% block meta_description %}{% if object.summary %}{{ object.summary|truncatechars:155 }}{% else %}Pedido de acesso à informação ao órgão {{ object.public_body.name }}, feito pelo Queremos Saber.{% endif %}{% endblock %}
+{% block social_title %}Pedido {{ object.protocol }} — Queremos Saber{% endblock %}
+{% block social_description %}{% if object.summary %}{{ object.summary|truncatechars:155 }}{% else %}Pedido de acesso à informação ao órgão {{ object.public_body.name }}, feito pelo Queremos Saber.{% endif %}{% endblock %}
+
 {% block content %}
 <article class="request-details">
   <section class="info">
-    <h2>
+    <h1>
       Pedido: {{ object.protocol }}
-    </h2>
+    </h1>
     <p>
       ATENÇÃO: Anote esse número de protocolo em um lugar seguro.
       Ele é a única maneira de acompanhar o andamento do pedido.

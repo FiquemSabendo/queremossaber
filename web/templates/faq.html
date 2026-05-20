@@ -1,13 +1,125 @@
 {% extends "base.html" %}
 
+{% block title %}Perguntas frequentes — Queremos Saber{% endblock %}
+{% block meta_description %}Tire suas dúvidas sobre como fazer pedidos pela Lei de Acesso à Informação (LAI) de forma anônima no Queremos Saber.{% endblock %}
+{% block social_title %}Perguntas frequentes — Queremos Saber{% endblock %}
+{% block social_description %}Tire suas dúvidas sobre como fazer pedidos pela Lei de Acesso à Informação (LAI) de forma anônima no Queremos Saber.{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é a Lei de Acesso à Informação (LAI)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Lei de Acesso à Informação (Lei 12.527/2011), também conhecida como LAI, regulamenta o direito constitucional do cidadão de acessar qualquer informação pública sem que seja necessário apresentar o motivo. Ela obriga órgãos públicos a considerar a publicidade como regra e o sigilo como exceção e vale para os três poderes da União, Estados, Distrito Federal e Municípios."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Por que este projeto foi criado?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Lei de Acesso à Informação (LAI) representou um grande avanço na transparência pública. Infelizmente, ela tem um grave problema: exigir a identificação do solicitante. Em um mundo ideal, essa exigência não seria problemática. Infelizmente, esse não é o caso no Brasil. Há diversos relatos de ameaças, sutis ou agressivas, demissões e outras represálias feitas por causa de um pedido de informação. Acreditamos que a única forma de garantir que todos sejam tratados da mesma forma é não revelar a identidade de ninguém. Por isso criamos este projeto."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Para quem este projeto foi criado?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nossa plataforma é direcionada a pessoas que se sintam em risco ao realizar pedidos de informação a um determinado órgão público. Independente do motivo — seja por sua profissão, pelo teor do pedido ou por divergências políticas —, se você se sente constrangido(a) pela obrigatoriedade de se identificar ao buscar uma informação pública, pode recorrer ao Queremos Saber para fazê-lo em segurança."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Eu preciso pagar para enviar pedidos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. Assim como o acesso à informação no Brasil, o uso desta plataforma é totalmente gratuito."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso enviar pedidos para qualquer órgão?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Quase. Você pode enviar pedidos para qualquer órgão que aceite pedidos pela Internet e aceite pedidos vindos de empresas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como entro com um recurso?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Infelizmente, ainda não é possível entrar com recursos pelo Queremos Saber. Esta é a funcionalidade mais importante que ainda não foi implementada. Sabemos da sua importância e estamos trabalhando para disponibilizá-la o quanto antes. Até lá, caso você receba uma resposta não satisfatória, recomendamos abrir outro pedido."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Em quanto tempo terei minha resposta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A LAI garante que, caso disponíveis, as informações são concedidas imediatamente ao solicitante. Do contrário, como em pedidos online, o órgão tem até 20 dias para enviá-las, com direito a mais 10 dias de prorrogação, se necessário e mediante justificativa do órgão."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O prazo de resposta da LAI começa a contar quando eu envio um pedido?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não, só depois do pedido passar pela nossa moderação e ser cadastrado no órgão público."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso fazer qualquer tipo de pedido?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. É preciso apenas se certificar de que o pedido seja válido (isto é, com uma redação clara e compreensível) e não apresente conteúdo difamatório, preconceituoso ou ilícito em seu texto. Apesar de nossa plataforma ser livre e gratuita, pedimos que você só use ela para pedidos em que você não quer revelar sua identidade para fins de proteção. Caso identifiquemos uma quantidade massiva de pedidos com propósito exclusivo de realizar um levantamento abrangente, nos reservamos o direito de não realizar esses protocolos para preservar o propósito principal da plataforma."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como sei se minha identidade não será revelada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nós não pedimos nenhum dado pessoal para cadastrar um novo pedido, nem guardamos registros de acesso ou endereços IP. Em outras palavras, nem nós mesmos sabemos quem você é. Você também pode usar o navegador Tor para garantir sua privacidade mesmo caso nossos servidores sejam invadidos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a relação deste projeto com o Queremos Saber antigo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O Queremos Saber foi uma plataforma de pedidos de informação criada pelo grupo Transparência Hacker em 2011, antes mesmo da LAI entrar em vigor. Ele permitia enviar pedidos para diversos órgãos, que ficavam públicos. Quando os órgãos criaram seus próprios portais de transparência, passaram a exigir que os pedidos fossem cadastrados nos seus sistemas e a plataforma entrou em desuso. Usar o mesmo nome para esta plataforma é uma pequena homenagem à primeira plataforma brasileira de pedidos de acesso à informação."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O código-fonte está disponível?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Você pode acessá-lo no GitHub em https://github.com/FiquemSabendo/queremossaber."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <section class="faq">
-  <h2>Perguntas frequentes</h2>
+  <h1>Perguntas frequentes</h1>
 
   <dl>
     <dt>O que é a Lei de Acesso à Informação (LAI)?</dt>
     <dd>
-      A Lei de Acesso à Informação (<a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" rel="external" target="_blank">Lei 12.527/2011</a>), também conhecida como LAI, regulamenta o direito constitucional do cidadão de acessar qualquer informação pública sem que seja necessário apresentar o motivo. Ela obriga órgãos públicos a considerar a publicidade como regra e o sigilo como exceção e vale para os três poderes da União, Estados, Distrito Federal e Municípios.
+      A Lei de Acesso à Informação (<a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" rel="external noopener" target="_blank">Lei 12.527/2011</a>), também conhecida como LAI, regulamenta o direito constitucional do cidadão de acessar qualquer informação pública sem que seja necessário apresentar o motivo. Ela obriga órgãos públicos a considerar a publicidade como regra e o sigilo como exceção e vale para os três poderes da União, Estados, Distrito Federal e Municípios.
     </dd>
 
     <dt>Por que este projeto foi criado?</dt>
@@ -16,7 +128,7 @@
         A Lei de Acesso à Informação (LAI) representou um grande avanço na transparência pública. Infelizmente, ela tem um grave problema: exigir a identificação do solicitante.
       </p>
       <p>
-        Em um mundo ideal, essa exigência não seria problemática. Infelizmente, esse não é o caso no Brasil. Há diversos relatos de ameaças, sutis ou agressivas, demissões e outras represálias feitas por causa de um pedido de informação. Você pode encontrar alguns desses casos no relatório <a href="http://artigo19.org/blog/2018/05/15/identidade-revelada-entraves-na-busca-por-informacao-publica-no-brasil/" target="_blank" rel="external">Identidade Revelada</a>, lançado em 2018 pela ONG <a href="https://artigo19.org" rel="external" target="_blank">Artigo 19</a>.
+        Em um mundo ideal, essa exigência não seria problemática. Infelizmente, esse não é o caso no Brasil. Há diversos relatos de ameaças, sutis ou agressivas, demissões e outras represálias feitas por causa de um pedido de informação. Você pode encontrar alguns desses casos no relatório <a href="http://artigo19.org/blog/2018/05/15/identidade-revelada-entraves-na-busca-por-informacao-publica-no-brasil/" target="_blank" rel="external noopener">Identidade Revelada</a>, lançado em 2018 pela ONG <a href="https://artigo19.org" rel="external noopener" target="_blank">Artigo 19</a>.
       </p>
       <p>
         Acreditamos que a única forma de garantir que todos sejam tratados da mesma forma é não revelar a identidade de ninguém. Por isso criamos este projeto.
@@ -45,7 +157,7 @@
 
     <dt>Em quanto tempo terei minha resposta?</dt>
     <dd>
-      A LAI garante que, caso disponíveis, as informações são concedidas imediatamente ao solicitante. Do contrário, como em pedidos online, o órgão tem até 20 dias para enviá-las, com direito a mais 10 dias de prorrogação, se necessário e mediante justificativa do órgão. É possível ver mais regras de prazos <a href="http://www.acessoainformacao.gov.br/assuntos/pedidos/prazos" rel="external" target="_blank">nesse link</a>.
+      A LAI garante que, caso disponíveis, as informações são concedidas imediatamente ao solicitante. Do contrário, como em pedidos online, o órgão tem até 20 dias para enviá-las, com direito a mais 10 dias de prorrogação, se necessário e mediante justificativa do órgão. É possível ver mais regras de prazos <a href="http://www.acessoainformacao.gov.br/assuntos/pedidos/prazos" rel="external noopener" target="_blank">nesse link</a>.
     </dd>
 
     <dt>O prazo de resposta da LAI começa a contar quando eu envio um pedido?</dt>
@@ -67,7 +179,7 @@
 
     <dt>Como sei se minha identidade não será revelada?</dt>
     <dd>
-      Nós não pedimos nenhum dado pessoal para cadastrar um novo pedido, nem guardamos registros de acesso ou endereços IP. Em outras palavras, nem nós mesmos sabemos quem você é. Você também pode usar o <a href="https://www.torproject.org/projects/torbrowser.html" rel="external">navegador Tor</a> para garantir sua privacidade mesmo caso nossos servidores sejam invadidos.
+      Nós não pedimos nenhum dado pessoal para cadastrar um novo pedido, nem guardamos registros de acesso ou endereços IP. Em outras palavras, nem nós mesmos sabemos quem você é. Você também pode usar o <a href="https://www.torproject.org/projects/torbrowser.html" rel="external noopener">navegador Tor</a> para garantir sua privacidade mesmo caso nossos servidores sejam invadidos.
     </dd>
 
     <dt>Qual a relação deste projeto com o Queremos Saber antigo?</dt>
@@ -89,7 +201,7 @@
 
     <dt>O código-fonte está disponível?</dt>
     <dd>
-      Sim. Você pode acessá-lo no <a href="https://github.com/FiquemSabendo/queremossaber" rel="external">GitHub</a>.
+      Sim. Você pode acessá-lo no <a href="https://github.com/FiquemSabendo/queremossaber" rel="external noopener">GitHub</a>.
     </dd>
 
   </dl>
