@@ -30,5 +30,10 @@ dev = [
     "watchdog>=6.0.0,<7",
 ]
 
+[tool.uv]
+constraint-dependencies = [
+    "urllib3>=2.7.0",  # CVE: decompression-bomb bypass + cross-origin header leak (GHSA in Dependabot #129/#130)
+]
+
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "web.settings_test"
