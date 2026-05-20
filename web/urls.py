@@ -16,13 +16,29 @@ Including another URLconf
 
 from django.views.generic import TemplateView
 from django.contrib import admin
-from django.urls import include, path, re_path
+from django.contrib.sitemaps.views import sitemap
+from django.http import HttpResponse
+from django.urls import include, path, re_path, reverse
 from django.conf import settings
 from django.views.static import serve
 from django.views.decorators.cache import cache_page
 
+from web.foi_requests.sitemaps import FOIRequestSitemap, StaticViewSitemap
+
 
 ONE_DAY = 60 * 60 * 24
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    "foi_requests": FOIRequestSitemap,
+}
+
+
+def robots_txt(request):
+    sitemap_url = request.build_absolute_uri(reverse("sitemap"))
+    body = "User-agent: *\nDisallow:\nSitemap: {}\n".format(sitemap_url)
+    return HttpResponse(body, content_type="text/plain")
+
 
 urlpatterns = [
     path(
@@ -35,6 +51,13 @@ urlpatterns = [
         cache_page(ONE_DAY)(TemplateView.as_view(template_name="faq.html")),
         name="faq",
     ),
+    path(
+        "sitemap.xml",
+        cache_page(ONE_DAY)(sitemap),
+        {"sitemaps": sitemaps},
+        name="sitemap",
+    ),
+    path("robots.txt", cache_page(ONE_DAY)(robots_txt), name="robots_txt"),
     path("p/", include("web.foi_requests.urls")),
     path("whoami/", include("web.whoami.urls")),
     path("a/", admin.site.urls),
