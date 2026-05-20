@@ -60,6 +60,14 @@ For multi-step tasks, state a brief plan:
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
+## 5. Named Variables Always
+
+**Never inline raw literals. Define or reuse a named variable.**
+
+- Colors, spacing, magic numbers → named variables (SCSS `$var`, constants, etc.).
+- If a value appears as a raw literal in a rule, introduce a named variable for it.
+- Reuse existing variables before creating new ones.
+
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
