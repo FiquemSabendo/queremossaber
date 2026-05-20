@@ -2,8 +2,11 @@
 FROM python:3.12 AS builder
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_LINK_MODE=copy
+ENV UV_PROJECT_ENVIRONMENT=/usr/local
 
 # Set the working directory in the container
 WORKDIR /app
@@ -13,15 +16,14 @@ RUN apt-get update && apt-get install -y \
     gettext \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Poetry
-RUN pip install poetry
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
-# Copy only pyproject.toml and poetry.lock (if it exists)
-COPY pyproject.toml poetry.lock* ./
+# Copy only pyproject.toml and uv.lock (if it exists)
+COPY pyproject.toml uv.lock* ./
 
-# Install project dependencies
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi --no-root
+# Install project dependencies into the system Python
+RUN uv sync --frozen --no-install-project --no-dev
 
 # Copy the project code into the container
 COPY . .
@@ -31,7 +33,7 @@ COPY . .
 COPY .env.example .env
 
 # Install the project itself
-RUN poetry install --no-interaction --no-ansi --no-root
+RUN uv sync --frozen --no-dev
 
 # Collect static files
 RUN make sass
@@ -44,9 +46,9 @@ RUN python manage.py compilemessages
 FROM python:3.12-slim
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-ENV PORT 8000
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
 
 # Set the working directory in the container
 WORKDIR /app

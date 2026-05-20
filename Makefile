@@ -15,38 +15,38 @@ help:
 	@echo 'setup_bucket_policy: applies bucket-policy.json policy to s3://queremosaber'
 
 install:
-	poetry install --no-root
-	poetry run pre-commit install
+	uv sync
+	uv run pre-commit install
 
 test:
-	poetry run pytest
-	poetry run pre-commit run --all-files
+	uv run pytest
+	uv run pre-commit run --all-files
 
 watch_sass: sass
-	poetry run watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
+	uv run watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
 
 sass:
-	poetry run pysassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
+	uv run pysassc web/static/web/styles/main.scss web/static/web/styles/main.css --sourcemap
 
 load_fixtures:
-	poetry run python manage.py loaddata public_bodies_and_esics sample_foi_requests
+	uv run python manage.py loaddata public_bodies_and_esics sample_foi_requests
 
 migrate:
-	poetry run python manage.py migrate
+	uv run python manage.py migrate
 
 server:
-	poetry run honcho -f Procfile.dev start
+	uv run honcho -f Procfile.dev start
 
 create_admin:
-	poetry run python manage.py createsuperuser
+	uv run python manage.py createsuperuser
 
 make_translations:
-	poetry run django-admin makemessages --all --ignore "env*"
+	uv run django-admin makemessages --all --ignore "env*"
 
 compile_translations:
 	# FIXME: This will compile all .po files in the current folder, including in
 	# `.tox` and `env`
-	poetry run django-admin compilemessages
+	uv run django-admin compilemessages
 
 setup_bucket_policy:
 	s3cmd setpolicy bucket-policy.json s3://queremossaber

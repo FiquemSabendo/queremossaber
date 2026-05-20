@@ -7,7 +7,7 @@ Informação sem revelar sua identidade.
 
 ## Instalando
 
-Assumindo que você já tem o Python e `poetry` instalados, instale as dependências com:
+Assumindo que você já tem o Python e [`uv`](https://docs.astral.sh/uv/) instalados, instale as dependências com:
 
 ```
 make install
