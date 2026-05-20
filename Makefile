@@ -16,11 +16,11 @@ help:
 
 install:
 	uv sync
-	uv run pre-commit install
+	uv run prek install
 
 test:
 	uv run pytest
-	uv run pre-commit run --all-files
+	uv run prek run --all-files
 
 watch_sass: sass
 	uv run watchmedo shell-command --patterns="*.scss" --recursive --command 'make sass' web/static/web/styles
