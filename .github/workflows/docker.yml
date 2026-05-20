@@ -5,7 +5,7 @@ on:
     workflows: ["Test"]
     types:
       - completed
-    branches: ["master"]
+    branches: ["main"]
 
 concurrency:
   group: build-${{ github.event.workflow_run.head_branch }}
@@ -46,7 +46,7 @@ jobs:
           tags: |
             type=raw,value=${{ github.event.workflow_run.head_branch }}
             type=sha,prefix=
-            type=raw,value=latest,enable=${{ github.event.workflow_run.head_branch == 'master' }}
+            type=raw,value=latest,enable=${{ github.event.workflow_run.head_branch == 'main' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
