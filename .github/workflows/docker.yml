@@ -45,7 +45,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ github.event.workflow_run.head_branch }}
-            type=raw,value=${{ github.event.workflow_run.head_sha }}
+            type=sha,prefix=
             type=raw,value=latest,enable=${{ github.event.workflow_run.head_branch == 'master' }}
 
       - name: Build and push Docker image
