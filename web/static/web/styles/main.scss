@@ -1,6 +1,7 @@
 $cyan: #48dbfb;
 $yellow: #feca57;
-$green: #6bb844;
+$green: #357a18;
+$green-light: #6bb844;
 $blue: #2e86de;
 $red: #ff6b6b;
 $pale: #c8d6e5;
@@ -82,6 +83,12 @@ footer {
 
   p {
     color: $white;
+  }
+
+  a,
+  a:link,
+  a:visited {
+    color: $green-light;
   }
 
   .fs-logo svg {

@@ -6,7 +6,8 @@
       Queremos Saber
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet">
+    <meta name="description" content="Faça pedidos de acesso à informação sem revelar sua identidade.">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
     <link rel="stylesheet" href="{% static 'web/styles/main.css' %}">
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
@@ -22,7 +23,7 @@
     <header>
       <div class="wrapper">
         <div class="logo-wrapper">
-          <a class="logo" href="{% url 'index' %}">
+          <a class="logo" href="{% url 'index' %}" aria-label="Queremos Saber - página inicial">
             {% include '_logo.svg' %}
           </a>
           <p>
@@ -59,7 +60,7 @@
         </div>
         <div style="width:35%; float:right;">
           <p align="right">
-            <a class="fs-logo" href="https://fiquemsabendo.com.br" rel="external">
+            <a class="fs-logo" href="https://fiquemsabendo.com.br" rel="external" aria-label="Fiquem Sabendo (site externo)">
               {% include '_logo_fs.svg' %}
             </a>
           </p>
