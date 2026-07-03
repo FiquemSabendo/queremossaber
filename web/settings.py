@@ -90,6 +90,7 @@ if IN_DEV:
 INSTALLED_APPS = [
     "web.foi_requests",
     "web.whoami",
+    "web.api",
     "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",

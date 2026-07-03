@@ -53,6 +53,51 @@ Quando você carrega as fixtures no seu banco de dados, os seguintes pedidos de 
 * Respondido com um PDF: HQCYR6KQ
 * Aguardando resposta atrasada do órgão público: GQ2XOQM7
 
+## API para desenvolvedores
+
+Sistemas externos podem criar pedidos de LAI programaticamente através da API
+em `/api/`. Todo acesso exige um token, criado pelo admin do Django em
+`Api > Api clients` (`/a/api/apiclient/add/`).
+
+Envie o token no header `Authorization: Token <token>`.
+
+### Buscar órgãos públicos
+
+```
+GET /api/public_bodies/?search=<termo>
+```
+
+Retorna até 20 órgãos cujo nome contenha `<termo>` (ou os 20 primeiros
+cadastrados, se `search` for omitido), no formato:
+
+```json
+{"results": [{"id": 1, "name": "...", "level": "Local", "municipality": "...", "uf": "SP"}]}
+```
+
+### Criar um pedido
+
+```
+POST /api/foi_requests/
+Content-Type: multipart/form-data
+```
+
+Campos:
+
+* `receiver` (obrigatório): id do órgão público, obtido via `/api/public_bodies/`.
+* `summary` (obrigatório): resumo curto do pedido.
+* `body` (obrigatório, 55 a 2000 caracteres): texto do pedido.
+* `attached_file` (opcional): arquivo a ser anexado (ex: imagem do mapa).
+* `can_publish` (opcional, padrão `true`).
+* `previous_protocol` (opcional): protocolo de um pedido anterior relacionado.
+
+O pedido criado entra na mesma fila de moderação usada pelo formulário do
+site — ele só é enviado ao órgão público depois de aprovado por um moderador.
+Em caso de sucesso (`201`), a resposta é:
+
+```json
+{"protocol": "ABCDEFGH", "url": "https://queremossaber.org.br/p/ABCDEFGH/", "status": "pending"}
+```
+
 ## Configurando uploads para Digital Ocean Spaces
 
 Durante desenvolvimento, os arquivos enviados são salvos no filesystem local.

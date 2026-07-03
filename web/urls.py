@@ -66,6 +66,7 @@ urlpatterns = [
     path("robots.txt", cache_page(ONE_DAY)(robots_txt), name="robots_txt"),
     path("p/", include("web.foi_requests.urls")),
     path("whoami/", include("web.whoami.urls")),
+    path("api/", include("web.api.urls")),
     path("a/", admin.site.urls),
 ]
 
