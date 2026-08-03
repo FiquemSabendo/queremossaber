@@ -114,3 +114,6 @@ venv.bak/
 web/static/web/styles/*.css
 web/static/web/styles/*.css.map
 staticfiles/
+
+# Devbox runtime state (Nix profile and checkout-local Postgres data).
+/.devbox/
