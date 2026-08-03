@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": [
+    "postgresql@16",
+    "uv@latest",
+    "gnumake@latest",
+    "git@latest",
+    "gettext@latest"
+  ],
+  "env": {
+    "PGUSER": "queremossaber",
+    "PGDATABASE": "queremossaber_dev"
+  },
+  "shell": {
+    "scripts": {
+      "setup": "bash devbox/bootstrap.sh",
+      "dev": "bash devbox/bootstrap.sh && exec make server",
+      "test": "bash devbox/bootstrap.sh && exec make test",
+      "db:stop": "if pg_ctl -D \"$PGDATA\" status >/dev/null 2>&1; then pg_ctl -D \"$PGDATA\" stop; else echo 'devbox postgres is not running'; fi"
+    }
+  }
+}
