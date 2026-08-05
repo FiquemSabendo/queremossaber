@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.FOIRequestRedirectView.as_view(), name="foirequest_search"),
+    path("", views.FOIRequestListView.as_view(), name="foirequest_list"),
     path(
         "new/",
         views.CreateFOIRequestView.as_view(),
