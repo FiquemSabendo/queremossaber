@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Pedidos públicos — Queremos Saber{% endblock %}
+{% block meta_description %}Veja os pedidos de acesso à informação feitos pelo Queremos Saber cujos autores autorizaram a divulgação.{% endblock %}
+{% block social_title %}Pedidos públicos — Queremos Saber{% endblock %}
+{% block social_description %}Veja os pedidos de acesso à informação feitos pelo Queremos Saber cujos autores autorizaram a divulgação.{% endblock %}
+
+{% block content %}
+<section class="request-list">
+  <h1>Pedidos públicos</h1>
+
+  <p>
+    Esta lista traz apenas os pedidos que já passaram pela nossa moderação e cujos
+    autores autorizaram sua divulgação.
+  </p>
+
+  <div class="request-list-table">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Protocolo</th>
+          <th scope="col">Data</th>
+          <th scope="col">Órgão</th>
+          <th scope="col">Título</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for foi_request in foirequest_list %}
+        <tr>
+          <td>
+            <a href="{{ foi_request.get_absolute_url }}">{{ foi_request.protocol }}</a>
+          </td>
+          <td>{{ foi_request.created_at|date:"d/m/Y" }}</td>
+          <td>{{ foi_request.public_body_name|default:"—" }}</td>
+          <td>{{ foi_request.first_message_summary|truncatechars:100|default:"—" }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Nenhum pedido público por enquanto.</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% if is_paginated %}
+  <nav class="pagination" aria-label="Paginação">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" rel="prev" aria-label="Página anterior">&lsaquo;</a>
+    {% endif %}
+    {% for page_number in page_range %}
+      {% if page_number == paginator.ELLIPSIS %}
+        <span class="pagination-ellipsis">{{ page_number }}</span>
+      {% elif page_number == page_obj.number %}
+        <span class="pagination-current" aria-current="page">{{ page_number }}</span>
+      {% else %}
+        <a href="?page={{ page_number }}">{{ page_number }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" rel="next" aria-label="Próxima página">&rsaquo;</a>
+    {% endif %}
+  </nav>
+{% endif %}
+</section>
+{% endblock %}

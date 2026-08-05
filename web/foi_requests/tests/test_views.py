@@ -2,19 +2,8 @@ import pytest
 from django.urls import reverse
 
 from ..models import PublicBody
-from ..views import FOIRequestRedirectView, CreatePublicBodyView, CreateFOIRequestView
+from ..views import CreatePublicBodyView, CreateFOIRequestView
 from .conftest import save_public_body
-
-
-class TestFOIRequestRedirectView(object):
-    def test_redirects_to_foirequest_detail(self, rf):
-        protocol = "ABC"
-        expected_url = reverse("foirequest_detail", kwargs={"slug": protocol})
-
-        request = rf.get("?protocol=" + protocol)
-        response = FOIRequestRedirectView.as_view()(request)
-
-        assert response.url == expected_url
 
 
 class TestCreatePublicBodyView(object):

@@ -16,6 +16,13 @@ $link-visited: $green;
 
 $visually-hidden-size: 1px;
 
+$table-cell-padding: .5rem;
+$table-border: 1px solid $pale;
+$table-header-font-size: .75rem;
+$pagination-gap: .25rem;
+$pagination-item-padding: .25rem;
+$pagination-margin-top: 2rem;
+
 $roboto-weight-min: 100;
 $roboto-weight-max: 900;
 
@@ -505,6 +512,55 @@ dt {
 
   .moderation-message {
     white-space: pre-line;
+  }
+}
+
+.request-list {
+  h1 {
+    text-align: left;
+  }
+
+  .request-list-table {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border-bottom: $table-border;
+    padding: $table-cell-padding;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    color: $black;
+    font-size: $table-header-font-size;
+    text-transform: uppercase;
+  }
+
+  .pagination {
+    display: flex;
+    gap: $pagination-gap;
+    justify-content: flex-end;
+    margin-top: $pagination-margin-top;
+
+    a,
+    span {
+      padding: 0 $pagination-item-padding;
+    }
+
+    .pagination-current {
+      font-weight: bold;
+    }
+
+    .pagination-ellipsis {
+      color: rgba($black, .5);
+    }
   }
 }
 

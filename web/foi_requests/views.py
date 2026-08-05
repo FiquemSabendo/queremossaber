@@ -1,15 +1,17 @@
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
-from django.views.generic.base import RedirectView
+from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.http import Http404
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, NoReverseMatch
 from django.db import transaction
+from django.db.models import OuterRef, Subquery
 
 from .forms import MessageForm, EsicForm, PublicBodyForm, FOIRequestForm
-from .models import FOIRequest, PublicBody
+from .models import FOIRequest, Message, PublicBody
 
 
 class CreateMessageView(CreateView):
@@ -99,10 +101,60 @@ class FOIRequestView(DetailView):
     slug_field = "protocol"
 
 
-class FOIRequestRedirectView(RedirectView):
-    pattern_name = "foirequest_search"
-    permanent = True
+class FOIRequestListView(ListView):
+    """Lists the FOI requests whose authors allowed their publication.
 
-    def get_redirect_url(self, *args, **kwargs):
-        protocol = self.request.GET.get("protocol")
-        return reverse("foirequest_detail", kwargs={"slug": protocol})
+    Also answers the protocol search: `?protocol=X` redirects to that
+    request's page.
+    """
+
+    model = FOIRequest
+    paginate_by = 50
+
+    def get(self, request, *args, **kwargs):
+        protocol = request.GET.get("protocol", "").strip()
+        if protocol:
+            try:
+                return redirect("foirequest_detail", slug=protocol, permanent=True)
+            except NoReverseMatch:
+                # Protocols only have letters and digits, so anything else
+                # can't be an existing request.
+                raise Http404
+        return super(FOIRequestListView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(FOIRequestListView, self).get_context_data(**kwargs)
+
+        # Elides the page numbers far from the current one, so the pagination
+        # doesn't overflow the layout.
+        context["page_range"] = context["paginator"].get_elided_page_range(
+            context["page_obj"].number, on_each_side=1, on_ends=1
+        )
+
+        return context
+
+    def get_queryset(self):
+        # `public_body` and `summary` are properties that query the first
+        # message, so we annotate them here to avoid one query per request.
+        first_message = Message.objects.filter(foi_request=OuterRef("pk")).order_by(
+            "created_at"
+        )
+
+        return (
+            FOIRequest.objects.filter(can_publish=True)
+            .annotate(
+                first_message_moderation_status=Subquery(
+                    first_message.values("moderation_status")[:1]
+                ),
+                public_body_name=Subquery(first_message.values("receiver__name")[:1]),
+                first_message_summary=Subquery(first_message.values("summary")[:1]),
+            )
+            .filter(first_message_moderation_status=True)
+            # The request's page shows every message, including the ones the
+            # moderation rejected or hasn't reviewed yet. Listing it here would
+            # make that content findable by anyone, so we only list requests
+            # whose messages are all approved.
+            .exclude(message__moderation_status__isnull=True)
+            .exclude(message__moderation_status=False)
+            .order_by("-created_at")
+        )
