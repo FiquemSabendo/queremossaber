@@ -25,7 +25,7 @@ dev = [
     "django-debug-toolbar>=4.4.6,<5",
     "django-livesync==0.5",
     "honcho>=2.0.0,<3",
-    "prek>=0.3.13",
+    "prek>=0.4.11",
     "pytest-django>=4.9.0,<5",
     "watchdog>=6.0.0,<7",
 ]
