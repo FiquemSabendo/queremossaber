@@ -374,7 +374,7 @@ dev = [
 requires-dist = [
     { name = "django", specifier = ">=5.2.16,<6" },
     { name = "django-environ", specifier = "==0.14.0" },
-    { name = "django-storages", extras = ["s3"], specifier = ">=1.14.4,<2" },
+    { name = "django-storages", extras = ["s3"], specifier = ">=1.14.6,<2" },
     { name = "django-widget-tweaks", specifier = ">=1.5.0,<2" },
     { name = "gunicorn", specifier = ">=23.0.0,<24" },
     { name = "libsass", specifier = ">=0.23.0,<1" },
