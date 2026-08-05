@@ -11,7 +11,7 @@ dependencies = [
     "django>=5.2.16,<6",
     "django-widget-tweaks>=1.5.0,<2",
     "django-environ==0.14.0",
-    "django-storages[s3]>=1.14.4,<2",
+    "django-storages[s3]>=1.14.6,<2",
     "raven==6.10.0",
     "psycopg2-binary>=2.9.10,<3",
     "libsass>=0.23.0,<1",
