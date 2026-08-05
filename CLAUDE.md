@@ -68,6 +68,11 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - If a value appears as a raw literal in a rule, introduce a named variable for it.
 - Reuse existing variables before creating new ones.
 
+## 6. Use pt-br for text, and en for code
+
+Every text (user-facing, code comments, commit messages, etc) must be in pt-br.
+The code itself (var names, functions, etc) in en.
+
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
