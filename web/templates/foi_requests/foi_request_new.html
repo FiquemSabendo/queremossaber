@@ -17,6 +17,14 @@
     Novo pedido
   </h1>
 
+  {% if foi_request_creation_suspended %}
+  <section class="warning">
+    Não estamos recebendo novos pedidos. O volume supera nossa capacidade de
+    cadastrá-los manualmente nos sistemas dos órgãos públicos. Reabriremos o
+    formulário assim que possível. Dúvidas?
+    <a href="mailto:queremossaber@fiquemsabendo.com.br">entre em contato</a>.
+  </section>
+  {% else %}
   <small>
     Por favor, só use esse site para pedidos sensíveis, quando você não queira
     se identificar, pois cada pedido é enviado manualmente por um voluntário.
@@ -78,5 +86,6 @@
       <a class="link-dimmed" href="{% url 'index' %}">cancelar</a>
     </div>
   </form>
+  {% endif %}
 </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
@@ -42,6 +43,7 @@ class CreateFOIRequestView(TemplateView):
                 "message_form", MessageForm(initial=message_form_initial)
             ),
             "foi_request_form": kwargs.get("foi_request_form", FOIRequestForm()),
+            "foi_request_creation_suspended": settings.SUSPEND_FOI_REQUEST_CREATION,
         }
 
         return {**context, **forms}
@@ -99,6 +101,13 @@ class CreatePublicBodyView(CreateView):
 class FOIRequestView(DetailView):
     model = FOIRequest
     slug_field = "protocol"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["foi_request_creation_suspended"] = (
+            settings.SUSPEND_FOI_REQUEST_CREATION
+        )
+        return context
 
 
 class FOIRequestListView(ListView):

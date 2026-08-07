@@ -7,6 +7,15 @@
 
 {% block content %}
 <article class="request-details">
+  {% if foi_request_creation_suspended and not object.first_message.is_sent and not object.first_message.is_rejected %}
+  <section class="warning">
+    Este pedido aguarda envio. O volume de pedidos supera nossa capacidade de
+    cadastrá-los manualmente nos sistemas dos órgãos públicos, então os envios
+    estão demorando mais que o normal. Dúvidas?
+    <a href="mailto:queremossaber@fiquemsabendo.com.br">entre em contato</a>.
+  </section>
+  {% endif %}
+
   <section class="info">
     <h1>
       Pedido: {{ object.protocol }}

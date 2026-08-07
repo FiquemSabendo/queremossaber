@@ -22,6 +22,7 @@ $table-header-font-size: .75rem;
 $pagination-gap: .25rem;
 $pagination-item-padding: .25rem;
 $pagination-margin-top: 2rem;
+$notice-margin-bottom: 1rem;
 
 $roboto-weight-min: 100;
 $roboto-weight-max: 900;
@@ -474,12 +475,13 @@ button,
     font-size: 1rem;
   }
 
-  margin-bottom: 1rem;
+  margin-bottom: $notice-margin-bottom;
 }
 
 .warning {
   background-color: $yellow;
   color: $black;
+  margin-bottom: $notice-margin-bottom;
 }
 
 dl,
