@@ -28,6 +28,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     ENV_PATH=(str, DEFAULT_ENV_PATH),
     ENABLE_S3=(bool, False),
+    SUSPEND_FOI_REQUEST_CREATION=(bool, False),
     HEROKU_APP_ID=(str, None),
     SESSION_COOKIE_SECURE=(bool, False),
     CSRF_COOKIE_SECURE=(bool, False),
@@ -58,6 +59,7 @@ if IN_DEV:
 
 ALLOWED_HOSTS = [
     "queremossaber.org.br",
+    "escritorio.chimera-dorian.ts.net",
     "6435-2804-1b0-f415-ac6f-be6e-e2ff-fedb-1041.ngrok-free.app",
 ] + allowed_hosts_dev
 
@@ -212,6 +214,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 ENABLE_S3 = env("ENABLE_S3")
+SUSPEND_FOI_REQUEST_CREATION = env("SUSPEND_FOI_REQUEST_CREATION")
 if ENABLE_S3:
     STORAGES["default"] = {
         "BACKEND": "storages.backends.s3.S3Storage",
