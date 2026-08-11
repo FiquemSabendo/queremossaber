@@ -22,7 +22,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "django-debug-toolbar>=4.4.6,<5",
+    "django-debug-toolbar>=7.0.0,<8",
     "django-livesync==0.5",
     "honcho>=2.0.0,<3",
     "prek>=0.4.11",
