@@ -8,7 +8,7 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "django>=5.2.16,<6",
+    "django>=5.2.17,<6",
     "django-widget-tweaks>=1.5.0,<2",
     "django-environ==0.14.0",
     "django-storages[s3]>=1.14.6,<2",
@@ -16,17 +16,17 @@ dependencies = [
     "psycopg2-binary>=2.9.10,<3",
     "libsass>=0.23.0,<1",
     "whitenoise>=6.8.2,<7",
-    "gunicorn>=23.0.0,<24",
+    "gunicorn>=26.0.0,<27",
     "sentry-sdk[django]>=2.66.1,<3",
 ]
 
 [dependency-groups]
 dev = [
-    "django-debug-toolbar>=4.4.6,<5",
+    "django-debug-toolbar>=7.0.0,<8",
     "django-livesync==0.5",
     "honcho>=2.0.0,<3",
     "prek>=0.4.12",
-    "pytest-django>=4.9.0,<5",
+    "pytest-django>=4.13.0,<5",
     "watchdog>=6.0.0,<7",
 ]
 
