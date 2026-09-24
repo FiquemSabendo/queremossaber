@@ -16,7 +16,7 @@ dependencies = [
     "psycopg2-binary>=2.9.10,<3",
     "libsass>=0.23.0,<1",
     "whitenoise>=6.8.2,<7",
-    "gunicorn>=23.0.0,<24",
+    "gunicorn>=26.0.0,<27",
     "sentry-sdk[django]>=2.66.1,<3",
 ]
 
