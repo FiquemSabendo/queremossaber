@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db.models import OuterRef, Subquery
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -82,6 +84,51 @@ class MessageInline(admin.StackedInline):
     autocomplete_fields = ("sender", "receiver")
 
 
+class FOIRequestStatusFilter(admin.SimpleListFilter):
+    title = "Status do pedido"
+    parameter_name = "request_status"
+    template = "admin/foi_requests/foirequest/status_filter.html"
+
+    def lookups(self, request, model_admin):
+        return (
+            (Message.STATUS.pending.name, "Aguardando moderação"),
+            (Message.STATUS.ready.name, "Prontos para envio"),
+            (FOIRequest.STATUS.waiting_government.name, "Aguardando órgão"),
+            (FOIRequest.STATUS.delayed.name, "Atrasados"),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value not in dict(self.lookup_choices):
+            return queryset
+
+        latest_message = Message.objects.filter(foi_request=OuterRef("pk")).order_by(
+            "-created_at"
+        )
+        queryset = queryset.alias(
+            latest_message_id=Subquery(latest_message.values("pk")[:1]),
+            latest_sender_id=Subquery(latest_message.values("sender_id")[:1]),
+            latest_sent_at=Subquery(latest_message.values("sent_at")[:1]),
+            latest_moderation_status=Subquery(
+                latest_message.values("moderation_status")[:1]
+            ),
+        ).filter(latest_message_id__isnull=False, latest_sender_id__isnull=True)
+
+        if value == Message.STATUS.pending.name:
+            return queryset.filter(
+                latest_sent_at__isnull=True, latest_moderation_status__isnull=True
+            )
+        if value == Message.STATUS.ready.name:
+            return queryset.filter(
+                latest_sent_at__isnull=True, latest_moderation_status=True
+            )
+
+        reply_deadline = timezone.now() - timezone.timedelta(days=FOIRequest.REPLY_DAYS)
+        if value == FOIRequest.STATUS.delayed.name:
+            return queryset.filter(latest_sent_at__lte=reply_deadline)
+        return queryset.filter(latest_sent_at__gt=reply_deadline)
+
+
 @admin.register(FOIRequest)
 class FOIRequestAdmin(admin.ModelAdmin):
     list_display = (
@@ -89,7 +136,7 @@ class FOIRequestAdmin(admin.ModelAdmin):
         "esic_protocol",
         "public_body",
         "esic",
-        "status",
+        "status_label",
         "can_publish",
     )
 
@@ -100,6 +147,12 @@ class FOIRequestAdmin(admin.ModelAdmin):
     )
 
     inlines = (MessageInline,)
+    list_filter = (FOIRequestStatusFilter,)
+    change_list_template = "admin/foi_requests/foirequest/change_list.html"
+
+    @admin.display(description="Status")
+    def status_label(self, obj):
+        return obj.status.value
 
 
 def approve_messages(modeladmin, request, queryset):

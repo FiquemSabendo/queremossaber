@@ -1,0 +1,29 @@
+{% extends "admin/change_list.html" %}
+{% load admin_list %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    .request-status-filters {
+      --filter-gap: 0.5rem;
+      --filter-margin: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--filter-gap);
+      margin-bottom: var(--filter-margin);
+    }
+    .request-status-filters a[aria-current="true"] {
+      background: var(--button-hover-bg);
+      text-decoration: underline;
+    }
+  </style>
+{% endblock %}
+
+{% block filters %}{% endblock %}
+
+{% block result_list %}
+  {% for spec in cl.filter_specs %}
+    {% admin_list_filter cl spec %}
+  {% endfor %}
+  {{ block.super }}
+{% endblock %}

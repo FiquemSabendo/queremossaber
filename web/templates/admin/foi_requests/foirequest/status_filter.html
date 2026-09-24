@@ -1,0 +1,5 @@
+<nav class="request-status-filters" aria-label="Filtrar por status do pedido">
+  {% for choice in choices %}
+    <a href="{{ choice.query_string|iriencode }}" class="button"{% if choice.selected %} aria-current="true"{% endif %}>{% if forloop.first %}Todos{% else %}{{ choice.display }}{% endif %}</a>
+  {% endfor %}
+</nav>
