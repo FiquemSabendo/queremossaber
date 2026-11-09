@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: ["3.12"]
@@ -31,10 +31,10 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v3
+      uses: astral-sh/setup-uv@v10.3.3
       with:
         enable-cache: true
         cache-dependency-glob: "uv.lock"
@@ -43,7 +43,7 @@ jobs:
       run: uv python install ${{ matrix.python-version }}
 
     - name: Cache prek
-      uses: actions/cache@v3
+      uses: actions/cache@v6
       with:
         path: ~/.cache/prek
         key: ${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('**/.pre-commit-config.yaml') }}
