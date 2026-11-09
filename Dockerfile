@@ -62,4 +62,4 @@ COPY --from=builder /app /app
 EXPOSE ${PORT}
 
 # Start the application
-CMD gunicorn --bind 0.0.0.0:${PORT} web.wsgi:application
+CMD ["gunicorn", "web.wsgi:application"]
