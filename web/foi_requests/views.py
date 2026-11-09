@@ -9,7 +9,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse, NoReverseMatch
 from django.db import transaction
-from django.db.models import OuterRef, Subquery
+from django.db.models import OuterRef, Prefetch, Subquery
 
 from .forms import MessageForm, EsicForm, PublicBodyForm, FOIRequestForm
 from .models import FOIRequest, Message, PublicBody
@@ -101,6 +101,21 @@ class CreatePublicBodyView(CreateView):
 class FOIRequestView(DetailView):
     model = FOIRequest
     slug_field = "protocol"
+
+    def get_queryset(self):
+        # A página acessa várias propriedades derivadas das mensagens e lista
+        # todas elas com remetente e destinatário. Sem isso cada acesso vira
+        # uma query (ver QUEREMOS-SABER-8 no Sentry).
+        return (
+            super()
+            .get_queryset()
+            .prefetch_related(
+                Prefetch(
+                    "message_set",
+                    queryset=Message.objects.select_related("sender", "receiver__esic"),
+                )
+            )
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,8 +1,9 @@
 import pytest
 from django.test import override_settings
 from django.urls import reverse
+from django.utils import timezone
 
-from ..models import PublicBody
+from ..models import Message, PublicBody
 from ..views import CreatePublicBodyView, CreateFOIRequestView
 from .conftest import save_message, save_public_body
 
@@ -141,3 +142,28 @@ class TestFOIRequestView:
         response = client.get(message.foi_request.get_absolute_url())
 
         assert self.NOTICE not in response.content.decode()
+
+    @pytest.mark.django_db()
+    @override_settings(SUSPEND_FOI_REQUEST_CREATION=True)
+    def test_renders_with_constant_number_of_queries(
+        self, client, foi_request, public_body, django_assert_num_queries
+    ):
+        # A página acessa várias propriedades que dependem das mensagens
+        # (public_body, summary, status...). Sem prefetch, cada acesso e cada
+        # mensagem listada vira uma query nova.
+        for _ in range(3):
+            save_message(Message(foi_request=foi_request, receiver=public_body))
+            save_message(
+                Message(
+                    foi_request=foi_request,
+                    sender=public_body,
+                    sent_at=timezone.now(),
+                )
+            )
+
+        # Uma query para o pedido e uma para as mensagens com remetente e
+        # destinatário.
+        with django_assert_num_queries(2):
+            response = client.get(foi_request.get_absolute_url())
+
+        assert response.status_code == 200

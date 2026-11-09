@@ -205,15 +205,21 @@ class FOIRequest(models.Model):
 
     @property
     def first_message(self):
-        if not self.pk:
-            return None
-        return self.message_set.order_by("created_at").first()
+        messages = self._messages_by_creation()
+        return messages[0] if messages else None
 
     @property
     def last_message(self):
+        messages = self._messages_by_creation()
+        return messages[-1] if messages else None
+
+    def _messages_by_creation(self):
+        # Lê `message_set.all()` em vez de `order_by().first()` para aproveitar
+        # o `prefetch_related` da view de detalhe: qualquer filtro ou ordenação
+        # no queryset ignoraria o cache e dispararia uma query nova por acesso.
         if not self.pk:
-            return None
-        return self.message_set.order_by("created_at").last()
+            return []
+        return sorted(self.message_set.all(), key=lambda message: message.created_at)
 
 
 class Message(models.Model):
