@@ -27,7 +27,7 @@ dev = [
     "honcho>=2.0.0,<3",
     "prek>=0.4.12",
     "pytest-django>=4.13.0,<5",
-    "watchdog>=6.0.0,<7",
+    "watchdog>=6.0.0,<8",
 ]
 
 [tool.uv]
